@@ -14,9 +14,6 @@ const UploadIcon: React.FC<UploadIconProps> = () => {
     animationData: animationData,
     loop: true,
     autoplay: true,
-    renderSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-    },
   };
 
   const { View } = useLottie(options, style);

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@phntms/react-share": "^0.0.7",
+    "axios": "^0.26.1",
     "lottie-react": "^2.2.1",
     "lottie-web": "^5.9.2",
     "next": "12.1.4",

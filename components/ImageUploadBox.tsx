@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // Icons
 import PolygonIcon from "./PolygonIcon";
 import UploadIcon from "./UploadIcon";
+import { CgSpinner as SpinnerIcon } from "react-icons/cg";
 
 // Hooks
 import { useDropzone } from "react-dropzone";
 import toast from "react-hot-toast";
+
+// API stuff
+import axios from "axios";
 
 interface SelectedFile extends File {
   preview: string;
@@ -14,6 +18,7 @@ interface SelectedFile extends File {
 
 const ImageUploadBox = () => {
   const [file, setFile] = useState<SelectedFile | undefined>();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: "image/*",
@@ -30,6 +35,40 @@ const ImageUploadBox = () => {
       toast.error("Can't accept this file type.");
     },
   });
+
+  useEffect(() => {
+    console.log(file);
+  }, [file]);
+
+  async function handleUpload(e: React.MouseEvent<HTMLButtonElement>) {
+    // Null check "file" state
+    if (!file) {
+      // Display that no file is selected
+      return;
+    }
+    setLoading(true);
+    let formdata = new FormData();
+
+    formdata.append("image", file);
+    formdata.append("name", "Carlo Taleon");
+
+    await axios({
+      url: "http://localhost:8000/uploadfile",
+      method: "POST",
+      headers: {
+        authorization: "your token",
+      },
+      data: formdata,
+    }).then(
+      (res) => {
+        // Display success in POST request
+      },
+      (err) => {
+        // Display errors in POST request
+      }
+    );
+    setLoading(false);
+  }
 
   return (
     <>
@@ -71,11 +110,18 @@ const ImageUploadBox = () => {
           {file ? file.name : <span className="invisible">.</span>}
         </p>
         <button
-          disabled={file ? false : true} // file ? (exists) : (doesn't exist)
-          className="flex items-center px-5 w-full py-2 rounded-md text-white border font-medium text-sm bg-gray-800 disabled:opacity-80 transition disabled:text-gray-300 disabled:bg-transparent"
+          onClick={handleUpload}
+          disabled={loading || (file ? false : true)} // file ? (exists) : (doesn't exist)
+          className="flex items-center px-5 w-full h-16 rounded-md text-white border font-medium text-sm bg-gray-800 disabled:opacity-80 transition disabled:text-gray-300 disabled:bg-transparent"
         >
-          <PolygonIcon />
-          <span className="text-center w-full">Measure Cobb Angle</span>
+          {loading ? (
+            <SpinnerIcon size="2rem" className="animate-spin" />
+          ) : (
+            <PolygonIcon />
+          )}
+          <span className="text-center w-full">
+            {loading ? "Measuring Cobb Angle..." : "Measure Cobb Angle"}
+          </span>
         </button>
       </div>
     </>

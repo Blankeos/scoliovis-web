@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { IoIosImages as ImageIcon } from "react-icons/io";
+import Footer from "../components/Footer";
 import ImageUploadBox from "../components/ImageUploadBox";
 import UploadIcon from "../components/UploadIcon";
 
@@ -26,20 +27,15 @@ const Home: NextPage = () => {
             </span>
           </h1>
           <p className="text-center max-w-sm mx-auto text-gray-600 text-sm">
-            ScolioVis is an automatic <b>Cobb Angle Measurement</b> tool for
+            ScolioVis is an automatic{" "}
+            <b className="custom-styles">Cobb Angle Measurement</b> tool for
             Anterior-Posterior Spine X-Rays. Get Started by Uploading Your Spine
             X-Ray image below.
           </p>
         </div>
         <ImageUploadBox />
       </main>
-
-      <footer className="py-4 px-5 max-w-3xl mx-auto pt-10">
-        <p className="text-xs text-gray-400 text-center">
-          This app is created by Elizalde, Rubinos, and Taleon as part of an
-          unpublished Thesis at WVSU-CICT. It is not yet medically approved.
-        </p>
-      </footer>
+      <Footer />
     </div>
   );
 };
