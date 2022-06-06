@@ -7,6 +7,8 @@ module.exports = {
     extend: {
       fontFamily: {
         epilogue: ["Epilogue", "sans-serif"],
+        inter: ["Inter", "sans-serif"],
+        poppins: ["Poppins", "sans-serif"],
       },
     },
   },
