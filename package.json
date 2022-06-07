@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^1.6.4",
     "@phntms/react-share": "^0.0.7",
     "axios": "^0.26.1",
     "lottie-react": "^2.2.1",
