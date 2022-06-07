@@ -31,3 +31,7 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.will-change {
+  will-change: auto;
+}
