@@ -32,7 +32,7 @@ const Home: NextPage = () => {
                 anterior-posterior spine X-rays. This is an ongoing thesis by
                 Elizalde, Rubinos, and Taleon
               </p>
-              <button className="flex gap-x-2 items-center px-5 py-4 bg-blue-700 text-white rounded-xl shadow-md text-sm">
+              <button className="flex gap-x-2 items-center px-5 py-3 bg-blue-700 text-white rounded-xl shadow-md text-sm">
                 <span>Get Started</span>
                 <ArrowIcon />
               </button>
@@ -60,11 +60,17 @@ const Home: NextPage = () => {
         </header>
         <section>
           <ImageUploadBox />
-          <div className="max-w-5xl w-full mx-auto p-7 flex flex-col items-center">
+          <div className="max-w-5xl w-full mx-auto p-7 flex flex-col items-center gap-y-5">
             <p className="flex gap-x-2 items-center text-gray-800 text-sm">
               <ArrowIcon className="rotate-90" />
               Or try with these example spine images
             </p>
+            <div className="flex gap-5">
+              <div className="bg-blue-500 w-20 h-20 rounded-md"></div>
+              <div className="bg-blue-500 w-20 h-20 rounded-md"></div>
+              <div className="bg-blue-500 w-20 h-20 rounded-md"></div>
+              <div className="bg-blue-500 w-20 h-20 rounded-md"></div>
+            </div>
           </div>
         </section>
       </main>
