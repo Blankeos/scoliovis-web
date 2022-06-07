@@ -73,7 +73,7 @@ const ImageUploadBox = () => {
   return (
     <>
       <input {...getInputProps()} />
-      <div className="max-w-sm mx-auto flex flex-col items-center">
+      <div className="max-w-5xl w-full mx-auto px-7 flex flex-col items-center">
         <label
           {...getRootProps()}
           className="h-72 w-full bg-gray-200 rounded-md text-gray-400 cursor-pointer border border-gray-300 hover:shadow-inner transition relative overflow-hidden"
