@@ -3,13 +3,14 @@ import Head from "next/head";
 import Image from "next/image";
 import Footer from "../components/Footer";
 import ImageUploadBox from "../components/ImageUploadBox";
+import { useState } from "react";
 
 // Icons
-import { FaBone as BoneIcon } from "react-icons/fa";
 import { FiArrowRight as ArrowIcon } from "react-icons/fi";
-import UploadIcon from "../components/UploadIcon";
-import { IoIosImages as ImageIcon } from "react-icons/io";
+import FixedWindow from "../components/FixedWindow/FixedWindow";
 const Home: NextPage = () => {
+  const [isShowing, setShowing] = useState<boolean>(false);
+
   return (
     <div className="flex flex-col min-h-screen">
       <nav className="">
@@ -32,7 +33,11 @@ const Home: NextPage = () => {
                 anterior-posterior spine X-rays. This is an ongoing thesis by
                 Elizalde, Rubinos, and Taleon
               </p>
-              <button className="flex gap-x-2 items-center px-5 py-3 bg-blue-700 text-white rounded-xl shadow-md text-sm">
+              <button
+                type="button"
+                onClick={() => setShowing(true)}
+                className="flex gap-x-2 items-center px-5 py-3 bg-blue-700 text-white rounded-xl shadow-md text-sm"
+              >
                 <span>Get Started</span>
                 <ArrowIcon />
               </button>
@@ -48,14 +53,6 @@ const Home: NextPage = () => {
                 </div>
               </div>
             </div>
-            {/* 
-          <h1 className="text-center text-2xl mb-5 text-gray-900"></h1>
-          <p className="text-center max-w-sm mx-auto text-gray-600 text-sm">
-          ScolioVis is an automatic{" "}
-          <b className="custom-styles">Cobb Angle Measurement</b> tool for
-          Anterior-Posterior Spine X-Rays. Get Started by Uploading Your Spine
-          X-Ray image below.
-        </p> */}
           </div>
         </header>
         <section>
@@ -75,6 +72,7 @@ const Home: NextPage = () => {
         </section>
       </main>
       <Footer />
+      <FixedWindow isShowing={isShowing} setShowing={setShowing} />
     </div>
   );
 };
