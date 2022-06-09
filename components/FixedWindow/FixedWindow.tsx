@@ -1,4 +1,10 @@
-import React, { Dispatch, Fragment, SetStateAction } from "react";
+import React, {
+  Dispatch,
+  Fragment,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
 // Icons
@@ -6,85 +12,134 @@ import {
   FiArrowLeft as ArrowIcon,
   FiSettings as SettingsIcon,
 } from "react-icons/fi";
+import { RiEyeLine as ViewDetailsIcon } from "react-icons/ri";
+import { MdBugReport as BugIcon } from "react-icons/md";
+import { HiChatAlt as SupportIcon } from "react-icons/hi";
+
+import Switch from "../Switch";
+import ImageUploadBox from "../ImageUploadBox";
+import Dropdown from "../Dropdown";
+import Tippy from "@tippyjs/react";
 
 type FixedWindowProps = {
+  file?: SelectedFile;
   isShowing: boolean;
   setShowing: Dispatch<SetStateAction<boolean>>;
+  setFile: Dispatch<SetStateAction<SelectedFile | undefined>>;
 };
 
-const FixedWindow: React.FC<FixedWindowProps> = ({ isShowing, setShowing }) => {
+const FixedWindow: React.FC<FixedWindowProps> = ({
+  isShowing,
+  setShowing,
+  file,
+  setFile,
+}) => {
   function closeModal() {
     setShowing(false);
   }
-  if (!isShowing) {
-    return <></>;
-  }
+
+  //   Hooks
+  const [enabled, setEnabled] = useState<boolean>(true);
+  useEffect(() => {
+    if (file !== undefined) {
+      //   File is not undefined, we can upload the file
+      console.log("File is not null, we can upload.");
+      setShowing(true);
+    } else {
+      console.log("File is null, we can't upload.");
+    }
+  }, [file]);
 
   return (
     <Transition appear show={isShowing} as={Fragment}>
-      <Dialog
-        open={isShowing}
-        as="div"
-        className="relative z-10"
-        onClose={closeModal}
-      >
-        {/* Background of the Dialog */}
-        {/* <Transition.Child
-          as={Fragment}
-          enter="ease-out duration-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in duration-200"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <div className="fixed inset-0 bg-black bg-opacity-25" />
-        </Transition.Child> */}
-
+      <Dialog as="div" className="relative z-10" onClose={() => {}}>
         {/* Actual Body of the Dialog is within Dialog.Panel */}
-        <div className="fixed inset-0 overflow-y-auto bg-white bg-opacity-50">
+        <div className="fixed inset-0 overflow-y-auto bg-white z-10">
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300 will-change"
-            enterFrom="opacity-0 scale-95"
-            enterTo="opacity-100 scale-100"
+            enterFrom="scale-95"
+            enterTo="scale-100"
             leave="ease-in duration-200 will-change"
-            leaveFrom="opacity-100 scale-100"
-            leaveTo="opacity-0 scale-95"
+            leaveFrom="scale-100"
+            leaveTo="scale-95"
           >
             {/* CONTENT OF THE WINDOW IS HERE!! */}
-            <Dialog.Panel className="w-full h-full transform overflow-hidden bg-white p-6 transition-all flex flex-col">
+            <div className="w-full h-full transform overflow-hidden bg-white p-6 transition-all flex flex-col ">
               {/* Nav */}
-              <nav className="flex justify-between h-12 text-gray-800">
+              <nav className="flex gap-5 justify-between h-12 text-gray-800 flex-shrink-0">
                 <div className="h-full">
                   <button
                     type="button"
-                    onClick={closeModal}
-                    className="flex h-full px-5 items-center gap-2 border rounded-md hover:bg-blue-700 hover:text-white"
+                    onClick={() => {
+                      window.scrollTo(0, 0);
+                      closeModal();
+                    }}
+                    className="flex h-full px-5 items-center gap-2 border rounded-xl text-sm hover:bg-blue-700 hover:text-white hover:shadow-md"
                   >
                     <ArrowIcon size="1.2rem" />
                     <span>Start New</span>
                   </button>
                 </div>
-                <div className="h-full">
-                  <button
-                    type="button"
-                    className="flex h-full px-5 items-center gap-2 border rounded-md hover:bg-blue-700 hover:text-white"
+                <div className="h-full flex gap-8">
+                  <div className="self-center flex items-center gap-x-2">
+                    <Tippy content="View Details">
+                      <button
+                        type="button"
+                        onClick={() => setEnabled((prev) => !prev)}
+                      >
+                        <ViewDetailsIcon
+                          className="text-center text-gray-800"
+                          size="1.5rem"
+                        />
+                      </button>
+                    </Tippy>
+                    <Switch enabled={enabled} setEnabled={setEnabled} />
+                  </div>
+                  <Dropdown
+                    className="flex h-full px-5 items-center gap-2 border rounded-xl text-sm hover:bg-blue-700 hover:text-white hover:shadow-md text-gray-800"
+                    openClass="bg-blue-700 text-white"
+                    items={[
+                      { label: "Report a Bug", Icon: BugIcon },
+                      { label: "Contact Support", Icon: SupportIcon },
+                    ]}
                   >
                     <SettingsIcon size="1.2rem" />
-                  </button>
+                  </Dropdown>
                 </div>
               </nav>
-              <main className="w-full flex-grow grid grid-cols-3 gap-5">
-                <div className="flex flex-col">
+              <main className="w-full flex-grow grid grid-cols-3 gap-8 overflow-hidden">
+                {/* COL 1 */}
+                <div className="flex flex-col overflow-hidden">
                   <div className="text-center py-5">
                     <h1 className="font-bold text-gray-700 truncate">
                       Input Spine Image
                     </h1>
                   </div>
-                  <div className="flex-grow bg-gray-200 flex items-center justify-center rounded-md">
-                    IMAGE HERE
-                  </div>
+                  {file ? (
+                    <div className="relative flex-grow flex justify-center items-center border-2 border-dashed rounded-xl overflow-hidden">
+                      <Transition.Child
+                        as={Fragment}
+                        enter="ease-out duration-300 will-change"
+                        enterFrom="scale-50"
+                        enterTo="scale-100"
+                        leave="ease-in duration-200 will-change"
+                        leaveFrom="scale-100"
+                        leaveTo="scale-50"
+                      >
+                        <img
+                          src={`${file.preview}`}
+                          className="object-contain w-11/12 h-5/6"
+                        />
+                      </Transition.Child>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="w-full h-full flex">
+                        <ImageUploadBox file={file} setFile={setFile} />
+                      </div>
+                    </>
+                  )}
                 </div>
                 <div className="flex flex-col">
                   <div className="text-center py-5">
@@ -92,7 +147,7 @@ const FixedWindow: React.FC<FixedWindowProps> = ({ isShowing, setShowing }) => {
                       Vertebral Segmentation
                     </h1>
                   </div>
-                  <div className="flex-grow bg-gray-200 flex items-center justify-center rounded-md">
+                  <div className="flex-grow flex items-center border-2 border-dashed justify-center rounded-xl">
                     IMAGE HERE
                   </div>
                 </div>
@@ -102,12 +157,12 @@ const FixedWindow: React.FC<FixedWindowProps> = ({ isShowing, setShowing }) => {
                       Cobb Angle Measurement
                     </h1>
                   </div>
-                  <div className="flex-grow bg-gray-200 flex items-center justify-center rounded-md">
+                  <div className="flex-grow flex items-center border-2 border-dashed justify-center rounded-xl">
                     IMAGE HERE
                   </div>
                 </div>
               </main>
-            </Dialog.Panel>
+            </div>
           </Transition.Child>
         </div>
       </Dialog>
