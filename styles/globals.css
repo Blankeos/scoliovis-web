@@ -33,5 +33,5 @@ a {
 }
 
 .will-change {
-  will-change: auto;
+  will-change: transform;
 }
