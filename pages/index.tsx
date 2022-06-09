@@ -52,8 +52,8 @@ const Home: NextPage = () => {
                 <ArrowIcon />
               </button>
             </div>
-            <div className="flex items-center bg-red-200">
-              <div className="bg-gradient-to-bl from-[#87fce8] to-[#abb7e5] rounded-full w-52 h-52 p-4 mb-3">
+            <div className="flex items-center">
+              <div className="bg-gradient-to-bl to-blue-800 from-blue-600 rounded-full w-52 h-52 p-8 mb-3">
                 <div className="w-full h-full relative tranform rotate-45">
                   <Image
                     src="/spine.png"
