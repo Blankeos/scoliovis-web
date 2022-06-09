@@ -38,13 +38,13 @@ const Dropdown: FCC<DropdownProps> = ({
           >
             <Menu.Items className="absolute right-0 mt-2 w-44 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               <div className="py-1 ">
-                {items.map((i) => (
-                  <Menu.Item>
+                {items.map((item, i) => (
+                  <Menu.Item key={i}>
                     {({ active }) => (
                       <MenuItemButon
                         active={active}
-                        Icon={i.Icon}
-                        label={i.label}
+                        Icon={item.Icon}
+                        label={item.label}
                       />
                     )}
                   </Menu.Item>
