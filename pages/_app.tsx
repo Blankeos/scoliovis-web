@@ -1,4 +1,5 @@
 import "../styles/globals.css";
+import "tippy.js/dist/tippy.css";
 import type { AppProps } from "next/app";
 import NextHead from "next/head";
 import MetaHeadEmbed from "@phntms/react-share/lib/components/MetaHeadEmbed";
