@@ -20,15 +20,17 @@ import Switch from "../Switch";
 import ImageUploadBox from "../ImageUploadBox";
 import Dropdown from "../Dropdown";
 import Tippy from "@tippyjs/react";
+import uploadFile from "../../services/uploadFile";
+import PolygonIcon from "../PolygonIcon";
 
-type FixedWindowProps = {
+type MainAppWindowProps = {
   file?: SelectedFile;
   isShowing: boolean;
   setShowing: Dispatch<SetStateAction<boolean>>;
   setFile: Dispatch<SetStateAction<SelectedFile | undefined>>;
 };
 
-const FixedWindow: React.FC<FixedWindowProps> = ({
+const MainAppWindow: React.FC<MainAppWindowProps> = ({
   isShowing,
   setShowing,
   file,
@@ -38,14 +40,31 @@ const FixedWindow: React.FC<FixedWindowProps> = ({
     setShowing(false);
   }
 
+  async function fetchData(file: SelectedFile) {
+    setLoading(true);
+    try {
+      const response = await uploadFile(file);
+      console.log(response.data);
+      setSegmentationResponse(response.data);
+    } catch (e) {
+      console.log(e);
+    }
+    setLoading(false);
+  }
   //   Hooks
+  const [segmentationResponse, setSegmentationResponse] =
+    useState<ISegmentationResponse>();
   const [enabled, setEnabled] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
+
   useEffect(() => {
     if (file !== undefined) {
       //   File is not undefined, we can upload the file
       console.log("File is not null, we can upload.");
       setShowing(true);
+      fetchData(file);
     } else {
+      // File is undefined, we can't upload
       console.log("File is null, we can't upload.");
     }
   }, [file]);
@@ -148,7 +167,24 @@ const FixedWindow: React.FC<FixedWindowProps> = ({
                     </h1>
                   </div>
                   <div className="flex-grow flex items-center border-2 border-dashed justify-center rounded-xl">
-                    IMAGE HERE
+                    {loading ? (
+                      <div className="flex flex-col items-center gap-y-5">
+                        <PolygonIcon />
+                        <span className="text-sm text-gray-500">
+                          Model is calculating...
+                        </span>
+                      </div>
+                    ) : (
+                      <>
+                        {segmentationResponse &&
+                          segmentationResponse.encoded_img && (
+                            <img
+                              src={`data:image/png;base64,${segmentationResponse.encoded_img}`}
+                              className="object-contain w-11/12 h-5/6"
+                            />
+                          )}
+                      </>
+                    )}
                   </div>
                 </div>
                 <div className="flex flex-col">
@@ -170,29 +206,4 @@ const FixedWindow: React.FC<FixedWindowProps> = ({
   );
 };
 
-export default FixedWindow;
-
-{
-  /* <Dialog.Title
-                  as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900"
-                >
-                  Payment successful
-                </Dialog.Title>
-                <div className="mt-2">
-                  <p className="text-sm text-gray-500">
-                    Your payment has been successfully submitted. We’ve sent you
-                    an email with all of the details of your order.
-                  </p>
-                </div>
-
-                <div className="mt-4">
-                  <button
-                    type="button"
-                    className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                    onClick={closeModal}
-                  >
-                    Got it, thanks!
-                  </button>
-                </div> */
-}
+export default MainAppWindow;

@@ -9,7 +9,7 @@ import ImageUploadBox from "../components/ImageUploadBox";
 
 // Icons
 import { FiArrowRight as ArrowIcon } from "react-icons/fi";
-import FixedWindow from "../components/FixedWindow/FixedWindow";
+import FixedWindow from "../components/MainAppWindow/MainAppWindow";
 import urlToSelectedFile from "../services/urlToSelectedFile";
 import ExampleImageButton from "../components/ExampleImageButton";
 import MyDialog from "../components/MyDialog";
@@ -46,10 +46,10 @@ const Home: NextPage = () => {
               <button
                 type="button"
                 onClick={() => setShowing(true)}
-                className="flex gap-x-2 items-center px-5 py-3 bg-blue-700 text-white rounded-xl shadow-md text-sm"
+                className="flex gap-x-2 items-center px-5 py-3 bg-blue-700 hover:bg-blue-600 transition text-white rounded-xl shadow-md text-sm group"
               >
                 <span>Open ScolioVis</span>
-                <ArrowIcon />
+                <ArrowIcon className="group-hover:translate-x-1 transition" />
               </button>
             </div>
             <div className="flex items-center">
@@ -102,7 +102,6 @@ const Home: NextPage = () => {
         setShowing={setShowing}
         setFile={setFile}
       />
-      {/* <MyDialog /> */}
     </div>
   );
 };
