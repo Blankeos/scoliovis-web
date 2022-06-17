@@ -190,9 +190,9 @@ const MainAppWindow: React.FC<MainAppWindowProps> = ({
                       </>
                     )}
                     {!loading && !segmentationResponse && (
-                      <div className="flex flex-col items-center gap-y-5 p-10 text-center">
-                        <APIErrorIcon size="3rem" className="text-red-500" />
-                        <span className="text-sm text-gray-500">
+                      <div className="flex flex-col items-center gap-y-5 px-16 text-center">
+                        <APIErrorIcon size="3rem" className="text-red-400" />
+                        <span className="text-sm text-red-400">
                           Failed to analyze the image. The ScolioVis server
                           might not be running.
                         </span>
