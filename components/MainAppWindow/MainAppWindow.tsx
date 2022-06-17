@@ -196,6 +196,15 @@ const MainAppWindow: React.FC<MainAppWindowProps> = ({
                           Failed to analyze the image. The ScolioVis server
                           might not be running.
                         </span>
+                        <button
+                          onClick={() => {
+                            if (!file) return;
+                            fetchData(file);
+                          }}
+                          className="border border-red-400 px-8 py-2 text-red-400 rounded-xl hover:bg-red-400 hover:text-white"
+                        >
+                          Retry
+                        </button>
                       </div>
                     )}
                   </div>
