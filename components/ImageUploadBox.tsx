@@ -49,7 +49,7 @@ const ImageUploadBox: React.FC<ImageUploadBoxProps> = ({ file, setFile }) => {
           } hover:bg-opacity-70`}
         >
           <div
-            className={`w-full h-full flex justify-center items-center flex-col gap-5 transition group-hover:opacity-100 text-center ${
+            className={`w-full h-full flex justify-center items-center flex-col gap-5 transition group-hover:opacity-100 text-center p-8 ${
               file
                 ? isDragActive
                   ? "opacity-100"

@@ -15,6 +15,7 @@ import {
 import { RiEyeLine as ViewDetailsIcon } from "react-icons/ri";
 import { MdBugReport as BugIcon } from "react-icons/md";
 import { HiChatAlt as SupportIcon } from "react-icons/hi";
+import { TbFaceIdError as APIErrorIcon } from "react-icons/tb";
 
 import Switch from "../Switch";
 import ImageUploadBox from "../ImageUploadBox";
@@ -160,13 +161,14 @@ const MainAppWindow: React.FC<MainAppWindowProps> = ({
                     </>
                   )}
                 </div>
-                <div className="flex flex-col">
+                {/* COL 2 */}
+                <div className="flex flex-col overflow-hidden">
                   <div className="text-center py-5">
                     <h1 className="font-bold text-gray-700 truncate">
                       Vertebral Segmentation
                     </h1>
                   </div>
-                  <div className="flex-grow flex items-center border-2 border-dashed justify-center rounded-xl">
+                  <div className="relative flex-grow flex justify-center items-center border-2 border-dashed rounded-xl overflow-hidden">
                     {loading ? (
                       <div className="flex flex-col items-center gap-y-5">
                         <PolygonIcon />
@@ -178,12 +180,23 @@ const MainAppWindow: React.FC<MainAppWindowProps> = ({
                       <>
                         {segmentationResponse &&
                           segmentationResponse.encoded_img && (
-                            <img
-                              src={`data:image/png;base64,${segmentationResponse.encoded_img}`}
-                              className="object-contain w-11/12 h-5/6"
-                            />
+                            <>
+                              <img
+                                src={`data:image/png;base64,${segmentationResponse.encoded_img}`}
+                                className="object-contain w-11/12 h-5/6"
+                              />
+                            </>
                           )}
                       </>
+                    )}
+                    {!loading && !segmentationResponse && (
+                      <div className="flex flex-col items-center gap-y-5 p-10 text-center">
+                        <APIErrorIcon size="3rem" className="text-red-500" />
+                        <span className="text-sm text-gray-500">
+                          Failed to analyze the image. The ScolioVis server
+                          might not be running.
+                        </span>
+                      </div>
                     )}
                   </div>
                 </div>
