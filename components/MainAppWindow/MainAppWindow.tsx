@@ -209,6 +209,7 @@ const MainAppWindow: React.FC<MainAppWindowProps> = ({
                     )}
                   </div>
                 </div>
+                {/* COL 3 */}
                 <div className="flex flex-col">
                   <div className="text-center py-5">
                     <h1 className="font-bold text-gray-700 truncate">
@@ -216,7 +217,7 @@ const MainAppWindow: React.FC<MainAppWindowProps> = ({
                     </h1>
                   </div>
                   <div className="flex-grow flex items-center border-2 border-dashed justify-center rounded-xl">
-                    IMAGE HERE
+                    COBB ANGLE PLACEHOLDER
                   </div>
                 </div>
               </main>
