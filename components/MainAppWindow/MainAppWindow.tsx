@@ -98,7 +98,7 @@ const MainAppWindow: React.FC<MainAppWindowProps> = ({
                     className="flex h-full px-5 items-center gap-2 border rounded-xl text-sm hover:bg-blue-700 hover:text-white hover:shadow-md"
                   >
                     <ArrowIcon size="1.2rem" />
-                    <span>Start New</span>
+                    <span>Start New </span>
                   </button>
                 </div>
                 <div className="h-full flex gap-8">
