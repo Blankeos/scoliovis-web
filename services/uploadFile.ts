@@ -14,7 +14,7 @@ async function fetchUploadFile(url: string, formData: FormData) {
       return res;
     },
     (err) => {
-      return err; // Display errors in POST request
+      throw err; // Display errors in POST request
     }
   );
 }
@@ -24,18 +24,21 @@ export default async function uploadFile(file: SelectedFile) {
   formData.append("image", file);
   formData.append("name", "Carlo Taleon");
 
-  let result;
+  let result: any;
   try {
-    result = fetchUploadFile("http://localhost:8000/uploadFile", formData);
-  } catch (er) {
-    console.log("Could not fetch from local API. Trying production API...");
+    result = await fetchUploadFile(
+      "https://scoliovis-temp.herokuapp.com/uploadfile",
+      formData
+    );
+  } catch (e) {
     try {
-      result = fetchUploadFile(
-        "https://scoliovis-api.deta.dev/uploadFile",
+      console.log("Could not fetch from production API. Trying local API...");
+      result = await fetchUploadFile(
+        "http://localhost:8000/uploadfile",
         formData
       );
-    } catch (err) {
-      console.log("Could not fetch from production API.");
+    } catch (er) {
+      console.log("Could not fetch from local API either. :(");
     }
   }
   return result;
