@@ -1,19 +1,14 @@
 // API stuff
 import axios from "axios";
 
-export default async function uploadFile(file: SelectedFile) {
-  let formdata = new FormData();
-
-  formdata.append("image", file);
-  formdata.append("name", "Carlo Taleon");
-
+async function fetchUploadFile(url: string, formData: FormData) {
   return await axios({
-    url: "http://localhost:8000/uploadfile",
+    url: url,
     method: "POST",
     headers: {
       authorization: "your token",
     },
-    data: formdata,
+    data: formData,
   }).then(
     (res) => {
       return res;
@@ -23,7 +18,28 @@ export default async function uploadFile(file: SelectedFile) {
     }
   );
 }
+export default async function uploadFile(file: SelectedFile) {
+  let formData = new FormData();
 
+  formData.append("image", file);
+  formData.append("name", "Carlo Taleon");
+
+  let result;
+  try {
+    result = fetchUploadFile("http://localhost:8000/uploadFile", formData);
+  } catch (er) {
+    console.log("Could not fetch from local API. Trying production API...");
+    try {
+      result = fetchUploadFile(
+        "https://scoliovis-api.deta.dev/uploadFile",
+        formData
+      );
+    } catch (err) {
+      console.log("Could not fetch from production API.");
+    }
+  }
+  return result;
+}
 // async function handleUpload(e: React.MouseEvent<HTMLButtonElement>) {
 //     // Null check "file" state
 //     if (!file) {
