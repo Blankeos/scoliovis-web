@@ -8,7 +8,9 @@ export default async function uploadFile(file: SelectedFile) {
   formData.append("name", "Carlo Taleon");
 
   return await axios({
-    url: process.env.uploadFileAPI || "http://localhost:8000/uploadfile",
+    url:
+      process.env.NEXT_PUBLIC_UPLOADFILEAPI ||
+      "http://localhost:8000/uploadfile",
     method: "POST",
     headers: {
       authorization: "your token",
