@@ -1,9 +1,14 @@
 // API stuff
 import axios from "axios";
 
-async function fetchUploadFile(url: string, formData: FormData) {
+export default async function uploadFile(file: SelectedFile) {
+  let formData = new FormData();
+
+  formData.append("image", file);
+  formData.append("name", "Carlo Taleon");
+
   return await axios({
-    url: url,
+    url: process.env.uploadFileAPI || "http://localhost:8000/uploadfile",
     method: "POST",
     headers: {
       authorization: "your token",
@@ -17,31 +22,6 @@ async function fetchUploadFile(url: string, formData: FormData) {
       throw err; // Display errors in POST request
     }
   );
-}
-export default async function uploadFile(file: SelectedFile) {
-  let formData = new FormData();
-
-  formData.append("image", file);
-  formData.append("name", "Carlo Taleon");
-
-  let result: any;
-  try {
-    result = await fetchUploadFile(
-      "https://scoliovis-temp.herokuapp.com/uploadfile",
-      formData
-    );
-  } catch (e) {
-    try {
-      console.log("Could not fetch from production API. Trying local API...");
-      result = await fetchUploadFile(
-        "http://localhost:8000/uploadfile",
-        formData
-      );
-    } catch (er) {
-      console.log("Could not fetch from local API either. :(");
-    }
-  }
-  return result;
 }
 // async function handleUpload(e: React.MouseEvent<HTMLButtonElement>) {
 //     // Null check "file" state
