@@ -165,7 +165,7 @@ const MainAppWindow: React.FC<MainAppWindowProps> = ({
                 <div className="flex flex-col overflow-hidden">
                   <div className="text-center py-5">
                     <h1 className="font-bold text-gray-700 truncate">
-                      Vertebral Segmentation
+                      Landmark Estimation
                     </h1>
                   </div>
                   <div className="relative flex-grow flex justify-center items-center border-2 border-dashed rounded-xl overflow-hidden">
@@ -189,7 +189,7 @@ const MainAppWindow: React.FC<MainAppWindowProps> = ({
                           )}
                       </>
                     )}
-                    {!loading && !segmentationResponse && (
+                    {!loading && file && !segmentationResponse && (
                       <div className="flex flex-col items-center gap-y-5 px-16 text-center">
                         <APIErrorIcon size="3rem" className="text-red-400" />
                         <span className="text-sm text-red-400">
@@ -217,7 +217,7 @@ const MainAppWindow: React.FC<MainAppWindowProps> = ({
                     </h1>
                   </div>
                   <div className="flex-grow flex items-center border-2 border-dashed justify-center rounded-xl">
-                    COBB ANGLE PLACEHOLDER
+                    {/* Cobb Angle Placeholder */}
                   </div>
                 </div>
               </main>
