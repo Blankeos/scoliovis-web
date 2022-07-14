@@ -36,7 +36,7 @@ const Home: NextPage = () => {
             <div className="">
               <h1 className="font-extrabold text-2xl mb-5 text-gray-800 max-w-xl">
                 Automatically measure the Cobb Angle on Spine X-Rays using
-                Computer Vision. 👁‍🗨
+                Computer Vision.
               </h1>
               <p className="mb-5 text-gray-700 max-w-xl">
                 ScolioVis is an automatic Cobb Angle Measurement tool for
