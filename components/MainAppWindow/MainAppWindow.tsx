@@ -17,12 +17,16 @@ import { MdBugReport as BugIcon } from "react-icons/md";
 import { HiChatAlt as SupportIcon } from "react-icons/hi";
 import { TbFaceIdError as APIErrorIcon } from "react-icons/tb";
 
+// Components
 import Switch from "../Switch";
 import ImageUploadBox from "../ImageUploadBox";
 import Dropdown from "../Dropdown";
 import Tippy from "@tippyjs/react";
 import uploadFile from "../../services/uploadFile";
 import PolygonIcon from "../PolygonIcon";
+import toast from "react-hot-toast";
+
+import serverIsBootingUp from "@/toasts/serverIsBootingUp";
 
 type MainAppWindowProps = {
   file?: SelectedFile;
@@ -42,6 +46,7 @@ const MainAppWindow: React.FC<MainAppWindowProps> = ({
   }
 
   async function fetchData(file: SelectedFile) {
+    serverIsBootingUp();
     setLoading(true);
     try {
       const response = await uploadFile(file);
