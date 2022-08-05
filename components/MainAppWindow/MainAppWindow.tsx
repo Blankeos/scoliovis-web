@@ -48,7 +48,7 @@ const MainAppWindow: React.FC<MainAppWindowProps> = ({
   async function fetchData(file: SelectedFile) {
     const timeOut = setTimeout(() => {
       serverIsBootingUp();
-    }, 500);
+    }, 8000);
 
     setLoading(true);
     try {
