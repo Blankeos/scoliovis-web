@@ -46,7 +46,10 @@ const MainAppWindow: React.FC<MainAppWindowProps> = ({
   }
 
   async function fetchData(file: SelectedFile) {
-    serverIsBootingUp();
+    const timeOut = setTimeout(() => {
+      serverIsBootingUp();
+    }, 500);
+
     setLoading(true);
     try {
       const response = await uploadFile(file);
@@ -55,6 +58,7 @@ const MainAppWindow: React.FC<MainAppWindowProps> = ({
     } catch (e) {
       console.log(e);
     }
+    clearTimeout(timeOut);
     setLoading(false);
   }
   //   Hooks
