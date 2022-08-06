@@ -27,6 +27,7 @@ import PolygonIcon from "../PolygonIcon";
 import toast from "react-hot-toast";
 
 import serverIsBootingUp from "@/toasts/serverIsBootingUp";
+import useServerDelayInformer from "@/hooks/useServerDelayInformer";
 
 type MainAppWindowProps = {
   file?: SelectedFile;
@@ -41,15 +42,13 @@ const MainAppWindow: React.FC<MainAppWindowProps> = ({
   file,
   setFile,
 }) => {
+  // Functions
   function closeModal() {
     setShowing(false);
   }
 
   async function fetchData(file: SelectedFile) {
-    const timeOut = setTimeout(() => {
-      serverIsBootingUp();
-    }, 8000);
-
+    sdInformer.start();
     setLoading(true);
     try {
       const response = await uploadFile(file);
@@ -58,10 +57,12 @@ const MainAppWindow: React.FC<MainAppWindowProps> = ({
     } catch (e) {
       console.log(e);
     }
-    clearTimeout(timeOut);
     setLoading(false);
+    sdInformer.cancel();
   }
+
   //   Hooks
+  const sdInformer = useServerDelayInformer();
   const [segmentationResponse, setSegmentationResponse] =
     useState<ISegmentationResponse>();
   const [enabled, setEnabled] = useState<boolean>(true);
@@ -98,6 +99,7 @@ const MainAppWindow: React.FC<MainAppWindowProps> = ({
               {/* Nav */}
               <nav className="flex gap-5 justify-between h-12 text-gray-800 flex-shrink-0">
                 <div className="h-full">
+                  {JSON.stringify(sdInformer.delayInformerIsVisible)}
                   <button
                     type="button"
                     onClick={() => {
@@ -179,11 +181,28 @@ const MainAppWindow: React.FC<MainAppWindowProps> = ({
                   </div>
                   <div className="relative flex-grow flex justify-center items-center border-2 border-dashed rounded-xl overflow-hidden">
                     {loading ? (
-                      <div className="flex flex-col items-center gap-y-5">
+                      <div className="flex flex-col items-center gap-y-5 px-5">
                         <PolygonIcon />
-                        <span className="text-sm text-gray-500">
+                        <span className="text-sm text-gray-500 text-center">
                           Model is calculating...
                         </span>
+                        {sdInformer.delayInformerIsVisible && (
+                          <span className="absolute top-10 mx-8 text-xs text-gray-600 text-center bg-yellow-300 bg-opacity-90 rounded-md px-3 py-5 shadow-md">
+                            <h5 className="text-sm font-bold mb-2 text-gray-800">
+                              😥 Waiting Too Long?
+                            </h5>
+                            Our{" "}
+                            <b className="font-bold text-purple-600">
+                              Heroku server
+                            </b>{" "}
+                            is still cold-starting after sleeping. Please wait
+                            for a bit! It should take under a minute.
+                            <br />
+                            <br />
+                            After that, processing another image will only take
+                            2 seconds.
+                          </span>
+                        )}
                       </div>
                     ) : (
                       <>
