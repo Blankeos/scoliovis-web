@@ -99,7 +99,6 @@ const MainAppWindow: React.FC<MainAppWindowProps> = ({
               {/* Nav */}
               <nav className="flex gap-5 justify-between h-12 text-gray-800 flex-shrink-0">
                 <div className="h-full">
-                  {JSON.stringify(sdInformer.delayInformerIsVisible)}
                   <button
                     type="button"
                     onClick={() => {
