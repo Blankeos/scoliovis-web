@@ -7,9 +7,13 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        epilogue: ["Epilogue", "sans-serif"],
-        inter: ["Inter", "sans-serif"],
-        poppins: ["Poppins", "sans-serif"],
+        manrope: ["Manrope", "sans-serif"],
+        // epilogue: ["Epilogue", "sans-serif"],
+        // inter: ["Inter", "sans-serif"],
+        // poppins: ["Poppins", "sans-serif"],
+      },
+      colors: {
+        primary: "#0073f5",
       },
     },
   },
