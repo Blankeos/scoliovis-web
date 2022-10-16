@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@headlessui/react": "^1.6.4",
+    "@headlessui/react": "^1.7.3",
     "@phntms/react-share": "^0.0.7",
     "@tippyjs/react": "^4.2.6",
     "axios": "^0.26.1",
