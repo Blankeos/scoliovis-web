@@ -22,6 +22,7 @@ import Switch from "../Switch";
 import ImageUploadBox from "../ImageUploadBox";
 import Dropdown from "../Dropdown";
 import Tippy from "@tippyjs/react";
+
 import uploadFile from "../../services/uploadFile";
 import PolygonIcon from "../PolygonIcon";
 import toast from "react-hot-toast";
@@ -174,7 +175,7 @@ const MainAppWindow: React.FC<MainAppWindowProps> = ({
                 {/* COL 2 */}
                 <div className="flex flex-col overflow-hidden">
                   <div className="text-center py-5">
-                    <h1 className="font-bold text-gray-700 truncate">
+                    <h1 className="font-manrope font-bold text-gray-700 truncate">
                       Landmark Estimation
                     </h1>
                   </div>
