@@ -21,6 +21,7 @@ specifiers:
   react-hot-toast: ^2.2.0
   react-icons: ^4.3.1
   tailwindcss: ^3.0.23
+  tippy.js: ^6.3.7
   typescript: 4.6.3
 
 dependencies:
@@ -36,6 +37,7 @@ dependencies:
   react-dropzone: 12.1.0_react@18.0.0
   react-hot-toast: 2.4.0_zpnidt7m3osuk7shl3s4oenomq
   react-icons: 4.6.0_react@18.0.0
+  tippy.js: 6.3.7
 
 devDependencies:
   '@types/node': 17.0.23
