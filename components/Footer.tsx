@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-
+import Image from "next/image";
 import { FaBone } from "react-icons/fa";
 const Footer = () => {
   return (
@@ -28,12 +28,14 @@ const Footer = () => {
         </p>
         {/* Logos */}
         <div className="flex place-self-center gap-x-20">
-          <img
-            className="w-28 h-28"
+          <Image
+            width={112}
+            height={112}
             src="https://raw.githubusercontent.com/wvsu-cict-code/cict-logo/0985c71c5d6e1c6caac1f04250c7a02f7efb395b/default.svg"
           />
-          <img
-            className="w-28 h-28"
+          <Image
+            width={112}
+            height={112}
             src="https://raw.githubusercontent.com/wvsu-cict-code/cict-logo/master/wvsu-big-logo.png"
           />
         </div>

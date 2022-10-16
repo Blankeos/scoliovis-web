@@ -14,6 +14,8 @@ import urlToSelectedFile from "../services/urlToSelectedFile";
 import ExampleImageButton from "../components/ExampleImageButton";
 import MyDialog from "../components/MyDialog";
 import { AiFillPlayCircle as PlayIcon } from "react-icons/ai";
+import Tippy from "@tippyjs/react";
+import { followCursor } from "tippy.js";
 
 const Home: NextPage = () => {
   const [isShowing, setShowing] = useState<boolean>(false);
@@ -84,7 +86,14 @@ const Home: NextPage = () => {
         <header className="">
           <div className="relative fluid-container px-9">
             <h1 className="text-center text-3xl font-extrabold py-10">
-              Automatic <span className="text-primary">Cobb Angle</span>
+              Automatic{" "}
+              <Tippy
+                followCursor={true}
+                plugins={[followCursor]}
+                content="The standard measurement for scoliosis severity"
+              >
+                <span className="text-primary">Cobb Angle</span>
+              </Tippy>
               <br />
               Measurement
             </h1>
@@ -129,13 +138,14 @@ const Home: NextPage = () => {
           <div className="fluid-container px-7 py-16">
             <div className="flex flex-col gap-y-7">
               <h1 className="text-white font-black text-center text-3xl">
-                What's ScolioVis?
+                What&apos;s ScolioVis?
               </h1>
               <p className="text-gray-100 text-center">
                 ScolioVis is a tool for automatically measuring the Cobb
                 Angle--the standard measurement to assess Scoliosis. We harness
                 the power of object detection and landmark detection to analyze
-                the spine and calculate the cobb angle. Here's how to use it.
+                the spine and calculate the cobb angle. Here&apos;s how to use
+                it.
               </p>
               {/* Cards Grid */}
               <div className="grid grid-cols-3 gap-x-5 px-2">
@@ -151,7 +161,8 @@ const Home: NextPage = () => {
                   </div>
                   <h2 className="text-lg font-medium">Input a Spine Image</h2>
                   <p className="text-gray-600">
-                    Upload a spine image, don't worry, we don't save it.
+                    Upload a spine image, don&apos;t worry, we don&apos;t save
+                    it.
                   </p>
                 </div>
                 {/* Card 2 */}
