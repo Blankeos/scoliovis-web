@@ -4,7 +4,7 @@ import Image from "next/image";
 import { FaBone } from "react-icons/fa";
 const Footer = () => {
   return (
-    <footer className="fluid-container px-7 py-20">
+    <footer className="fluid-container px-7 py-20 overflow-hidden">
       <div className="flex flex-col gap-8">
         {/* Footer Nav */}
         <div className="flex place-self-center gap-x-20">
