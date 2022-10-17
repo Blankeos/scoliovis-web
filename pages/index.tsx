@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import Head from "next/head";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import Footer from "../components/Footer";
 import ImageUploadBox from "../components/ImageUploadBox";
@@ -16,41 +16,24 @@ import MyDialog from "../components/MyDialog";
 import { AiFillPlayCircle as PlayIcon } from "react-icons/ai";
 import Tippy from "@tippyjs/react";
 import { followCursor } from "tippy.js";
+import Nav from "components/Nav";
+import { motion, useInView } from "framer-motion";
+import enterAnim from "@/utils/enterAnim";
+import useRefInView from "@/hooks/useRefInView";
 
 const Home: NextPage = () => {
   const [isShowing, setShowing] = useState<boolean>(false);
   const [file, setFile] = useState<SelectedFile | undefined>();
 
+  const [ref1, inView1] = useRefInView();
+  const [ref2, inView2] = useRefInView();
+
   return (
     <div className="flex flex-col min-h-screen">
-      <nav className="">
-        <div className="fluid-container py-7 px-9 w-full">
-          <div className="flex justify-between gap-x-8">
-            <Link href="/">
-              <a>
-                <h1 className="text-2xl text-primary">
-                  <span className="font-black">Scolio</span>Vis
-                </h1>
-              </a>
-            </Link>
-            <ul className="flex gap-x-8">
-              <li>
-                <Link href="/">
-                  <a className="text-gray-500 text-sm">About</a>
-                </Link>
-              </li>
-              <li>
-                <Link href="/">
-                  <a className="text-gray-500 text-sm">Paper</a>
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+      <Nav />
       <main className="flex-grow h-full">
         <header className="">
-          <div className="relative fluid-container px-9 flex flex-col">
+          <div className="relative fluid-container px-9 flex flex-col overflow-hidden">
             <div className="self-center w-32 h-32 static md:absolute md:bottom-0 md:right-0 md:pb-5 md:w-auto md:h-auto">
               <Image
                 src="/assets/apex.png"
@@ -59,7 +42,10 @@ const Home: NextPage = () => {
                 objectFit="contain"
               />
             </div>
-            <h1 className="text-center text-3xl font-extrabold pt-2 pb-10 md:py-10">
+            <motion.h1
+              {...enterAnim()}
+              className="text-center text-3xl font-extrabold pt-2 pb-10 md:py-10"
+            >
               Automatic{" "}
               <Tippy
                 followCursor={true}
@@ -70,16 +56,22 @@ const Home: NextPage = () => {
               </Tippy>
               <br />
               Measurement
-            </h1>
-            <div className="h-48 max-w-sm w-full mx-auto px-7 flex flex-col items-center">
+            </motion.h1>
+            <motion.div
+              {...enterAnim(0.1)}
+              className="h-48 max-w-sm w-full mx-auto px-7 flex flex-col items-center"
+            >
               <ImageUploadBox file={file} setFile={setFile} />
-            </div>
-            <div className="fluid-container p-7 flex flex-col items-center gap-y-5">
-              <p className="flex gap-x-2 items-center text-gray-800 text-sm">
+            </motion.div>
+            <div className="fluid-container p-7 flex flex-col items-center gap-y-5 overflow-hidden">
+              <motion.p
+                {...enterAnim(0.2)}
+                className="flex gap-x-2 items-center text-gray-800 text-sm"
+              >
                 <ArrowIcon className="rotate-90" />
                 Or try with these example spine images
-              </p>
-              <div className="flex gap-5">
+              </motion.p>
+              <motion.div {...enterAnim(0.3)} className="flex gap-5">
                 <ExampleImageButton
                   exampleImageURL="/example_images/1.jpg"
                   setFile={setFile}
@@ -96,23 +88,30 @@ const Home: NextPage = () => {
                   exampleImageURL="/example_images/4.jpg"
                   setFile={setFile}
                 />
-              </div>
+              </motion.div>
             </div>
           </div>
         </header>
-        <section className="bg-primary">
-          <div className="fluid-container px-7 py-16">
+        <section className="bg-primary overflow-hidden">
+          <div className="fluid-container px-7 py-16 overflow-hidden">
             <div className="flex flex-col gap-y-7">
-              <h1 className="text-white font-black text-center text-3xl">
+              <motion.h1
+                ref={ref1}
+                {...enterAnim(0, inView1)}
+                className="text-white font-black text-center text-3xl"
+              >
                 What&apos;s ScolioVis?
-              </h1>
-              <p className="text-gray-100 text-center">
+              </motion.h1>
+              <motion.p
+                {...enterAnim(0.1, inView1)}
+                className="text-gray-100 text-center"
+              >
                 ScolioVis is a tool for automatically measuring the Cobb
                 Angle--the standard measurement to assess Scoliosis. We harness
                 the power of object detection and landmark detection to analyze
                 the spine and calculate the cobb angle. Here&apos;s how to use
                 it.
-              </p>
+              </motion.p>
               {/* Cards Grid */}
               <div className="grid md:grid-cols-3 gap-x-5 gap-y-5 px-2">
                 {/* Card 1 */}
@@ -185,7 +184,7 @@ const Home: NextPage = () => {
             </div>
           </div>
         </section>
-        <section className="fluid-container px-9 py-10">
+        <section className="fluid-container px-9 py-10 overflow-hidden">
           <div className="flex flex-col gap-y-8">
             <h1 className="font-black text-center text-3xl text-gray-800">
               How good is it?
