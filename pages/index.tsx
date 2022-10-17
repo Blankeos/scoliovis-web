@@ -49,43 +49,17 @@ const Home: NextPage = () => {
         </div>
       </nav>
       <main className="flex-grow h-full">
-        {/* <header className="">
-          <div className="max-w-5xl mx-auto py-7 px-7 flex gap-x-16 justify-between">
-            <div className="">
-              <h1 className="font-extrabold text-2xl mb-5 text-gray-800 max-w-xl">
-                Automatically measure the Cobb Angle on Spine X-Rays using
-                Computer Vision.
-              </h1>
-              <p className="mb-5 text-gray-700 max-w-xl">
-                ScolioVis is an automatic Cobb Angle Measurement tool for
-                anterior-posterior spine X-rays. This is an ongoing thesis by
-                Elizalde, Rubinos, and Taleon.
-              </p>
-              <button
-                type="button"
-                onClick={() => setShowing(true)}
-                className="flex gap-x-2 items-center px-5 py-3 bg-blue-700 hover:bg-blue-600 transition text-white rounded-xl shadow-md text-sm group"
-              >
-                <span>Open ScolioVis</span>
-                <ArrowIcon className="group-hover:translate-x-1 transition" />
-              </button>
-            </div>
-            <div className="flex items-center">
-              <div className="bg-gradient-to-bl to-blue-800 from-blue-600 rounded-full w-52 h-52 p-8 mb-3">
-                <div className="w-full h-full relative tranform rotate-45">
-                  <Image
-                    src="/spine.png"
-                    layout="fill"
-                    className="object-contain"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </header> */}
         <header className="">
-          <div className="relative fluid-container px-9">
-            <h1 className="text-center text-3xl font-extrabold py-10">
+          <div className="relative fluid-container px-9 flex flex-col">
+            <div className="self-center w-32 h-32 static md:absolute md:bottom-0 md:right-0 md:pb-5 md:w-auto md:h-auto">
+              <Image
+                src="/assets/apex.png"
+                width={180}
+                height={180}
+                objectFit="contain"
+              />
+            </div>
+            <h1 className="text-center text-3xl font-extrabold pt-2 pb-10 md:py-10">
               Automatic{" "}
               <Tippy
                 followCursor={true}
@@ -97,7 +71,7 @@ const Home: NextPage = () => {
               <br />
               Measurement
             </h1>
-            <div className="h-48 max-w-sm mx-auto px-7 flex flex-col items-center">
+            <div className="h-48 max-w-sm w-full mx-auto px-7 flex flex-col items-center">
               <ImageUploadBox file={file} setFile={setFile} />
             </div>
             <div className="fluid-container p-7 flex flex-col items-center gap-y-5">
@@ -124,14 +98,6 @@ const Home: NextPage = () => {
                 />
               </div>
             </div>
-            <div className="absolute bottom-0 right-0 pb-5">
-              <Image
-                src="/assets/apex.png"
-                width={180}
-                height={180}
-                objectFit="contain"
-              />
-            </div>
           </div>
         </header>
         <section className="bg-primary">
@@ -148,9 +114,12 @@ const Home: NextPage = () => {
                 it.
               </p>
               {/* Cards Grid */}
-              <div className="grid grid-cols-3 gap-x-5 px-2">
+              <div className="grid md:grid-cols-3 gap-x-5 gap-y-5 px-2">
                 {/* Card 1 */}
-                <div className="overflow-hidden bg-white rounded-2xl flex flex-col items-center gap-y-3 px-5 py-8 text-center">
+                <div className="relative overflow-hidden bg-white rounded-2xl flex flex-col items-center gap-y-3 px-5 py-8 text-center">
+                  <span className="block md:hidden absolute top-0 left-0 pt-8 pl-8 text-gray-300 text-2xl font-bold">
+                    1
+                  </span>
                   <div className="h-40 w-40 rounded-full">
                     <Image
                       src="/assets/apexfolder.png"
@@ -166,7 +135,10 @@ const Home: NextPage = () => {
                   </p>
                 </div>
                 {/* Card 2 */}
-                <div className="overflow-hidden bg-white rounded-2xl flex flex-col items-center gap-y-3 px-5 py-8 text-center">
+                <div className="relative overflow-hidden bg-white rounded-2xl flex flex-col items-center gap-y-3 px-5 py-8 text-center">
+                  <span className="block md:hidden absolute top-0 left-0 pt-8 pl-8 text-gray-300 text-2xl font-bold">
+                    2
+                  </span>
                   <div className="h-40 w-40 rounded-full">
                     <Image
                       src="/assets/apexruler.png"
@@ -181,7 +153,10 @@ const Home: NextPage = () => {
                   </p>
                 </div>
                 {/* Card 3 */}
-                <div className="overflow-hidden bg-white rounded-2xl flex flex-col items-center gap-y-3 px-5 py-8 text-center">
+                <div className="relative overflow-hidden bg-white rounded-2xl flex flex-col items-center gap-y-3 px-5 py-8 text-center">
+                  <span className="block md:hidden absolute top-0 left-0 pt-8 pl-8 text-gray-300 text-2xl font-bold">
+                    3
+                  </span>
                   <div className="h-40 w-40 rounded-full">
                     <Image
                       src="/assets/apexangle.png"

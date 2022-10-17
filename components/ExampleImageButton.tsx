@@ -24,7 +24,7 @@ const ExampleImageButton: React.FC<ExampleImageButtonProps> = ({
       }}
       type="button"
       onClick={() => tryWithExample(exampleImageURL)}
-      className="w-20 h-20 rounded-md hover:opacity-70"
+      className="w-16 h-16 md:w-20 md:h-20 rounded-md hover:opacity-70"
     ></button>
   );
 };
