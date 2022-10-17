@@ -27,6 +27,8 @@ const Home: NextPage = () => {
 
   const [ref1, inView1] = useRefInView();
   const [ref2, inView2] = useRefInView();
+  const [ref3, inView3] = useRefInView();
+  const [ref4, inView4] = useRefInView();
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -115,7 +117,11 @@ const Home: NextPage = () => {
               {/* Cards Grid */}
               <div className="grid md:grid-cols-3 gap-x-5 gap-y-5 px-2">
                 {/* Card 1 */}
-                <div className="relative overflow-hidden bg-white rounded-2xl flex flex-col items-center gap-y-3 px-5 py-8 text-center">
+                <motion.div
+                  ref={ref2}
+                  {...enterAnim(0.1, inView2)}
+                  className="relative overflow-hidden bg-white rounded-2xl flex flex-col items-center gap-y-3 px-5 py-8 text-center"
+                >
                   <span className="block md:hidden absolute top-0 left-0 pt-8 pl-8 text-gray-300 text-2xl font-bold">
                     1
                   </span>
@@ -127,14 +133,19 @@ const Home: NextPage = () => {
                       objectFit="contain"
                     />
                   </div>
-                  <h2 className="text-lg font-medium">Input a Spine Image</h2>
-                  <p className="text-gray-600">
+                  <h2 className="text-lg font-medium text-gray-700">
+                    Input a Spine Image
+                  </h2>
+                  <p className="text-gray-500">
                     Upload a spine image, don&apos;t worry, we don&apos;t save
                     it.
                   </p>
-                </div>
+                </motion.div>
                 {/* Card 2 */}
-                <div className="relative overflow-hidden bg-white rounded-2xl flex flex-col items-center gap-y-3 px-5 py-8 text-center">
+                <motion.div
+                  {...enterAnim(0.2, inView2)}
+                  className="relative overflow-hidden bg-white rounded-2xl flex flex-col items-center gap-y-3 px-5 py-8 text-center"
+                >
                   <span className="block md:hidden absolute top-0 left-0 pt-8 pl-8 text-gray-300 text-2xl font-bold">
                     2
                   </span>
@@ -146,13 +157,18 @@ const Home: NextPage = () => {
                       objectFit="contain"
                     />
                   </div>
-                  <h2 className="text-lg font-medium">ScolioVis Algorithm</h2>
-                  <p className="text-gray-600">
+                  <h2 className="text-lg font-medium text-gray-700">
+                    ScolioVis Algorithm
+                  </h2>
+                  <p className="text-gray-500">
                     Let our ML model and algorithm do the work for you.
                   </p>
-                </div>
+                </motion.div>
                 {/* Card 3 */}
-                <div className="relative overflow-hidden bg-white rounded-2xl flex flex-col items-center gap-y-3 px-5 py-8 text-center">
+                <motion.div
+                  {...enterAnim(0.3, inView2)}
+                  className="relative overflow-hidden bg-white rounded-2xl flex flex-col items-center gap-y-3 px-5 py-8 text-center"
+                >
                   <span className="block md:hidden absolute top-0 left-0 pt-8 pl-8 text-gray-300 text-2xl font-bold">
                     3
                   </span>
@@ -164,11 +180,13 @@ const Home: NextPage = () => {
                       objectFit="contain"
                     />
                   </div>
-                  <h2 className="text-lg font-medium">Cobb Angle Results</h2>
-                  <p className="text-gray-600">
+                  <h2 className="text-lg font-medium text-gray-700">
+                    Cobb Angle Results
+                  </h2>
+                  <p className="text-gray-500">
                     Get the cobb angle result along with some analysis.
                   </p>
-                </div>
+                </motion.div>
               </div>
             </div>
           </div>
@@ -186,20 +204,27 @@ const Home: NextPage = () => {
         </section>
         <section className="fluid-container px-9 py-10 overflow-hidden">
           <div className="flex flex-col gap-y-8">
-            <h1 className="font-black text-center text-3xl text-gray-800">
+            <motion.h1
+              ref={ref3}
+              {...enterAnim(0, inView3)}
+              className="font-black text-center text-3xl text-gray-800"
+            >
               How good is it?
-            </h1>
+            </motion.h1>
             {/* 2-Col-Grid 1 */}
             <div className="grid grid-cols-2 gap-x-10">
-              <div className="justify-self-end">
+              <motion.div
+                {...enterAnim(0.1, inView3)}
+                className="justify-self-end"
+              >
                 <Image
                   src="/assets/apexgrass.png"
                   width={250}
                   height={250}
                   objectFit="contain"
                 />
-              </div>
-              <div className="max-w-xs">
+              </motion.div>
+              <motion.div {...enterAnim(0.2, inView3)} className="max-w-xs">
                 <h2 className="font-bold text-2xl text-gray-800">
                   98% accuracy MAE
                 </h2>
@@ -208,11 +233,14 @@ const Home: NextPage = () => {
                   you can collaborate, share, and just talk about your day
                   without clogging up a group chat.
                 </p>
-              </div>
+              </motion.div>
             </div>
             {/* 2-Col-Grid 2 */}
-            <div className="grid grid-cols-2 gap-x-10">
-              <div className="max-w-xs justify-self-end text-right">
+            <div ref={ref4} className="grid grid-cols-2 gap-x-10">
+              <motion.div
+                {...enterAnim(0.2, inView4)}
+                className="max-w-xs justify-self-end text-right"
+              >
                 <h2 className="font-bold text-2xl text-gray-800">
                   Experts love it!
                 </h2>
@@ -220,23 +248,26 @@ const Home: NextPage = () => {
                   We conducted a usability testing and got __ in a, __ in b, __
                   in c, and __ in d.
                 </p>
-              </div>
-              <div className="">
+              </motion.div>
+              <motion.div {...enterAnim(0.1, inView4)} className="">
                 <Image
                   src="/assets/apexglass.png"
                   width={250}
                   height={250}
                   objectFit="contain"
                 />
-              </div>
+              </motion.div>
             </div>
-            <div className="mt-10 self-center">
+            <motion.div
+              {...enterAnim(0.8, inView4)}
+              className="mt-10 self-center"
+            >
               <Link href="/">
                 <a className="border border-primary text-primary hover:bg-primary hover:text-white hover:shadow-md transition px-10 py-5">
                   Read the paper
                 </a>
               </Link>
-            </div>
+            </motion.div>
           </div>
         </section>
       </main>
