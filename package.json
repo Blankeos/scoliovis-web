@@ -13,6 +13,7 @@
     "@phntms/react-share": "^0.0.7",
     "@tippyjs/react": "^4.2.6",
     "axios": "^0.26.1",
+    "framer-motion": "^7.5.3",
     "lottie-react": "^2.2.1",
     "lottie-web": "^5.9.2",
     "next": "12.1.4",
