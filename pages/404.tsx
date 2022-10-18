@@ -28,7 +28,7 @@ const ErrorPage = () => {
               Whoops! Are you lost?
             </h2>
             <p className="text-center text-gray-500">
-              Either this page doesn't exist or an error ocurred.
+              Either this page doesn&apos;t exist or an error ocurred.
               <br />
               Wrong link perhaps?
             </p>
