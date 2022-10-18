@@ -37,11 +37,13 @@ const Footer = () => {
           <Image
             width={112}
             height={112}
+            alt="WVSU CICT Logo"
             src="https://raw.githubusercontent.com/wvsu-cict-code/cict-logo/0985c71c5d6e1c6caac1f04250c7a02f7efb395b/default.svg"
           />
           <Image
             width={112}
             height={112}
+            alt="WVSU Logo"
             src="https://raw.githubusercontent.com/wvsu-cict-code/cict-logo/master/wvsu-big-logo.png"
           />
         </div>

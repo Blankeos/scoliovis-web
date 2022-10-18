@@ -127,6 +127,7 @@ const Home: NextPage = () => {
                   </span>
                   <div className="h-40 w-40 rounded-full">
                     <Image
+                      alt="input a spine image illustration"
                       src="/assets/apexfolder.png"
                       width={500}
                       height={500}
@@ -151,6 +152,7 @@ const Home: NextPage = () => {
                   </span>
                   <div className="h-40 w-40 rounded-full">
                     <Image
+                      alt="scoliovis algorithm illustration"
                       src="/assets/apexruler.png"
                       width={500}
                       height={500}
@@ -174,6 +176,7 @@ const Home: NextPage = () => {
                   </span>
                   <div className="h-40 w-40 rounded-full">
                     <Image
+                      alt="cobb angle results illustration"
                       src="/assets/apexangle.png"
                       width={500}
                       height={500}
@@ -218,6 +221,7 @@ const Home: NextPage = () => {
                 className="justify-self-end"
               >
                 <Image
+                  alt="performance illustration"
                   src="/assets/apexgrass.png"
                   width={250}
                   height={250}
@@ -251,6 +255,7 @@ const Home: NextPage = () => {
               </motion.div>
               <motion.div {...enterAnim(0.1, inView4)} className="">
                 <Image
+                  alt="usability testing illustration"
                   src="/assets/apexglass.png"
                   width={250}
                   height={250}

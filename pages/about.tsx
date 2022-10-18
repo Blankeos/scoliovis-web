@@ -4,7 +4,6 @@ import React from "react";
 import { motion } from "framer-motion";
 
 import enterAnim from "@/utils/enterAnim";
-import Image from "next/image";
 
 const AboutPage = () => {
   return (
