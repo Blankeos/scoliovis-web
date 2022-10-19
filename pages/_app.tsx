@@ -11,10 +11,10 @@ function MyApp({ Component, pageProps }: AppProps) {
       <NextHead>
         <link
           rel="apple-touch-icon"
-          sizes="57x57"
-          href="/apple-icon-57x57.png"
+          // sizes="57x57"
+          href="/apple-touch-icon.png"
         />
-        <link
+        {/* <link
           rel="apple-touch-icon"
           sizes="60x60"
           href="/apple-icon-60x60.png"
@@ -52,8 +52,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         <link
           rel="apple-touch-icon"
           sizes="180x180"
-          href="/apple-icon-180x180.png"
-        />
+          href="/apple-icon-180x180.png" 
+        /> */}
         <link
           rel="icon"
           type="image/png"
@@ -66,12 +66,12 @@ function MyApp({ Component, pageProps }: AppProps) {
           sizes="32x32"
           href="/favicon-32x32.png"
         />
-        <link
+        {/* <link
           rel="icon"
           type="image/png"
           sizes="96x96"
           href="/favicon-96x96.png"
-        />
+        /> */}
         <link
           rel="icon"
           type="image/png"
@@ -79,9 +79,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           href="/favicon-16x16.png"
         />
         <link rel="manifest" href="/manifest.json" />
-        <meta name="msapplication-TileColor" content="#ffffff" />
-        <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
-        <meta name="theme-color" content="#ffffff" />
+        {/* <meta name="msapplication-TileColor" content="#ffffff" /> */}
+        {/* <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" /> */}
+        <meta name="theme-color" content="#0073f5" />
       </NextHead>
       <Head />
       <Component {...pageProps} />
