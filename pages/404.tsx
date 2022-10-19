@@ -13,6 +13,7 @@ const ErrorPage = () => {
           <div className="relative flex flex-col items-center">
             <div className="relative left-10">
               <Image
+                alt="apex crying"
                 src="/assets/apexcrying.png"
                 width={250}
                 height={250}

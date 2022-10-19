@@ -40,6 +40,7 @@ const Home: NextPage = () => {
           <div className="relative fluid-container px-9 flex flex-col overflow-hidden">
             <div className="self-center w-32 h-32 static md:absolute md:bottom-0 md:right-0 md:pb-5 md:w-auto md:h-auto">
               <Image
+                alt="Apex the mascot"
                 src="/assets/apex.png"
                 width={180}
                 height={180}
