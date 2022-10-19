@@ -1,7 +1,7 @@
 // API stuff
 import axios from "axios";
 
-export default async function uploadFile(file: SelectedFile) {
+export default async function uploadFile(file: ISelectedFile) {
   let formData = new FormData();
 
   formData.append("image", file);

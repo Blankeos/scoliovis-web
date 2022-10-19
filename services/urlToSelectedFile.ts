@@ -4,7 +4,7 @@ const getUrlExtension = (url: string) => {
   return url.split(/[#?]/)[0].split(".").pop()?.trim();
 };
 
-const urlToSelectedFile = async (imgUrl: string): Promise<SelectedFile> => {
+const urlToSelectedFile = async (imgUrl: string): Promise<ISelectedFile> => {
   var imgExt = getUrlExtension(imgUrl);
 
   const response = await fetch(imgUrl);
