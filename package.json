@@ -13,6 +13,7 @@
     "@phntms/react-share": "^0.0.7",
     "@tippyjs/react": "^4.2.6",
     "axios": "^0.26.1",
+    "csstype": "^3.1.1",
     "framer-motion": "^7.5.3",
     "lottie-react": "^2.2.1",
     "lottie-web": "^5.9.2",
@@ -22,7 +23,8 @@
     "react-dropzone": "^12.0.5",
     "react-hot-toast": "^2.2.0",
     "react-icons": "^4.3.1",
-    "tippy.js": "^6.3.7"
+    "tippy.js": "^6.3.7",
+    "zustand": "^4.1.2"
   },
   "devDependencies": {
     "@types/node": "17.0.23",
