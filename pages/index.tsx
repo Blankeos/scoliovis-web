@@ -2,21 +2,21 @@ import type { NextPage } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import Head from "next/head";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
+// Components
+import Nav from "components/Nav";
 import Footer from "../components/Footer";
 import ImageUploadBox from "../components/ImageUploadBox";
+import FixedWindow from "../components/MainAppWindow/MainAppWindow";
+
+import Tippy from "@tippyjs/react";
 
 // Icons
 import { FiArrowRight as ArrowIcon } from "react-icons/fi";
-import FixedWindow from "../components/MainAppWindow/MainAppWindow";
-import urlToSelectedFile from "../services/urlToSelectedFile";
 import ExampleImageButton from "../components/ExampleImageButton";
-import MyDialog from "../components/MyDialog";
 import { AiFillPlayCircle as PlayIcon } from "react-icons/ai";
-import Tippy from "@tippyjs/react";
 import { followCursor } from "tippy.js";
-import Nav from "components/Nav";
 import { motion, useInView } from "framer-motion";
 import enterAnim from "@/utils/enterAnim";
 import useRefInView from "@/hooks/useRefInView";
@@ -29,6 +29,7 @@ const Home: NextPage = () => {
   const [ref2, inView2] = useRefInView();
   const [ref3, inView3] = useRefInView();
   const [ref4, inView4] = useRefInView();
+  const [ref5, inView5] = useRefInView();
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -109,10 +110,10 @@ const Home: NextPage = () => {
                 className="text-gray-100 text-center"
               >
                 ScolioVis is a tool for automatically measuring the Cobb
-                Angle--the standard measurement to assess Scoliosis. We harness
-                the power of object detection and landmark detection to analyze
-                the spine and calculate the cobb angle. Here&apos;s how to use
-                it.
+                Angle&mdash;the standard measurement to assess Scoliosis. We
+                harness the power of object detection and landmark detection to
+                analyze the spine and calculate the cobb angle. Here&apos;s how
+                to use it.
               </motion.p>
               {/* Cards Grid */}
               <div className="grid md:grid-cols-3 gap-x-5 gap-y-5 px-2">
@@ -264,7 +265,8 @@ const Home: NextPage = () => {
               </motion.div>
             </div>
             <motion.div
-              {...enterAnim(0.8, inView4)}
+              ref={ref5}
+              {...enterAnim(0.2, inView5)}
               className="mt-10 self-center"
             >
               <Link href="/">

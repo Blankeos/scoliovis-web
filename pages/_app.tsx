@@ -2,7 +2,7 @@ import "../styles/globals.css";
 import "tippy.js/dist/tippy.css";
 import type { AppProps } from "next/app";
 import NextHead from "next/head";
-import MetaHeadEmbed from "@phntms/react-share/lib/components/MetaHeadEmbed";
+import Head from "components/Head";
 import { Toaster } from "react-hot-toast";
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -83,28 +83,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
         <meta name="theme-color" content="#ffffff" />
       </NextHead>
-      <MetaHeadEmbed
-        render={(meta: React.ReactNode) => <NextHead>{meta}</NextHead>}
-        siteTitle="ScolioVis"
-        pageTitle="Home"
-        titleTemplate="[pageTitle] | [siteTitle]"
-        description="Default description"
-        baseSiteUrl="/"
-        pagePath=""
-        keywords={[
-          "scoliosis",
-          "cobb angle",
-          "computer vision",
-          "segmentation",
-        ]}
-        imageUrl=""
-        imageAlt=""
-        twitter={{
-          cardSize: "large",
-          siteUsername: "@carlo_taleon",
-          creatorUsername: "@carlo_taleon",
-        }}
-      />
+      <Head />
       <Component {...pageProps} />
       <Toaster containerClassName="text-sm" />
     </>
