@@ -16,8 +16,8 @@ const Head: React.FC<HeadProps> = ({
   siteTitle = "ScolioVis",
   pagePath = "",
   description = "ScolioVis is a tool for automatically measuring the Cobb Angle—the standard measurement to assess Scoliosis.",
-  imageUrl = "",
-  imageAlt = "",
+  imageUrl = "assets/image-meta.png",
+  imageAlt = "image meta",
   keywords = ["scoliosis", "cobb angle", "computer vision", "segmentation"],
 }) => {
   return (

@@ -15,6 +15,7 @@
     "axios": "^0.26.1",
     "csstype": "^3.1.1",
     "framer-motion": "^7.5.3",
+    "immer": "^9.0.15",
     "lottie-react": "^2.2.1",
     "lottie-web": "^5.9.2",
     "next": "12.1.4",

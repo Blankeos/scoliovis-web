@@ -9,18 +9,20 @@ import { CgSpinner as SpinnerIcon } from "react-icons/cg";
 import { useDropzone } from "react-dropzone";
 import toast from "react-hot-toast";
 import { imageUploadToasts } from "../services/customToasts";
+import { useStore } from "store";
 
 type ImageUploadBoxProps = {
-  file: SelectedFile | undefined;
-  setFile: React.Dispatch<React.SetStateAction<SelectedFile | undefined>>;
+  file: ISelectedFile | undefined;
 };
-const ImageUploadBox: React.FC<ImageUploadBoxProps> = ({ file, setFile }) => {
+const ImageUploadBox: React.FC<ImageUploadBoxProps> = ({ file }) => {
+  const setSelectedFile = useStore((state) => state.setSelectedFile);
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: "image/*",
     multiple: false,
     onDropAccepted: (acceptedFiles) => {
       imageUploadToasts.success();
-      setFile(
+      setSelectedFile(
         Object.assign(acceptedFiles[0], {
           preview: URL.createObjectURL(acceptedFiles[0]),
         })

@@ -1,18 +1,18 @@
 import React, { Dispatch, SetStateAction } from "react";
+import { useStore } from "store";
 import { imageUploadToasts } from "../services/customToasts";
 import urlToSelectedFile from "../services/urlToSelectedFile";
 
 type ExampleImageButtonProps = {
-  setFile: Dispatch<SetStateAction<SelectedFile | undefined>>;
   exampleImageURL: string;
 };
 const ExampleImageButton: React.FC<ExampleImageButtonProps> = ({
-  setFile,
   exampleImageURL,
 }) => {
+  const setSelectedFile = useStore((state) => state.setSelectedFile);
   async function tryWithExample(exampleImageURL: string) {
     const f = await urlToSelectedFile(exampleImageURL);
-    setFile(f);
+    setSelectedFile(f);
     imageUploadToasts.success();
   }
   return (

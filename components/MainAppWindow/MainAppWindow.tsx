@@ -31,24 +31,22 @@ import serverIsBootingUp from "@/toasts/serverIsBootingUp";
 import useServerDelayInformer from "@/hooks/useServerDelayInformer";
 
 type MainAppWindowProps = {
-  file?: SelectedFile;
+  file?: ISelectedFile;
   isShowing: boolean;
   setShowing: Dispatch<SetStateAction<boolean>>;
-  setFile: Dispatch<SetStateAction<SelectedFile | undefined>>;
 };
 
 const MainAppWindow: React.FC<MainAppWindowProps> = ({
   isShowing,
   setShowing,
   file,
-  setFile,
 }) => {
   // Functions
   function closeModal() {
     setShowing(false);
   }
 
-  async function fetchData(file: SelectedFile) {
+  async function fetchData(file: ISelectedFile) {
     sdInformer.start();
     setLoading(true);
     try {
@@ -167,7 +165,7 @@ const MainAppWindow: React.FC<MainAppWindowProps> = ({
                   ) : (
                     <>
                       <div className="w-full h-full flex">
-                        <ImageUploadBox file={file} setFile={setFile} />
+                        <ImageUploadBox file={file} />
                       </div>
                     </>
                   )}

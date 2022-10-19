@@ -17,13 +17,14 @@ import { FiArrowRight as ArrowIcon } from "react-icons/fi";
 import ExampleImageButton from "../components/ExampleImageButton";
 import { AiFillPlayCircle as PlayIcon } from "react-icons/ai";
 import { followCursor } from "tippy.js";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import enterAnim from "@/utils/enterAnim";
 import useRefInView from "@/hooks/useRefInView";
+import { useStore } from "store";
 
 const Home: NextPage = () => {
   const [isShowing, setShowing] = useState<boolean>(false);
-  const [file, setFile] = useState<SelectedFile | undefined>();
+  const selectedFile = useStore((state) => state.selectedFile);
 
   const [ref1, inView1] = useRefInView();
   const [ref2, inView2] = useRefInView();
@@ -64,7 +65,7 @@ const Home: NextPage = () => {
               {...enterAnim(0.1)}
               className="h-48 max-w-sm w-full mx-auto px-7 flex flex-col items-center"
             >
-              <ImageUploadBox file={file} setFile={setFile} />
+              <ImageUploadBox file={selectedFile} />
             </motion.div>
             <div className="fluid-container p-7 flex flex-col items-center gap-y-5 overflow-hidden">
               <motion.p
@@ -75,22 +76,10 @@ const Home: NextPage = () => {
                 Or try with these example spine images
               </motion.p>
               <motion.div {...enterAnim(0.3)} className="flex gap-5">
-                <ExampleImageButton
-                  exampleImageURL="/example_images/1.jpg"
-                  setFile={setFile}
-                />
-                <ExampleImageButton
-                  exampleImageURL="/example_images/2.jpg"
-                  setFile={setFile}
-                />
-                <ExampleImageButton
-                  exampleImageURL="/example_images/3.jpg"
-                  setFile={setFile}
-                />
-                <ExampleImageButton
-                  exampleImageURL="/example_images/4.jpg"
-                  setFile={setFile}
-                />
+                <ExampleImageButton exampleImageURL="/example_images/1.jpg" />
+                <ExampleImageButton exampleImageURL="/example_images/2.jpg" />
+                <ExampleImageButton exampleImageURL="/example_images/3.jpg" />
+                <ExampleImageButton exampleImageURL="/example_images/4.jpg" />
               </motion.div>
             </div>
           </div>
@@ -280,10 +269,9 @@ const Home: NextPage = () => {
       </main>
       <Footer />
       <FixedWindow
-        file={file}
+        file={selectedFile}
         isShowing={isShowing}
         setShowing={setShowing}
-        setFile={setFile}
       />
     </div>
   );
