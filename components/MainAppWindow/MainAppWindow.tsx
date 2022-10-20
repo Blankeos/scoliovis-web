@@ -153,10 +153,10 @@ const MainAppWindow: React.FC<MainAppWindowProps> = ({
                         leaveFrom="scale-100"
                         leaveTo="scale-50"
                       >
-                        <img
+                        {/* <img
                           src={`${file.preview}`}
                           className="object-contain w-11/12 h-5/6"
-                        />
+                        /> */}
                       </Transition.Child>
                     </div>
                   ) : (
@@ -204,10 +204,10 @@ const MainAppWindow: React.FC<MainAppWindowProps> = ({
                         {segmentationResponse &&
                           segmentationResponse.encoded_img && (
                             <>
-                              <img
+                              {/* <img
                                 src={`data:image/png;base64,${segmentationResponse.encoded_img}`}
                                 className="object-contain w-11/12 h-5/6"
-                              />
+                              /> */}
                             </>
                           )}
                       </>

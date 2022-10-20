@@ -117,6 +117,7 @@ const MainAppPage = () => {
             className="relative max-w-4xl h-full w-full mx-auto"
           >
             <Image
+              alt="spine image"
               src={`${selectedFile?.preview}`}
               layout="fill"
               objectFit="contain"
@@ -136,7 +137,7 @@ const MainAppPage = () => {
           <div className="text-xs flex gap-x-2 items-center">
             <button className="bg-gray-200 p-1 px-2 rounded-md">Change</button>
             <p className="truncate text-gray-500 text-xs">
-              someone's spine.png
+              someone&apos;s spine.png
             </p>
           </div>
           <h2 className="flex items-center gap-x-2 text-sm text-gray-700 font-semibold mt-3">
