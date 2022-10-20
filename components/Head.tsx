@@ -10,8 +10,10 @@ interface HeadProps {
   imageUrl?: string;
   imageAlt?: string;
   keywords?: string[];
+  overrideTitle?: string;
 }
 const Head: React.FC<HeadProps> = ({
+  overrideTitle = undefined,
   pageTitle = "Home",
   siteTitle = "ScolioVis",
   pagePath = "",
@@ -25,7 +27,7 @@ const Head: React.FC<HeadProps> = ({
       render={(meta: React.ReactNode) => <NextHead>{meta}</NextHead>}
       siteTitle={siteTitle}
       pageTitle={pageTitle}
-      titleTemplate="[pageTitle] | [siteTitle]"
+      titleTemplate={overrideTitle || "[pageTitle] | [siteTitle]"}
       description={description}
       baseSiteUrl=""
       pagePath={pagePath}
