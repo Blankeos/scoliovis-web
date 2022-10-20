@@ -36,6 +36,8 @@ import Tippy from "@tippyjs/react";
 import { useStore } from "store";
 import ImageUploadBox from "components/ImageUploadBox";
 import PolygonIcon from "components/PolygonIcon";
+import Image from "next/image";
+import { motion } from "framer-motion";
 const MainAppPage = () => {
   const selectedFile = useStore((state) => state.selectedFile);
 
@@ -107,10 +109,25 @@ const MainAppPage = () => {
       </nav>
       <main className="flex-grow h-full flex overflow-y-hidden">
         {/* First Section */}
-        <div className="flex-grow p-3 bg-gray-300">FIRST SECTION</div>
+        <div className="flex-grow p-3 bg-gray-200">
+          <motion.div
+            initial={{ scale: 0.5, opacity: 0.5 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ type: "spring", duration: 0.8 }}
+            className="relative max-w-4xl h-full w-full mx-auto"
+          >
+            <Image
+              src={`${selectedFile?.preview}`}
+              layout="fill"
+              objectFit="contain"
+            />
+          </motion.div>
+        </div>
         {/* Second Section */}
         <div className="shadow-xl flex flex-col overflow-y-auto max-w-xs w-full p-3 gap-y-2">
-          <h1 className="text-lg">ScolioVis</h1>
+          <h1 className="text-lg text-primary text-center">
+            <span className="font-black">Scolio</span>Vis
+          </h1>
           <hr />
           <h2 className="flex items-center gap-x-2 text-sm text-gray-700 font-semibold mt-3">
             {/* <UploadIcon /> */}

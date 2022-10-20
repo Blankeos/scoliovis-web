@@ -270,11 +270,11 @@ const Home: NextPage = () => {
         </section>
       </main>
       <Footer />
-      <FixedWindow
+      {/* <FixedWindow
         file={selectedFile}
         isShowing={isShowing}
         setShowing={setShowing}
-      />
+      /> */}
     </div>
   );
 };
