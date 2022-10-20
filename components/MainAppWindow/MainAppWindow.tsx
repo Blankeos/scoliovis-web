@@ -22,12 +22,9 @@ import Switch from "../Switch";
 import ImageUploadBox from "../ImageUploadBox";
 import Dropdown from "../Dropdown";
 import Tippy from "@tippyjs/react";
-
 import uploadFile from "../../services/uploadFile";
 import PolygonIcon from "../PolygonIcon";
-import toast from "react-hot-toast";
 
-import serverIsBootingUp from "@/toasts/serverIsBootingUp";
 import useServerDelayInformer from "@/hooks/useServerDelayInformer";
 
 type MainAppWindowProps = {
