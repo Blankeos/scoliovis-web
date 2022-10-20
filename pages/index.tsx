@@ -1,8 +1,8 @@
 import type { NextPage } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import Head from "next/head";
 import { useState } from "react";
+import Head from "components/Head";
 
 // Components
 import Nav from "components/Nav";
@@ -34,6 +34,7 @@ const Home: NextPage = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
+      <Head overrideTitle="ScolioVis - Automatically measure Cobb Angles with Machine Learning" />
       <Nav />
       <main className="flex-grow h-full">
         <header className="">
