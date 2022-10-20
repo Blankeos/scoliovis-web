@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React, { Dispatch, SetStateAction } from "react";
 import { useStore } from "store";
 import { imageUploadToasts } from "../services/customToasts";
@@ -10,10 +11,12 @@ const ExampleImageButton: React.FC<ExampleImageButtonProps> = ({
   exampleImageURL,
 }) => {
   const setSelectedFile = useStore((state) => state.setSelectedFile);
+  const router = useRouter();
   async function tryWithExample(exampleImageURL: string) {
     const f = await urlToSelectedFile(exampleImageURL);
     setSelectedFile(f);
     imageUploadToasts.success();
+    router.push("/app");
   }
   return (
     <button
