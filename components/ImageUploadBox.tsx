@@ -13,8 +13,12 @@ import { useStore } from "store";
 
 type ImageUploadBoxProps = {
   file: ISelectedFile | undefined;
+  onSuccess?: () => void;
 };
-const ImageUploadBox: React.FC<ImageUploadBoxProps> = ({ file }) => {
+const ImageUploadBox: React.FC<ImageUploadBoxProps> = ({
+  file,
+  onSuccess = () => {},
+}) => {
   const setSelectedFile = useStore((state) => state.setSelectedFile);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -27,6 +31,7 @@ const ImageUploadBox: React.FC<ImageUploadBoxProps> = ({ file }) => {
           preview: URL.createObjectURL(acceptedFiles[0]),
         })
       );
+      onSuccess();
     },
     onDropRejected: (fileRejection) => {
       imageUploadToasts.error();

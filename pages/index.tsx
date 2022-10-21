@@ -21,10 +21,13 @@ import { motion } from "framer-motion";
 import enterAnim from "@/utils/enterAnim";
 import useRefInView from "@/hooks/useRefInView";
 import { useStore } from "store";
+import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
   const [isShowing, setShowing] = useState<boolean>(false);
   const selectedFile = useStore((state) => state.selectedFile);
+
+  const router = useRouter();
 
   const [ref1, inView1] = useRefInView();
   const [ref2, inView2] = useRefInView();
@@ -67,7 +70,10 @@ const Home: NextPage = () => {
               {...enterAnim(0.1)}
               className="h-48 max-w-sm w-full mx-auto px-7 flex flex-col items-center"
             >
-              <ImageUploadBox file={selectedFile} />
+              <ImageUploadBox
+                file={selectedFile}
+                onSuccess={() => router.push("/app")}
+              />
             </motion.div>
             <div className="fluid-container p-7 flex flex-col items-center gap-y-5 overflow-hidden">
               <motion.p
@@ -270,11 +276,6 @@ const Home: NextPage = () => {
         </section>
       </main>
       <Footer />
-      {/* <FixedWindow
-        file={selectedFile}
-        isShowing={isShowing}
-        setShowing={setShowing}
-      /> */}
     </div>
   );
 };
