@@ -2,7 +2,7 @@ import Head from "components/Head";
 import Link from "next/link";
 
 import React, { Fragment, useEffect, useState } from "react";
-import { Transition } from "@headlessui/react";
+import { Switch, Transition } from "@headlessui/react";
 
 // Icons
 import {
@@ -38,6 +38,8 @@ import ImageUploadBox from "components/ImageUploadBox";
 import PolygonIcon from "components/PolygonIcon";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import SmallSwitch from "components/Switch/Switch";
+import MultiSwitch from "components/Switch/MultiSwitch";
 const MainAppPage = () => {
   const selectedFile = useStore((state) => state.selectedFile);
 
@@ -61,6 +63,7 @@ const MainAppPage = () => {
     useState<ISegmentationResponse>();
   const [enabled, setEnabled] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
+  const [showAngle, setShowAngle] = useState<boolean>(true);
 
   return (
     <div className="flex flex-col min-h-screen max-h-screen overflow-hidden">
@@ -109,7 +112,7 @@ const MainAppPage = () => {
       </nav>
       <main className="flex-grow h-full flex overflow-y-hidden">
         {/* First Section */}
-        <div className="flex-grow p-3 bg-gray-200">
+        <div className="flex-grow p-3 bg-gray-200 shadow-inner">
           <motion.div
             initial={{ scale: 0.5, opacity: 0.5 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -140,38 +143,25 @@ const MainAppPage = () => {
               someone&apos;s spine.png
             </p>
           </div>
+          <hr />
           <h2 className="flex items-center gap-x-2 text-sm text-gray-700 font-semibold mt-3">
             {/* <ObjectDetectionIcon /> */}
             <span>Detection Display</span>
           </h2>
+          <hr />
           <h2 className="flex items-center gap-x-2 text-sm text-gray-700 font-semibold mt-3">
             {/* <LandmarkEstimationIcon /> */}
             <span>Landmark Display</span>
           </h2>
-          <div className="flex gap-x-1 text-gray-600 border self-start rounded-lg bg-gray-200">
-            <button className="h-7 w-7 border grid place-items-center rounded-lg border-white bg-white">
-              <LandmarkDisplayTypeIcon />
-            </button>
-            <button className="h-7 w-7 grid place-items-center">
-              <LandmarkDisplayTypeIcon />
-            </button>
-            <button className="h-7 w-7 grid place-items-center">
-              <LandmarkDisplayTypeIcon />
-            </button>
-            <button className="h-7 w-7 grid place-items-center">
-              <LandmarkDisplayTypeIcon />
-            </button>
-          </div>
+          <MultiSwitch />
           <div className="h-7 w-7 border bg-primary rounded-lg"></div>
+          <hr />
           <h2 className="flex items-center gap-x-2 text-sm text-gray-700 font-semibold mt-3">
             {/* <CobbAngleIcon /> */}
             <span>Cobb Angle Display</span>
           </h2>
-          <div className="flex gap-x-4 text-sm cursor-pointer items-center self-start">
-            <div className="border rounded-lg w-14 p-0.5 bg-gray-200 border-gray-300">
-              <div className="h-6 w-6 bg-white shadow rounded-md" />
-            </div>
-            <span>Show Angle</span>
+          <div className="grid grid-cols-[7rem,1fr] text-sm cursor-pointer items-center self-start">
+            <SmallSwitch enabled={showAngle} setEnabled={setShowAngle} />
           </div>
         </div>
       </main>

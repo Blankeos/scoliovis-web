@@ -18,7 +18,7 @@ import { HiChatAlt as SupportIcon } from "react-icons/hi";
 import { TbFaceIdError as APIErrorIcon } from "react-icons/tb";
 
 // Components
-import Switch from "../Switch";
+import Switch from "../Switch/Switch";
 import ImageUploadBox from "../ImageUploadBox";
 import Dropdown from "../Dropdown";
 import Tippy from "@tippyjs/react";
