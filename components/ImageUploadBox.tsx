@@ -10,6 +10,7 @@ import { useDropzone } from "react-dropzone";
 import toast from "react-hot-toast";
 import { imageUploadToasts } from "../services/customToasts";
 import { useStore } from "store";
+import getHeightAndWidthFromDataUrl from "@/utils/getImageDataFromURL";
 
 type ImageUploadBoxProps = {
   file: ISelectedFile | undefined;
@@ -24,11 +25,17 @@ const ImageUploadBox: React.FC<ImageUploadBoxProps> = ({
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: "image/*",
     multiple: false,
-    onDropAccepted: (acceptedFiles) => {
+    onDropAccepted: async (acceptedFiles) => {
       imageUploadToasts.success();
+      const file = acceptedFiles[0];
+      const src = URL.createObjectURL(file);
+      const { width, height } = await getHeightAndWidthFromDataUrl(src);
+
       setSelectedFile(
-        Object.assign(acceptedFiles[0], {
-          preview: URL.createObjectURL(acceptedFiles[0]),
+        Object.assign(file, {
+          src: src,
+          width: width,
+          height: height,
         })
       );
       onSuccess();
@@ -44,7 +51,7 @@ const ImageUploadBox: React.FC<ImageUploadBoxProps> = ({
         {...getRootProps()}
         className="h-full w-full bg-gray-200 rounded-xl text-gray-400 cursor-pointer border border-gray-300 hover:shadow-inner transition relative overflow-hidden"
         style={{
-          backgroundImage: `url('${file?.preview}')`,
+          backgroundImage: `url('${file?.src}')`,
           backgroundPosition: "center",
           backgroundSize: "contain",
           backgroundRepeat: "no-repeat",
