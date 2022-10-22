@@ -21,27 +21,24 @@ import // TiImage as UploadIcon,
 // TiTick as CheckIcon,
 "react-icons/ti";
 
-import { HiArrowsPointingOut as LandmarkDisplayTypeIcon } from "react-icons/hi2";
-
 import { TbAngle as CobbAngleIcon } from "react-icons/tb";
-
-import { RiEyeLine as ViewDetailsIcon } from "react-icons/ri";
-import { MdBugReport as BugIcon } from "react-icons/md";
-import { HiChatAlt as SupportIcon } from "react-icons/hi";
-import { TbFaceIdError as APIErrorIcon } from "react-icons/tb";
 import useServerDelayInformer from "@/hooks/useServerDelayInformer";
 import uploadFile from "services/uploadFile";
 
 import Tippy from "@tippyjs/react";
 import { useStore } from "store";
-import ImageUploadBox from "components/ImageUploadBox";
-import PolygonIcon from "components/PolygonIcon";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import SmallSwitch from "components/Switch/Switch";
 import MultiSwitch from "components/Switch/MultiSwitch";
+import ImageCanvas from "components/MainAppPage/ImageCanvas";
+
+import { TwitterPicker } from "react-color";
+
 const MainAppPage = () => {
   const selectedFile = useStore((state) => state.selectedFile);
+  const drawSettings = useStore((state) => state.drawSettings);
+  const setLandmarkSize = useStore((state) => state.setLandmarkSize);
+  const setLandmarkColor = useStore((state) => state.setLandmarkColor);
 
   async function fetchData(file: ISelectedFile) {
     sdInformer.start();
@@ -119,12 +116,13 @@ const MainAppPage = () => {
             transition={{ type: "spring", duration: 0.8 }}
             className="relative max-w-4xl h-full w-full mx-auto"
           >
-            <Image
+            <ImageCanvas />
+            {/* <Image
               alt="spine image"
-              src={`${selectedFile?.preview}`}
+              src={`${selectedFile?.src}`}
               layout="fill"
               objectFit="contain"
-            />
+            /> */}
           </motion.div>
         </div>
         {/* Second Section */}
@@ -154,7 +152,81 @@ const MainAppPage = () => {
             <span>Landmark Display</span>
           </h2>
           <MultiSwitch />
-          <div className="h-7 w-7 border bg-primary rounded-lg"></div>
+          <div className="flex gap-x-2">
+            <Tippy
+              interactive={true}
+              placement="top"
+              content={
+                <span>
+                  <TwitterPicker
+                    color={drawSettings.landmarkColor[0]}
+                    colors={[
+                      "#FFFFFF",
+                      "#FF6900",
+                      "#FCB900",
+                      "#8ED1FC",
+                      "#F78DA7",
+                      "#7BDCB5",
+                      "#00D084",
+                    ]}
+                    triangle="hide"
+                    onChange={(color) => {
+                      setLandmarkColor({
+                        topColor: color.hex,
+                      });
+                    }}
+                  />
+                </span>
+              }
+            >
+              <div
+                className="h-7 w-7 border rounded-lg"
+                style={{ background: drawSettings.landmarkColor[0] }}
+              ></div>
+            </Tippy>
+            <Tippy
+              interactive={true}
+              placement="top"
+              content={
+                <span>
+                  <TwitterPicker
+                    color={drawSettings.landmarkColor[1]}
+                    colors={[
+                      "#FFFFFF",
+                      "#FF6900",
+                      "#FCB900",
+                      "#8ED1FC",
+                      "#F78DA7",
+                      "#7BDCB5",
+                      "#00D084",
+                    ]}
+                    triangle="hide"
+                    onChange={(color) => {
+                      setLandmarkColor({
+                        bottomColor: color.hex,
+                      });
+                    }}
+                  />
+                </span>
+              }
+            >
+              <div
+                className="h-7 w-7 border rounded-lg"
+                style={{ background: drawSettings.landmarkColor[1] }}
+              ></div>
+            </Tippy>
+          </div>
+          <div className="h-7">
+            <input
+              type="range"
+              min="0"
+              max="20"
+              onChange={(e) => {
+                setLandmarkSize(parseInt(e.target.value));
+              }}
+              value={drawSettings.landmarkSize}
+            />
+          </div>
           <hr />
           <h2 className="flex items-center gap-x-2 text-sm text-gray-700 font-semibold mt-3">
             {/* <CobbAngleIcon /> */}
