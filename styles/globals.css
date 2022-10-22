@@ -37,3 +37,10 @@ a {
 .fluid-container {
   @apply max-w-5xl w-full mx-auto;
 }
+
+/* START: Tippy Stuff */
+.tippy-box[data-theme~="transparent"] {
+  background-color: transparent;
+  color: transparent;
+}
+/* END: Tippy Stuff */
