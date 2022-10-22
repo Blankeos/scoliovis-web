@@ -10,7 +10,7 @@ const MultiSwitch = () => {
         style={{
           transform: `translate(calc(100% * ${currentIndex} + 4px * ${currentIndex}), 0)`,
         }}
-        className="absolute transition ease-in-out transform h-7 w-7 bg-white rounded-lg shadow"
+        className="absolute transition ease-in-out transform h-7 w-7 bg-white rounded-md shadow"
       />
       <button
         onClick={() => setCurrentIndex(0)}
