@@ -10,15 +10,17 @@ import { useDropzone } from "react-dropzone";
 import toast from "react-hot-toast";
 import { imageUploadToasts } from "../services/customToasts";
 import { useStore } from "store";
-import getHeightAndWidthFromDataUrl from "@/utils/getImageDataFromURL";
+import getImageDataFromURL from "@/utils/getImageDataFromURL";
 
 type ImageUploadBoxProps = {
   file: ISelectedFile | undefined;
   onSuccess?: () => void;
+  bgClass?: string;
 };
 const ImageUploadBox: React.FC<ImageUploadBoxProps> = ({
   file,
   onSuccess = () => {},
+  bgClass = "bg-gray-200",
 }) => {
   const setSelectedFile = useStore((state) => state.setSelectedFile);
 
@@ -29,10 +31,11 @@ const ImageUploadBox: React.FC<ImageUploadBoxProps> = ({
       imageUploadToasts.success();
       const file = acceptedFiles[0];
       const src = URL.createObjectURL(file);
-      const { width, height } = await getHeightAndWidthFromDataUrl(src);
+      const { width, height, img } = await getImageDataFromURL(src);
 
       setSelectedFile(
         Object.assign(file, {
+          img: img,
           src: src,
           width: width,
           height: height,
@@ -49,7 +52,9 @@ const ImageUploadBox: React.FC<ImageUploadBoxProps> = ({
       <input {...getInputProps()} />
       <label
         {...getRootProps()}
-        className="h-full w-full bg-gray-200 rounded-xl text-gray-400 cursor-pointer border border-gray-300 hover:shadow-inner transition relative overflow-hidden"
+        className={`h-full w-full rounded-xl text-gray-400 cursor-pointer border border-gray-300 hover:shadow-inner transition relative overflow-hidden ${
+          bgClass || ""
+        }`}
         style={{
           backgroundImage: `url('${file?.src}')`,
           backgroundPosition: "center",
@@ -79,23 +84,6 @@ const ImageUploadBox: React.FC<ImageUploadBoxProps> = ({
           </div>
         </div>
       </label>
-      {/* <p className="text-xs my-3 text-gray-400 w-full text-center truncate">
-          {file ? file.name : <span className="invisible">.</span>}
-        </p>
-        <button
-          onClick={handleUpload}
-          disabled={loading || (file ? false : true)} // file ? (exists) : (doesn't exist)
-          className="flex items-center px-5 w-full h-16 rounded-md text-white border font-medium text-sm bg-gray-800 disabled:opacity-80 transition disabled:text-gray-300 disabled:bg-transparent"
-        >
-          {loading ? (
-            <SpinnerIcon size="2rem" className="animate-spin" />
-          ) : (
-            <PolygonIcon />
-          )}
-          <span className="text-center w-full">
-            {loading ? "Measuring Cobb Angle..." : "Measure Cobb Angle"}
-          </span>
-        </button> */}
     </>
   );
 };

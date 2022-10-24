@@ -6,13 +6,16 @@ import getImageDataFromURL from "@/utils/getImageDataFromURL";
 const getUrlExtension = (url: string) => {
   return url.split(/[#?]/)[0].split(".").pop()?.trim();
 };
+const getImgName = (url: string) => {
+  return url.split(/[#?]/)[0].split("/").pop()?.trim();
+};
 
 const urlToSelectedFile = async (imgUrl: string): Promise<ISelectedFile> => {
   var imgExt = getUrlExtension(imgUrl);
-
+  var imgName = getImgName(imgUrl);
   const response = await fetch(imgUrl);
   const blob = await response.blob();
-  const file = new File([blob], "profileImage." + imgExt, {
+  const file = new File([blob], imgName || `no_name.${imgExt}`, {
     type: blob.type,
   });
 
