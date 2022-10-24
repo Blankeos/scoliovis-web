@@ -6,17 +6,20 @@ import urlToSelectedFile from "../services/urlToSelectedFile";
 
 type ExampleImageButtonProps = {
   exampleImageURL: string;
+  routeToApp?: boolean;
 };
 const ExampleImageButton: React.FC<ExampleImageButtonProps> = ({
   exampleImageURL,
+  routeToApp = true,
 }) => {
   const setSelectedFile = useStore((state) => state.setSelectedFile);
   const router = useRouter();
+
   async function tryWithExample(exampleImageURL: string) {
     const f = await urlToSelectedFile(exampleImageURL);
     setSelectedFile(f);
     imageUploadToasts.success();
-    router.push("/app");
+    routeToApp && router.push("/app");
   }
   return (
     <button
