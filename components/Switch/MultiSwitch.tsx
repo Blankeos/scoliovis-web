@@ -2,8 +2,14 @@ import React, { useState } from "react";
 
 // calc((124px/4)*0
 
-const MultiSwitch = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+interface IMultiSwitchProps {
+  currentIndex: number;
+  onChange?: (clickedIndex: number) => void;
+}
+const MultiSwitch: React.FC<IMultiSwitchProps> = ({
+  currentIndex,
+  onChange,
+}) => {
   return (
     <div className="relative flex gap-x-1 text-gray-600 border self-start rounded-lg bg-gray-200 p-0.5 border-gray-300">
       <span
@@ -13,7 +19,9 @@ const MultiSwitch = () => {
         className="absolute transition ease-in-out transform h-7 w-7 bg-white rounded-md shadow"
       />
       <button
-        onClick={() => setCurrentIndex(0)}
+        onClick={() => {
+          onChange && onChange(0);
+        }}
         className={`relative h-7 w-7 grid place-items-center
         ${currentIndex === 0 ? "opacity-70" : "opacity-40"}
         `}
@@ -27,7 +35,9 @@ const MultiSwitch = () => {
         />
       </button>
       <button
-        onClick={() => setCurrentIndex(1)}
+        onClick={() => {
+          onChange && onChange(1);
+        }}
         className={`relative h-7 w-7 grid place-items-center
         ${currentIndex === 1 ? "opacity-70" : "opacity-40"}
         `}
@@ -41,7 +51,9 @@ const MultiSwitch = () => {
         />
       </button>
       <button
-        onClick={() => setCurrentIndex(2)}
+        onClick={() => {
+          onChange && onChange(2);
+        }}
         className={`relative h-7 w-7 grid place-items-center
         ${currentIndex === 2 ? "opacity-70" : "opacity-40"}
         `}
@@ -55,7 +67,9 @@ const MultiSwitch = () => {
         />
       </button>
       <button
-        onClick={() => setCurrentIndex(3)}
+        onClick={() => {
+          onChange && onChange(3);
+        }}
         className={`relative h-7 w-7 grid place-items-center
         ${currentIndex === 3 ? "opacity-70" : "opacity-40"}
         `}
