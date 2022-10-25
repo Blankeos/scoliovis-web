@@ -2,12 +2,18 @@ import create from "zustand";
 import { devtools } from "zustand/middleware";
 import produce from "immer";
 
+type scoliovisAPIResponse = {
+  landmarks: number[];
+};
+
 export interface IStoreState {
   //   States
   selectedFile?: ISelectedFile;
   drawSettings: DrawSettingsType;
+  scoliovisAPIResponse?: scoliovisAPIResponse;
 
   // Actions
+  setScoliovisAPIResponse: (responseData?: scoliovisAPIResponse) => void;
   setSelectedFile: (file?: ISelectedFile) => void;
   setLandmarkDisplayType: (displayType: LandmarkDisplayType) => void;
   setLandmarkSize: (size: number) => void;
@@ -29,6 +35,13 @@ export const useStore = create<IStoreState>()(
       landmarkSize: 7,
       lineWidth: 2,
     },
+    scoliovisAPIResponse: undefined,
+    setScoliovisAPIResponse: (responseData) =>
+      set(
+        produce((state: IStoreState) => {
+          state.scoliovisAPIResponse = responseData;
+        })
+      ),
     setSelectedFile: (file) =>
       set(
         produce((state: IStoreState) => {

@@ -1,15 +1,19 @@
 import denormalizeLandmarks from "@/utils/denormalizeLandmarks";
+import generatePathFromPoints from "@/utils/generatePathFromPoints";
 import landmarksToCoordinates from "@/utils/landmarksToCoordinates";
 import React, { MutableRefObject, useEffect, useRef, useState } from "react";
 import getLandmarks from "services/getLandmarks";
 import { useStore } from "store";
 
 const ImageCanvas = () => {
+  // From Global State
+  const scoliovisAPIResponse = useStore((state) => state.scoliovisAPIResponse);
   const selectedFile = useStore((state) => state.selectedFile);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const ctx = useRef() as MutableRefObject<CanvasRenderingContext2D>;
 
-  const [landmarks, setLandmarks] = useState<number[][]>();
+  // State for drawing
+  const [points, setPoints] = useState<number[][]>();
   const drawSettings = useStore((state) => state.drawSettings);
 
   useEffect(() => {
@@ -25,13 +29,13 @@ const ImageCanvas = () => {
     ctx.current = context;
 
     initialize();
-  }, []);
+  }, [scoliovisAPIResponse]);
 
   useEffect(() => {
-    if (drawSettings && selectedFile && ctx && landmarks) {
+    if (drawSettings && selectedFile && ctx && points) {
       drawImage();
       drawLandmarks({
-        points: landmarks,
+        points: points,
         drawSettings: drawSettings,
       });
     }
@@ -39,17 +43,16 @@ const ImageCanvas = () => {
 
   async function initialize() {
     drawImage();
-    if (!selectedFile) return;
-    const res: any = await getLandmarks(selectedFile);
-    const landmarks = res.data.landmarks;
-
+    if (!selectedFile || !scoliovisAPIResponse) return;
+    // const res: any = await getLandmarks(selectedFile);
+    // const landmarks = res.data.landmarks;
     const points = denormalizeLandmarks(
-      landmarks,
+      scoliovisAPIResponse.landmarks,
       selectedFile.width,
       selectedFile.height
     );
 
-    setLandmarks(points);
+    setPoints(points);
     // Start Drawing
     drawLandmarks({
       points: points,
@@ -79,9 +82,53 @@ const ImageCanvas = () => {
     points: number[][];
     drawSettings: DrawSettingsType;
   }) {
+    // DRAW POINTS
+    ctx.current.lineWidth = 5;
     ctx.current.fillStyle = drawSettings.landmarkColor[0];
+    let currVertPoint = 0;
     points.forEach((point, i) => {
+      // Top Verts
+      if ([0, 1].includes(currVertPoint))
+        ctx.current.fillStyle = drawSettings.landmarkColor[0];
+      if ([2, 3].includes(currVertPoint))
+        ctx.current.fillStyle = drawSettings.landmarkColor[1];
+
       drawCircle(point[0], point[1], drawSettings.landmarkSize);
+
+      currVertPoint = currVertPoint + 1;
+      if (currVertPoint >= 4) currVertPoint = 0;
+    });
+
+    // DRAW PATHS
+    const paths = generatePathFromPoints(
+      points,
+      drawSettings.landmarkDisplayType
+    );
+    // const paths = generatePathFromPoints(points, "no_lines");
+    ctx.current.lineWidth = 8;
+    switch (drawSettings.landmarkDisplayType) {
+      case "all_lines":
+        ctx.current.strokeStyle = "aqua";
+        break;
+      case "top_lines":
+        ctx.current.strokeStyle = drawSettings.landmarkColor[0];
+        break;
+      case "bottom_lines":
+        ctx.current.strokeStyle = drawSettings.landmarkColor[1];
+        break;
+      default:
+        break;
+    }
+
+    paths.forEach((path) => {
+      path.forEach((point, i) => {
+        if (i === 0) {
+          ctx.current.beginPath();
+          ctx.current.moveTo(point[0], point[1]);
+        } else ctx.current.lineTo(point[0], point[1]);
+
+        if (i === path.length - 1) ctx.current.stroke();
+      });
     });
   }
 
