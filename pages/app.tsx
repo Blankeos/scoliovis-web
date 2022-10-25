@@ -33,20 +33,42 @@ import MultiSwitch from "components/Switch/MultiSwitch";
 import ImageCanvas from "components/MainAppPage/ImageCanvas";
 
 import { TwitterPicker } from "react-color";
+import ImageUploadBox from "components/ImageUploadBox";
+import enterAnim from "@/utils/enterAnim";
+import ExampleImageButton from "components/ExampleImageButton";
+import getLandmarks from "services/getLandmarks";
+import Image from "next/image";
+
+const DISPLAY_TYPES: LandmarkDisplayType[] = [
+  "no_lines",
+  "top_lines",
+  "bottom_lines",
+  "all_lines",
+];
 
 const MainAppPage = () => {
   const selectedFile = useStore((state) => state.selectedFile);
   const drawSettings = useStore((state) => state.drawSettings);
   const setLandmarkSize = useStore((state) => state.setLandmarkSize);
   const setLandmarkColor = useStore((state) => state.setLandmarkColor);
+  const setLandmarkDisplayType = useStore(
+    (state) => state.setLandmarkDisplayType
+  );
+  const setScoliovisAPIResponse = useStore(
+    (state) => state.setScoliovisAPIResponse
+  );
+  const scolioVisAPIResponse = useStore((state) => state.scoliovisAPIResponse);
 
   async function fetchData(file: ISelectedFile) {
     sdInformer.start();
+    setScoliovisAPIResponse();
     setLoading(true);
     try {
-      const response = await uploadFile(file);
-      console.log(response.data);
-      setSegmentationResponse(response.data);
+      const res: any = await getLandmarks(file);
+      setScoliovisAPIResponse(res.data);
+      console.log(res.data);
+      // console.log(response.data);
+      // setSegmentationResponse(response.data);
     } catch (e) {
       console.log(e);
     }
@@ -55,12 +77,20 @@ const MainAppPage = () => {
   }
 
   //   Hooks
+  useEffect(() => {
+    if (!selectedFile) return;
+    fetchData(selectedFile);
+  }, [selectedFile]);
+
   const sdInformer = useServerDelayInformer();
   const [segmentationResponse, setSegmentationResponse] =
     useState<ISegmentationResponse>();
+
+  // States
   const [enabled, setEnabled] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
   const [showAngle, setShowAngle] = useState<boolean>(true);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   return (
     <div className="flex flex-col min-h-screen max-h-screen overflow-hidden">
@@ -116,13 +146,40 @@ const MainAppPage = () => {
             transition={{ type: "spring", duration: 0.8 }}
             className="relative max-w-4xl h-full w-full mx-auto"
           >
-            <ImageCanvas />
-            {/* <Image
-              alt="spine image"
-              src={`${selectedFile?.src}`}
-              layout="fill"
-              objectFit="contain"
-            /> */}
+            {selectedFile ? (
+              <ImageCanvas />
+            ) : (
+              <div className="h-full relative flex flex-col">
+                <ImageUploadBox file={selectedFile} bgClass="bg-gray-100" />
+                <div className="fluid-container p-7 flex flex-col items-center gap-y-5 overflow-hidden">
+                  <motion.p
+                    {...enterAnim(0.2)}
+                    className="flex gap-x-2 items-center text-gray-500 text-sm"
+                  >
+                    <ArrowIcon className="-rotate-90" />
+                    Or try with these example spine images
+                  </motion.p>
+                  <motion.div {...enterAnim(0.3)} className="flex gap-5">
+                    <ExampleImageButton
+                      exampleImageURL="/example_images/1.jpg"
+                      routeToApp={false}
+                    />
+                    <ExampleImageButton
+                      exampleImageURL="/example_images/2.jpg"
+                      routeToApp={false}
+                    />
+                    <ExampleImageButton
+                      exampleImageURL="/example_images/3.jpg"
+                      routeToApp={false}
+                    />
+                    <ExampleImageButton
+                      exampleImageURL="/example_images/4.jpg"
+                      routeToApp={false}
+                    />
+                  </motion.div>
+                </div>
+              </div>
+            )}
           </motion.div>
         </div>
         {/* Second Section */}
@@ -136,105 +193,168 @@ const MainAppPage = () => {
             <span>Input Image</span>
           </h2>
           <div className="text-xs flex gap-x-2 items-center">
-            <button className="bg-gray-200 p-1 px-2 rounded-md">Change</button>
+            <button className="bg-gray-200 p-1 px-2 rounded-md">
+              Choose Image
+            </button>
             <p className="truncate text-gray-500 text-xs">
-              someone&apos;s spine.png
+              {selectedFile && selectedFile.name}
             </p>
           </div>
           <hr />
-          <h2 className="flex items-center gap-x-2 text-sm text-gray-700 font-semibold mt-3">
-            {/* <ObjectDetectionIcon /> */}
-            <span>Detection Display</span>
-          </h2>
-          <hr />
-          <h2 className="flex items-center gap-x-2 text-sm text-gray-700 font-semibold mt-3">
-            {/* <LandmarkEstimationIcon /> */}
-            <span>Landmark Display</span>
-          </h2>
-          <MultiSwitch />
-          <div className="flex gap-x-2">
-            <Tippy
-              interactive={true}
-              placement="top"
-              content={
-                <span>
-                  <TwitterPicker
-                    color={drawSettings.landmarkColor[0]}
-                    colors={[
-                      "#FFFFFF",
-                      "#FF6900",
-                      "#FCB900",
-                      "#8ED1FC",
-                      "#F78DA7",
-                      "#7BDCB5",
-                      "#00D084",
-                    ]}
-                    triangle="hide"
-                    onChange={(color) => {
-                      setLandmarkColor({
-                        topColor: color.hex,
-                      });
-                    }}
-                  />
-                </span>
-              }
-            >
-              <div
-                className="h-7 w-7 border rounded-lg"
-                style={{ background: drawSettings.landmarkColor[0] }}
-              ></div>
-            </Tippy>
-            <Tippy
-              interactive={true}
-              placement="top"
-              content={
-                <span>
-                  <TwitterPicker
-                    color={drawSettings.landmarkColor[1]}
-                    colors={[
-                      "#FFFFFF",
-                      "#FF6900",
-                      "#FCB900",
-                      "#8ED1FC",
-                      "#F78DA7",
-                      "#7BDCB5",
-                      "#00D084",
-                    ]}
-                    triangle="hide"
-                    onChange={(color) => {
-                      setLandmarkColor({
-                        bottomColor: color.hex,
-                      });
-                    }}
-                  />
-                </span>
-              }
-            >
-              <div
-                className="h-7 w-7 border rounded-lg"
-                style={{ background: drawSettings.landmarkColor[1] }}
-              ></div>
-            </Tippy>
-          </div>
-          <div className="h-7">
-            <input
-              type="range"
-              min="0"
-              max="20"
-              onChange={(e) => {
-                setLandmarkSize(parseInt(e.target.value));
-              }}
-              value={drawSettings.landmarkSize}
-            />
-          </div>
-          <hr />
-          <h2 className="flex items-center gap-x-2 text-sm text-gray-700 font-semibold mt-3">
-            {/* <CobbAngleIcon /> */}
-            <span>Cobb Angle Display</span>
-          </h2>
-          <div className="grid grid-cols-[7rem,1fr] text-sm cursor-pointer items-center self-start">
-            <SmallSwitch enabled={showAngle} setEnabled={setShowAngle} />
-          </div>
+          {!loading && scolioVisAPIResponse && (
+            <>
+              <h2 className="flex items-center gap-x-2 text-sm text-gray-700 font-semibold mt-3">
+                {/* <ObjectDetectionIcon /> */}
+                <span>Detection Display</span>
+              </h2>
+              <hr />
+              <h2 className="flex items-center gap-x-2 text-sm text-gray-700 font-semibold mt-3">
+                {/* <LandmarkEstimationIcon /> */}
+                <span>Landmark Display</span>
+              </h2>
+              <MultiSwitch
+                currentIndex={currentIndex}
+                onChange={(indexClicked) => {
+                  setCurrentIndex((prev) => {
+                    setLandmarkDisplayType(DISPLAY_TYPES[indexClicked]);
+                    return indexClicked;
+                  });
+                }}
+              />
+              <div className="flex gap-x-2">
+                <Tippy
+                  interactive={true}
+                  placement="top"
+                  content={
+                    <span>
+                      <TwitterPicker
+                        color={drawSettings.landmarkColor[0]}
+                        colors={[
+                          "#FFFFFF",
+                          "#FF6900",
+                          "#FCB900",
+                          "#8ED1FC",
+                          "#F78DA7",
+                          "#7BDCB5",
+                          "#00D084",
+                        ]}
+                        triangle="hide"
+                        onChange={(color) => {
+                          setLandmarkColor({
+                            topColor: color.hex,
+                          });
+                        }}
+                      />
+                    </span>
+                  }
+                >
+                  <div
+                    className="h-7 w-7 border rounded-lg"
+                    style={{ background: drawSettings.landmarkColor[0] }}
+                  ></div>
+                </Tippy>
+                <Tippy
+                  interactive={true}
+                  placement="top"
+                  content={
+                    <span>
+                      <TwitterPicker
+                        color={drawSettings.landmarkColor[1]}
+                        colors={[
+                          "#FFFFFF",
+                          "#FF6900",
+                          "#FCB900",
+                          "#8ED1FC",
+                          "#F78DA7",
+                          "#7BDCB5",
+                          "#00D084",
+                        ]}
+                        triangle="hide"
+                        onChange={(color) => {
+                          setLandmarkColor({
+                            bottomColor: color.hex,
+                          });
+                        }}
+                      />
+                    </span>
+                  }
+                >
+                  <div
+                    className="h-7 w-7 border rounded-lg"
+                    style={{ background: drawSettings.landmarkColor[1] }}
+                  ></div>
+                </Tippy>
+              </div>
+              <div className="h-7">
+                <input
+                  type="range"
+                  min="0"
+                  max="20"
+                  onChange={(e) => {
+                    setLandmarkSize(parseInt(e.target.value));
+                  }}
+                  value={drawSettings.landmarkSize}
+                />
+              </div>
+              <hr />
+              <h2 className="flex items-center gap-x-2 text-sm text-gray-700 font-semibold mt-3">
+                {/* <CobbAngleIcon /> */}
+                <span>Cobb Angle Display</span>
+              </h2>
+              <div className="grid grid-cols-[7rem,1fr] text-sm cursor-pointer items-center self-start">
+                <SmallSwitch enabled={showAngle} setEnabled={setShowAngle} />
+              </div>
+            </>
+          )}
+          {loading && (
+            <div className="flex flex-col justify-center h-full gap-y-5">
+              <motion.div
+                initial={{ y: 0 }}
+                animate={{ y: -12 }}
+                transition={{
+                  yoyo: Infinity,
+                  duration: 0.5,
+                }}
+                className="flex justify-center"
+              >
+                <Image
+                  src="/assets/apexglass.png"
+                  width={150}
+                  height={150}
+                  objectFit="contain"
+                />
+              </motion.div>
+              <p className="text-center text-xs text-gray-600 px-4">
+                <b>Apex</b> is currently sending your spine to the server.
+                Please wait a while...
+              </p>
+            </div>
+          )}
+          {!loading && !scolioVisAPIResponse && (
+            <div className="flex flex-col justify-center h-full gap-y-5">
+              <div className="flex justify-center transform translate-x-3">
+                <Image
+                  src="/assets/apexcrying.png"
+                  width={150}
+                  height={150}
+                  objectFit="contain"
+                />
+              </div>
+              <p className="text-center text-xs text-gray-600 px-4">
+                <span className="text-red-500">The server did not respond</span>{" "}
+                so the request failed. <b>Apex</b> is sorry! 😢
+              </p>
+              <button
+                className="text-sm hover:text-primary transition"
+                onClick={() => {
+                  if (!selectedFile) return;
+                  fetchData(selectedFile);
+                }}
+              >
+                Try again?
+              </button>
+            </div>
+          )}
         </div>
       </main>
     </div>
