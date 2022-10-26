@@ -38,7 +38,7 @@ export const useStore = create<IStoreState>()(
     scoliovisAPIResponse: undefined,
     setScoliovisAPIResponse: (responseData) =>
       set(
-        produce((state: IStoreState) => {
+        produce((state: any) => {
           state.scoliovisAPIResponse = responseData;
         })
       ),
