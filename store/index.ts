@@ -2,7 +2,7 @@ import create from "zustand";
 import { devtools } from "zustand/middleware";
 import produce from "immer";
 
-type scoliovisAPIResponse = {
+type ScolioVisAPIResponseType = {
   landmarks: number[];
 };
 
@@ -10,10 +10,10 @@ export interface IStoreState {
   //   States
   selectedFile?: ISelectedFile;
   drawSettings: DrawSettingsType;
-  scoliovisAPIResponse?: scoliovisAPIResponse;
+  scoliovisAPIResponse?: ScolioVisAPIResponseType;
 
   // Actions
-  setScoliovisAPIResponse: (responseData?: scoliovisAPIResponse) => void;
+  setScoliovisAPIResponse: (responseData?: ScolioVisAPIResponseType) => void;
   setSelectedFile: (file?: ISelectedFile) => void;
   setLandmarkDisplayType: (displayType: LandmarkDisplayType) => void;
   setLandmarkSize: (size: number) => void;
