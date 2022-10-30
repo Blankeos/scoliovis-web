@@ -40,7 +40,10 @@ export const useStore = create<IStoreState>()(
         }),
       setSelectedFile: (file) =>
         set((state) => {
-          state.selectedFile = file as any; // just to make the typescript compiler happy. (issue with the img type not being compatible. Too deep to fix, but works)
+          // I added 'any' just to make the typescript compiler happy.
+          // Issue is with the HTMLImageElement type not being compatible with WriteableDraft).
+          // It's too deep to fix, but this works anyway)
+          state.selectedFile = file as any;
         }),
       setLandmarkDisplayType: (displayType) =>
         set((state) => {
