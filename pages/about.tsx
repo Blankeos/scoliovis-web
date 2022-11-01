@@ -30,11 +30,12 @@ const AboutPage = () => {
             About
           </motion.h1>
           <motion.p {...enterAnim(0.2)}>
-            Pineapple salsa golden cayenne pepper coconut chocolate spiced
-            pumpkin chili ghost pepper citrusy sesame soba noodles extra crispy
-            green onions almond milk. Chili scotch bonnet pepper balsamic
-            vinaigrette tart bananas Caribbean red habanero cherries blueberries
-            salted walnut pesto flakes.
+            <b>ScolioVis</b> is an automatic cobb angle measurement tool
+            developed by BS in Computer Science students at West Visayas State
+            University for their Undergraduate Thesis. The finished product is
+            this web application implementing the trained machine learning
+            models to perform vertebrae landmark estimation in order to extract
+            the Cobb Angles automatically.
           </motion.p>
 
           <motion.h2
@@ -110,6 +111,8 @@ const AboutPage = () => {
           <p className="text-gray-700">
             Dr. Bobby D. Gerardo - Thesis Co-Adviser
           </p>
+          <p className="text-gray-700">Dr. Julie Ann Salido - Consultation</p>
+          <p className="text-gray-700">Mr. Paolo H. - Consultation</p>
           <p className="text-gray-700">Dr. Shuo Li - SpineWeb Dataset 16</p>
         </div>
       </main>
