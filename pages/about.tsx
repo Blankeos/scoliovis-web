@@ -35,7 +35,8 @@ const AboutPage = () => {
             University for their Undergraduate Thesis. The finished product is
             this web application implementing the trained machine learning
             models to perform vertebrae landmark estimation in order to extract
-            the Cobb Angles automatically.
+            the Cobb Angles automatically. The research is set to be published
+            in 2022.
           </motion.p>
 
           <motion.h2
