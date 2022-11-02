@@ -93,18 +93,18 @@ const MainAppPage = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   return (
-    <div className="flex flex-col min-h-screen max-h-screen overflow-hidden">
+    <div className="relative flex flex-col min-h-screen max-h-screen overflow-hidden">
       <Head pageTitle="Main App" pagePath="app" />
-      <nav className="grid grid-cols-5 p-3 border-b">
-        <div className="col-span-1 flex justify-start">
+      <nav className="absolute z-20 grid grid-cols-5 p-3">
+        <div className="col-span-1 flex justify-start h-12">
           <Link href="/">
-            <a className="flex h-full px-5 items-center gap-2 border rounded-xl text-sm hover:bg-primary hover:border-primary hover:text-white hover:shadow-md transition">
+            <a className="flex h-full px-5 items-center gap-2 border rounded-xl text-sm hover:bg-primary hover:border-primary hover:text-white hover:shadow-md transition bg-white bg-opacity-50">
               <ArrowIcon size="1.2rem" />
               <span>Back</span>
             </a>
           </Link>
         </div>
-        <div className="flex items-center col-span-3 justify-center">
+        {/* <div className="flex items-center col-span-3 justify-center">
           <Tippy content="1. Input Image">
             <div className="flex-shrink-0 w-12 h-12 grid place-items-center rounded-lg bg-primary text-white">
               <UploadIcon size="1.7rem" />
@@ -135,7 +135,7 @@ const MainAppPage = () => {
             </div>
           </Tippy>
         </div>
-        <div className="col-span-1" />
+        <div className="col-span-1" /> */}
       </nav>
       <main className="flex-grow h-full flex overflow-y-hidden">
         {/* First Section */}
@@ -193,9 +193,6 @@ const MainAppPage = () => {
             <span>Input Image</span>
           </h2>
           <div className="text-xs flex gap-x-2 items-center">
-            <button className="bg-gray-200 p-1 px-2 rounded-md">
-              Choose Image
-            </button>
             <p className="truncate text-gray-500 text-xs">
               {selectedFile && selectedFile.name}
             </p>
