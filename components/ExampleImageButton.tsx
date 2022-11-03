@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import React, { Dispatch, SetStateAction } from "react";
 import { useStore } from "store";
-import { imageUploadToasts } from "../services/customToasts";
-import urlToSelectedFile from "../services/urlToSelectedFile";
+import { imageUploadToasts } from "../src/utils/customToasts";
+import urlToSelectedFile from "../src/utils/urlToSelectedFile";
 
 type ExampleImageButtonProps = {
   exampleImageURL: string;

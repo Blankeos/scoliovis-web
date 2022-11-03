@@ -8,7 +8,7 @@ import { CgSpinner as SpinnerIcon } from "react-icons/cg";
 // Hooks
 import { useDropzone } from "react-dropzone";
 import toast from "react-hot-toast";
-import { imageUploadToasts } from "../services/customToasts";
+import { imageUploadToasts } from "../src/utils/customToasts";
 import { useStore } from "store";
 import getImageDataFromURL from "@/utils/getImageDataFromURL";
 
