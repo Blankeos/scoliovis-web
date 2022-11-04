@@ -231,9 +231,8 @@ const Home: NextPage = () => {
                   98% accuracy MAE
                 </h2>
                 <p className="text-gray-700">
-                  Discord servers are organized into topic-based channels where
-                  you can collaborate, share, and just talk about your day
-                  without clogging up a group chat.
+                  We're using a YoloV5 model trained at xmAP as well as a
+                  localized landmark detection model with 90% accuracy.
                 </p>
               </motion.div>
             </div>
