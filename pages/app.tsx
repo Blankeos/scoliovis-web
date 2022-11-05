@@ -20,6 +20,7 @@ import // TiImage as UploadIcon,
 // TiFlowParallel as LandmarkEstimationIcon,
 // TiTick as CheckIcon,
 "react-icons/ti";
+import { BsFileEarmarkImage as ImageIcon } from "react-icons/bs";
 
 import { TbAngle as CobbAngleIcon } from "react-icons/tb";
 import useServerDelayInformer from "@/hooks/useServerDelayInformer";
@@ -193,8 +194,9 @@ const MainAppPage = () => {
             <span>Input Image</span>
           </h2>
           <div className="text-xs flex gap-x-2 items-center">
-            <p className="truncate text-gray-500 text-xs">
-              {selectedFile && selectedFile.name}
+            <p className="truncate text-gray-500 text-xs flex gap-x-1">
+              <ImageIcon className="transform translate-y-0.5" />
+              <span>{selectedFile && selectedFile.name}</span>
             </p>
           </div>
           <hr />
