@@ -228,7 +228,7 @@ const Home: NextPage = () => {
               </motion.div>
               <motion.div {...enterAnim(0.2, inView3)} className="max-w-xs">
                 <h2 className="font-bold text-2xl text-gray-800">
-                  98% accuracy MAE
+                  Great model performance
                 </h2>
                 <p className="text-gray-700">
                   We&apos;re using a YoloV5 model trained at 96% mAP as well as
@@ -265,7 +265,7 @@ const Home: NextPage = () => {
               {...enterAnim(0.2, inView5)}
               className="mt-10 self-center"
             >
-              <Link href="/">
+              <Link href="/paper">
                 <a className="border border-primary text-primary hover:bg-primary hover:text-white hover:shadow-md transition px-10 py-5">
                   Read the paper
                 </a>
