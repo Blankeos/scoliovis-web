@@ -37,7 +37,7 @@ const Nav = () => {
               </Link>
             </li>
             <li>
-              <Link href="/404nothing">
+              <Link href="/paper">
                 <a className="text-gray-500 text-sm">Paper</a>
               </Link>
             </li>
