@@ -231,8 +231,8 @@ const Home: NextPage = () => {
                   98% accuracy MAE
                 </h2>
                 <p className="text-gray-700">
-                  We're using a YoloV5 model trained at xmAP as well as a
-                  localized landmark detection model with 90% accuracy.
+                  We&apos;re using a YoloV5 model trained at 96% mAP as well as
+                  a localized landmark detection model with __ accuracy.
                 </p>
               </motion.div>
             </div>
@@ -243,11 +243,11 @@ const Home: NextPage = () => {
                 className="max-w-xs justify-self-end text-right"
               >
                 <h2 className="font-bold text-2xl text-gray-800">
-                  Experts love it!
+                  Usability ISO
                 </h2>
                 <p className="text-gray-700">
-                  We conducted a usability testing and got __ in a, __ in b, __
-                  in c, and __ in d.
+                  We're planning to conduct ISO to evaluate the usability of our
+                  app.
                 </p>
               </motion.div>
               <motion.div {...enterAnim(0.1, inView4)} className="">
