@@ -246,8 +246,8 @@ const Home: NextPage = () => {
                   Usability ISO
                 </h2>
                 <p className="text-gray-700">
-                  We're planning to conduct ISO to evaluate the usability of our
-                  app.
+                  We&apos;re planning to conduct ISO to evaluate the usability
+                  of our app.
                 </p>
               </motion.div>
               <motion.div {...enterAnim(0.1, inView4)} className="">
