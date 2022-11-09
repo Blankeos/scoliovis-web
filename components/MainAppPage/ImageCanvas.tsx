@@ -2,7 +2,6 @@ import denormalizeLandmarks from "@/utils/denormalizeLandmarks";
 import generatePathFromPoints from "@/utils/generatePathFromPoints";
 import landmarksToCoordinates from "@/utils/landmarksToCoordinates";
 import React, { MutableRefObject, useEffect, useRef, useState } from "react";
-import getLandmarks from "services/getLandmarks";
 import { useStore } from "store";
 
 const ImageCanvas = () => {
@@ -31,11 +30,16 @@ const ImageCanvas = () => {
     initialize();
   }, [scoliovisAPIResponse]);
 
+  // Redraw everytime a setting changes
   useEffect(() => {
-    if (drawSettings && selectedFile && ctx && points) {
+    if (drawSettings && selectedFile && ctx && points && scoliovisAPIResponse) {
       drawImage();
       drawLandmarks({
         points: points,
+        drawSettings: drawSettings,
+      });
+      drawDetections({
+        detections: scoliovisAPIResponse.detections,
         drawSettings: drawSettings,
       });
     }
@@ -53,9 +57,12 @@ const ImageCanvas = () => {
     );
 
     setPoints(points);
-    // Start Drawing
     drawLandmarks({
       points: points,
+      drawSettings: drawSettings,
+    });
+    drawDetections({
+      detections: scoliovisAPIResponse.detections,
       drawSettings: drawSettings,
     });
   }
@@ -75,6 +82,56 @@ const ImageCanvas = () => {
     );
   }
 
+  function drawDetections({
+    detections,
+    drawSettings,
+  }: {
+    detections: DetectionType[];
+    drawSettings: DrawSettingsType;
+  }) {
+    if (!drawSettings.showDetections) return;
+
+    // Drawing Bboxes
+    detections.forEach((detection, i) => {
+      let width = detection.xmax - detection.xmin;
+      let height = detection.ymax - detection.ymin;
+
+      // Drawing Rects
+      ctx.current.lineWidth = 2 * drawSettings.detectionsScale;
+      ctx.current.strokeStyle = "blue";
+      ctx.current.strokeRect(detection.xmin, detection.ymin, width, height);
+    });
+
+    // Draw BBox Labels
+    if (!drawSettings.showDetectionLabels) return;
+    detections.forEach((detection, i) => {
+      let fontSize = 30 + drawSettings.detectionsScale * 0.8;
+      // Drawing Text
+      ctx.current.fillStyle = "white";
+      ctx.current.font = `${fontSize}px sans-serif`;
+      ctx.current.textBaseline = "top";
+
+      let padding = 10; // in px
+      let text = `vert: ${(detection.confidence * 100).toFixed(0)}%`;
+      let tm = ctx.current.measureText(text);
+
+      ctx.current.fillStyle = `rgba(0,0,255,0.5)`;
+      ctx.current.fillRect(
+        detection.xmin,
+        detection.ymin,
+        tm.width + padding,
+        fontSize
+      );
+
+      ctx.current.fillStyle = "white";
+      ctx.current.fillText(
+        text,
+        detection.xmin + padding * 0.5,
+        detection.ymin
+      );
+    });
+  }
+
   function drawLandmarks({
     points,
     drawSettings,
@@ -82,6 +139,7 @@ const ImageCanvas = () => {
     points: number[][];
     drawSettings: DrawSettingsType;
   }) {
+    if (!drawSettings.showLandmarks) return;
     // DRAW POINTS
     ctx.current.lineWidth = 5;
     ctx.current.fillStyle = drawSettings.landmarkColor[0];
