@@ -4,14 +4,16 @@ import { Switch as HeadlessSwitch } from "@headlessui/react";
 
 type SwitchProps = {
   enabled: boolean;
-  setEnabled: React.Dispatch<React.SetStateAction<boolean>>;
+  setEnabled: (value: boolean) => void;
 };
 const SmallSwitch: React.FC<SwitchProps> = ({ enabled, setEnabled }) => {
   return (
     <HeadlessSwitch
       checked={enabled}
       onChange={setEnabled}
-      className="inline-flex border rounded-lg w-[3.8rem] p-0.5 bg-gray-200 border-gray-300"
+      className={`${
+        enabled ? "bg-primary border-blue-700 " : "bg-gray-200 border-gray-300 "
+      } inline-flex border rounded-lg w-[2.9rem] p-0.5 transition ease-in-out duration-150`}
       // className={`${enabled ? "bg-blue-700" : "bg-gray-300"}
       // relative inline-flex items-center h-[28px] w-[50px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
     >
@@ -19,8 +21,8 @@ const SmallSwitch: React.FC<SwitchProps> = ({ enabled, setEnabled }) => {
       <span
         aria-hidden="true"
         className={`${
-          enabled ? "translate-x-[26px]" : "translate-x-0"
-        } h-7 w-7 bg-white shadow rounded-md transition pointer-events-none ease-in-out duration-150`}
+          enabled ? "translate-x-[20px]" : "translate-x-0"
+        } h-5 w-5 bg-white shadow rounded-md transition pointer-events-none ease-in-out duration-150`}
       />
       {/* <span
         aria-hidden="true"
