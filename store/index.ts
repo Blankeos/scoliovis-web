@@ -9,9 +9,11 @@ export interface IStoreState {
   drawSettings: DrawSettingsType;
   scoliovisAPIResponse?: ScolioVisAPIResponseType;
 
-  // Actions
-  setScoliovisAPIResponse: (responseData?: ScolioVisAPIResponseType) => void;
+  // Actions: Context
   setSelectedFile: (file?: ISelectedFile) => void;
+  setScoliovisAPIResponse: (responseData?: ScolioVisAPIResponseType) => void;
+
+  // Actions: DrawSettings
   setLandmarkDisplayType: (displayType: LandmarkDisplayType) => void;
   setLandmarkSize: (size: number) => void;
   setLandmarkColor: ({
@@ -21,6 +23,12 @@ export interface IStoreState {
     topColor?: string;
     bottomColor?: string;
   }) => void;
+  setLineWidth: (lineWidth: number) => void;
+  setShowDetections: (show: boolean) => void;
+  setShowDetectionLabels: (show: boolean) => void;
+  setShowLandmarks: (show: boolean) => void;
+  setShowCobbAngle: (show: boolean) => void;
+  setDetectionsScale: (scale: number) => void;
 }
 
 export const useStore = create<IStoreState>()(
@@ -28,10 +36,15 @@ export const useStore = create<IStoreState>()(
     immer((set) => ({
       selectedFile: undefined,
       drawSettings: {
+        showCobbAngle: true,
+        showLandmarks: true,
+        showDetections: false,
+        showDetectionLabels: true,
         landmarkDisplayType: "no_lines",
         landmarkColor: ["#FFFFFF", "#8ED1FC"],
         landmarkSize: 7,
         lineWidth: 2,
+        detectionsScale: 1,
       },
       scoliovisAPIResponse: undefined,
       setScoliovisAPIResponse: (responseData) =>
@@ -57,6 +70,30 @@ export const useStore = create<IStoreState>()(
         set((state) => {
           if (topColor) state.drawSettings.landmarkColor[0] = topColor;
           if (bottomColor) state.drawSettings.landmarkColor[1] = bottomColor;
+        }),
+      setLineWidth: (lineWidth) =>
+        set((state) => {
+          state.drawSettings.lineWidth = lineWidth;
+        }),
+      setShowDetections: (show) =>
+        set((state) => {
+          state.drawSettings.showDetections = show;
+        }),
+      setShowLandmarks: (show) =>
+        set((state) => {
+          state.drawSettings.showLandmarks = show;
+        }),
+      setShowCobbAngle: (show) =>
+        set((state) => {
+          state.drawSettings.showCobbAngle = show;
+        }),
+      setDetectionsScale: (scale) =>
+        set((state) => {
+          state.drawSettings.detectionsScale = scale;
+        }),
+      setShowDetectionLabels: (show) =>
+        set((state) => {
+          state.drawSettings.showDetectionLabels = show;
         }),
     }))
   )
