@@ -37,8 +37,8 @@ import { TwitterPicker } from "react-color";
 import ImageUploadBox from "components/ImageUploadBox";
 import enterAnim from "@/utils/enterAnim";
 import ExampleImageButton from "components/ExampleImageButton";
-import getLandmarks from "services/getLandmarks";
 import Image from "next/image";
+import getPrediction from "services/getPrediction";
 
 const DISPLAY_TYPES: LandmarkDisplayType[] = [
   "no_lines",
@@ -49,6 +49,9 @@ const DISPLAY_TYPES: LandmarkDisplayType[] = [
 
 const MainAppPage = () => {
   const selectedFile = useStore((state) => state.selectedFile);
+  const scolioVisAPIResponse = useStore((state) => state.scoliovisAPIResponse);
+
+  // Draw Settings
   const drawSettings = useStore((state) => state.drawSettings);
   const setLandmarkSize = useStore((state) => state.setLandmarkSize);
   const setLandmarkColor = useStore((state) => state.setLandmarkColor);
@@ -58,14 +61,20 @@ const MainAppPage = () => {
   const setScoliovisAPIResponse = useStore(
     (state) => state.setScoliovisAPIResponse
   );
-  const scolioVisAPIResponse = useStore((state) => state.scoliovisAPIResponse);
+  const setShowDetections = useStore((state) => state.setShowDetections);
+  const setShowLandmarks = useStore((state) => state.setShowLandmarks);
+  const setShowCobbAngle = useStore((state) => state.setShowCobbAngle);
+  const setDetectionsScale = useStore((state) => state.setDetectionsScale);
+  const setShowDetectionLabels = useStore(
+    (state) => state.setShowDetectionLabels
+  );
 
   async function fetchData(file: ISelectedFile) {
     sdInformer.start();
     setScoliovisAPIResponse();
     setLoading(true);
     try {
-      const res: any = await getLandmarks(file);
+      const res: any = await getPrediction(file);
       setScoliovisAPIResponse(res.data);
       console.log(res.data);
       // console.log(response.data);
@@ -184,12 +193,12 @@ const MainAppPage = () => {
           </motion.div>
         </div>
         {/* Second Section */}
-        <div className="shadow-xl flex flex-col overflow-y-auto max-w-xs w-full p-3 gap-y-2">
+        <div className="shadow-xl flex flex-col overflow-y-auto max-w-xs w-full p-3 gap-y-3">
           <h1 className="text-lg text-primary text-center">
             <span className="font-black">Scolio</span>Vis
           </h1>
           <hr />
-          <h2 className="flex items-center gap-x-2 text-sm text-gray-700 font-semibold mt-3">
+          <h2 className="flex items-center gap-x-2 text-sm text-gray-700 font-semibold">
             {/* <UploadIcon /> */}
             <span>Input Image</span>
           </h2>
@@ -202,107 +211,175 @@ const MainAppPage = () => {
           <hr />
           {!loading && scolioVisAPIResponse && (
             <>
-              <h2 className="flex items-center gap-x-2 text-sm text-gray-700 font-semibold mt-3">
-                {/* <ObjectDetectionIcon /> */}
+              <h2 className="flex items-center gap-x-2 text-sm text-gray-700 font-semibold">
+                <SmallSwitch
+                  enabled={drawSettings.showDetections}
+                  setEnabled={setShowDetections}
+                />
+                <ObjectDetectionIcon />
                 <span>Detection Display</span>
               </h2>
+              {drawSettings.showDetections && (
+                <div className="flex flex-col gap-y-0.5">
+                  <div className="grid grid-cols-[50px,1fr] items-center border border-transparent hover:border-gray-500 pl-3 h-9 gap-x-2">
+                    <div className="flex justify-start">
+                      <input
+                        className="cursor-pointer"
+                        type="checkbox"
+                        id="showDetectionLabels"
+                        checked={drawSettings.showDetectionLabels}
+                        onChange={(e) => {
+                          setShowDetectionLabels(e.target.checked);
+                          // e.target.checked
+                        }}
+                      />
+                    </div>
+                    <label
+                      htmlFor="showDetectionLabels"
+                      className="cursor-pointer select-none text-xs"
+                    >
+                      Show Detection Labels
+                    </label>
+                  </div>
+                  <div className="grid grid-cols-[50px,1fr] items-center border border-transparent hover:border-gray-500 pl-3 h-9 gap-x-2">
+                    <label className="text-xs truncate">Scale</label>
+                    <div className="h-7 select-none flex">
+                      <input
+                        className="cursor-grab active:cursor-grabbing"
+                        type="range"
+                        min="1"
+                        max="4"
+                        onChange={(e) => {
+                          setDetectionsScale(parseInt(e.target.value));
+                        }}
+                        value={drawSettings.detectionsScale}
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
               <hr />
-              <h2 className="flex items-center gap-x-2 text-sm text-gray-700 font-semibold mt-3">
-                {/* <LandmarkEstimationIcon /> */}
+              <h2 className="flex items-center gap-x-2 text-sm text-gray-700 font-semibold">
+                <SmallSwitch
+                  enabled={drawSettings.showLandmarks}
+                  setEnabled={setShowLandmarks}
+                />
+                <LandmarkEstimationIcon />
                 <span>Landmark Display</span>
               </h2>
-              <MultiSwitch
-                currentIndex={currentIndex}
-                onChange={(indexClicked) => {
-                  setCurrentIndex((prev) => {
-                    setLandmarkDisplayType(DISPLAY_TYPES[indexClicked]);
-                    return indexClicked;
-                  });
-                }}
-              />
-              <div className="flex gap-x-2">
-                <Tippy
-                  interactive={true}
-                  placement="top"
-                  content={
-                    <span>
-                      <TwitterPicker
-                        color={drawSettings.landmarkColor[0]}
-                        colors={[
-                          "#FFFFFF",
-                          "#FF6900",
-                          "#FCB900",
-                          "#8ED1FC",
-                          "#F78DA7",
-                          "#7BDCB5",
-                          "#00D084",
-                        ]}
-                        triangle="hide"
-                        onChange={(color) => {
-                          setLandmarkColor({
-                            topColor: color.hex,
+              {drawSettings.showLandmarks && (
+                <div className="flex flex-col gap-y-0.5">
+                  <div className="grid grid-cols-[50px,1fr] items-center border border-transparent hover:border-gray-500 pl-3 h-9 gap-x-2">
+                    <label className="text-xs">Mode</label>
+                    <div className="flex">
+                      <MultiSwitch
+                        currentIndex={currentIndex}
+                        onChange={(indexClicked) => {
+                          setCurrentIndex((prev) => {
+                            setLandmarkDisplayType(DISPLAY_TYPES[indexClicked]);
+                            return indexClicked;
                           });
                         }}
                       />
-                    </span>
-                  }
-                >
-                  <div
-                    className="h-7 w-7 border rounded-lg"
-                    style={{ background: drawSettings.landmarkColor[0] }}
-                  ></div>
-                </Tippy>
-                <Tippy
-                  interactive={true}
-                  placement="top"
-                  content={
-                    <span>
-                      <TwitterPicker
-                        color={drawSettings.landmarkColor[1]}
-                        colors={[
-                          "#FFFFFF",
-                          "#FF6900",
-                          "#FCB900",
-                          "#8ED1FC",
-                          "#F78DA7",
-                          "#7BDCB5",
-                          "#00D084",
-                        ]}
-                        triangle="hide"
-                        onChange={(color) => {
-                          setLandmarkColor({
-                            bottomColor: color.hex,
-                          });
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-[50px,1fr] items-center border border-transparent hover:border-gray-500 pl-3 h-9 gap-x-2">
+                    <label className="text-xs">Colors</label>
+                    <div className="flex gap-x-2">
+                      <Tippy
+                        interactive={true}
+                        trigger="click"
+                        theme="transparent"
+                        placement="bottom"
+                        content={
+                          <span>
+                            <TwitterPicker
+                              color={drawSettings.landmarkColor[0]}
+                              colors={[
+                                "#FFFFFF",
+                                "#FF6900",
+                                "#FCB900",
+                                "#8ED1FC",
+                                "#F78DA7",
+                                "#7BDCB5",
+                                "#00D084",
+                              ]}
+                              triangle="hide"
+                              onChange={(color) => {
+                                setLandmarkColor({
+                                  topColor: color.hex,
+                                });
+                              }}
+                            />
+                          </span>
+                        }
+                      >
+                        <div
+                          className="h-7 w-7 border rounded-lg cursor-pointer"
+                          style={{ background: drawSettings.landmarkColor[0] }}
+                        ></div>
+                      </Tippy>
+                      <Tippy
+                        interactive={true}
+                        trigger="click"
+                        theme="transparent"
+                        placement="bottom"
+                        content={
+                          <span>
+                            <TwitterPicker
+                              color={drawSettings.landmarkColor[1]}
+                              colors={[
+                                "#FFFFFF",
+                                "#FF6900",
+                                "#FCB900",
+                                "#8ED1FC",
+                                "#F78DA7",
+                                "#7BDCB5",
+                                "#00D084",
+                              ]}
+                              triangle="hide"
+                              onChange={(color) => {
+                                setLandmarkColor({
+                                  bottomColor: color.hex,
+                                });
+                              }}
+                            />
+                          </span>
+                        }
+                      >
+                        <div
+                          className="h-7 w-7 border rounded-lg cursor-pointer"
+                          style={{ background: drawSettings.landmarkColor[1] }}
+                        ></div>
+                      </Tippy>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-[50px,1fr] items-center border border-transparent hover:border-gray-500 pl-3 h-9 gap-x-2">
+                    <label className="text-xs">Radius</label>
+                    <div className="h-7 select-none flex">
+                      <input
+                        className="cursor-grab active:cursor-grabbing"
+                        type="range"
+                        min="0"
+                        max="20"
+                        onChange={(e) => {
+                          setLandmarkSize(parseInt(e.target.value));
                         }}
+                        value={drawSettings.landmarkSize}
                       />
-                    </span>
-                  }
-                >
-                  <div
-                    className="h-7 w-7 border rounded-lg"
-                    style={{ background: drawSettings.landmarkColor[1] }}
-                  ></div>
-                </Tippy>
-              </div>
-              <div className="h-7">
-                <input
-                  type="range"
-                  min="0"
-                  max="20"
-                  onChange={(e) => {
-                    setLandmarkSize(parseInt(e.target.value));
-                  }}
-                  value={drawSettings.landmarkSize}
-                />
-              </div>
+                    </div>
+                  </div>
+                </div>
+              )}
               <hr />
-              <h2 className="flex items-center gap-x-2 text-sm text-gray-700 font-semibold mt-3">
-                {/* <CobbAngleIcon /> */}
+              <h2 className="flex items-center gap-x-2 text-sm text-gray-700 font-semibold">
+                <SmallSwitch
+                  enabled={drawSettings.showCobbAngle}
+                  setEnabled={setShowCobbAngle}
+                />
+                <CobbAngleIcon />
                 <span>Cobb Angle Display</span>
               </h2>
-              <div className="grid grid-cols-[7rem,1fr] text-sm cursor-pointer items-center self-start">
-                <SmallSwitch enabled={showAngle} setEnabled={setShowAngle} />
-              </div>
             </>
           )}
           {loading && (
