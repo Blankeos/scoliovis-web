@@ -6,10 +6,20 @@ interface ISelectedFile extends File {
 }
 
 type DrawSettingsType = {
+  // Detections
+  showDetections: boolean;
+  showDetectionLabels: boolean;
+  detectionsScale: number;
+
+  // Landmarks
+  showLandmarks: boolean;
   landmarkDisplayType: LandmarkDisplayType;
   landmarkSize: number;
   landmarkColor: [string, string];
   lineWidth: number;
+
+  // Cobb Angle
+  showCobbAngle: boolean;
 };
 
 type LandmarkDisplayType =
@@ -20,6 +30,19 @@ type LandmarkDisplayType =
 
 type ScolioVisAPIResponseType = {
   landmarks: number[];
+  detections: DetectionType[];
+  normalized_detections: DetectionType[];
+  base64_image: string;
+};
+
+type DetectionType = {
+  class: number;
+  confidence: number;
+  name: string;
+  xmin: number;
+  ymin: number;
+  xmax: number;
+  ymax: number;
 };
 
 // Custom Type for a React functional component with props AND CHILDREN
