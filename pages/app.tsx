@@ -221,7 +221,7 @@ const MainAppPage = () => {
               </h2>
               {drawSettings.showDetections && (
                 <div className="flex flex-col gap-y-0.5">
-                  <div className="grid grid-cols-[50px,1fr] items-center border border-transparent hover:border-gray-500 pl-3 h-9 gap-x-2">
+                  <div className="grid grid-cols-[50px,1fr] items-center border border-transparent pl-3 h-9 gap-x-2">
                     <div className="flex justify-start">
                       <input
                         className="cursor-pointer"
@@ -241,7 +241,7 @@ const MainAppPage = () => {
                       Show Detection Labels
                     </label>
                   </div>
-                  <div className="grid grid-cols-[50px,1fr] items-center border border-transparent hover:border-gray-500 pl-3 h-9 gap-x-2">
+                  <div className="grid grid-cols-[50px,1fr] items-center border border-transparent pl-3 h-9 gap-x-2">
                     <label className="text-xs truncate">Scale</label>
                     <div className="h-7 select-none flex">
                       <input
@@ -269,7 +269,7 @@ const MainAppPage = () => {
               </h2>
               {drawSettings.showLandmarks && (
                 <div className="flex flex-col gap-y-0.5">
-                  <div className="grid grid-cols-[50px,1fr] items-center border border-transparent hover:border-gray-500 pl-3 h-9 gap-x-2">
+                  <div className="grid grid-cols-[50px,1fr] items-center border border-transparent pl-3 h-9 gap-x-2">
                     <label className="text-xs">Mode</label>
                     <div className="flex">
                       <MultiSwitch
@@ -283,7 +283,7 @@ const MainAppPage = () => {
                       />
                     </div>
                   </div>
-                  <div className="grid grid-cols-[50px,1fr] items-center border border-transparent hover:border-gray-500 pl-3 h-9 gap-x-2">
+                  <div className="grid grid-cols-[50px,1fr] items-center border border-transparent pl-3 h-9 gap-x-2">
                     <label className="text-xs">Colors</label>
                     <div className="flex gap-x-2">
                       <Tippy
@@ -354,7 +354,7 @@ const MainAppPage = () => {
                       </Tippy>
                     </div>
                   </div>
-                  <div className="grid grid-cols-[50px,1fr] items-center border border-transparent hover:border-gray-500 pl-3 h-9 gap-x-2">
+                  <div className="grid grid-cols-[50px,1fr] items-center border border-transparent pl-3 h-9 gap-x-2">
                     <label className="text-xs">Radius</label>
                     <div className="h-7 select-none flex">
                       <input
