@@ -37,8 +37,8 @@ export const useStore = create<IStoreState>()(
       selectedFile: undefined,
       drawSettings: {
         showCobbAngle: true,
-        showLandmarks: true,
-        showDetections: false,
+        showLandmarks: false,
+        showDetections: true,
         showDetectionLabels: true,
         landmarkDisplayType: "no_lines",
         landmarkColor: ["#FFFFFF", "#8ED1FC"],
