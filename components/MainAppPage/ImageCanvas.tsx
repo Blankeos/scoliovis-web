@@ -112,7 +112,7 @@ const ImageCanvas = () => {
       ctx.current.textBaseline = "top";
 
       let padding = 10; // in px
-      let text = `vert: ${(detection.confidence * 100).toFixed(0)}%`;
+      let text = `(${i + 1}) vert: ${(detection.confidence * 100).toFixed(0)}%`;
       let tm = ctx.current.measureText(text);
 
       ctx.current.fillStyle = `rgba(0,0,255,0.5)`;
