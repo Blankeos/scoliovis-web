@@ -40,6 +40,8 @@ import ExampleImageButton from "components/ExampleImageButton";
 import Image from "next/image";
 import getPrediction from "services/getPrediction";
 
+import usePanZoom from "use-pan-and-zoom";
+
 const DISPLAY_TYPES: LandmarkDisplayType[] = [
   "no_lines",
   "top_lines",
@@ -102,98 +104,79 @@ const MainAppPage = () => {
   const [showAngle, setShowAngle] = useState<boolean>(true);
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  const { transform, setContainer, panZoomHandlers } = usePanZoom({
+    zoomSensitivity: 0.001,
+  });
+
   return (
     <div className="relative flex flex-col min-h-screen max-h-screen overflow-hidden">
       <Head pageTitle="Main App" pagePath="app" />
-      <nav className="absolute z-20 grid grid-cols-5 p-3">
+      <nav className="absolute grid grid-cols-5 p-3">
         <div className="col-span-1 flex justify-start h-12">
           <Link href="/">
-            <a className="flex h-full px-5 items-center gap-2 border rounded-xl text-sm hover:bg-primary hover:border-primary hover:text-white hover:shadow-md transition bg-white bg-opacity-50">
+            <a className="relative z-20 flex h-full px-5 items-center gap-2 border rounded-xl text-sm hover:bg-primary hover:border-primary hover:text-white hover:shadow-md transition bg-white bg-opacity-50">
               <ArrowIcon size="1.2rem" />
               <span>Back</span>
             </a>
           </Link>
         </div>
-        {/* <div className="flex items-center col-span-3 justify-center">
-          <Tippy content="1. Input Image">
-            <div className="flex-shrink-0 w-12 h-12 grid place-items-center rounded-lg bg-primary text-white">
-              <UploadIcon size="1.7rem" />
-            </div>
-          </Tippy>
-          <span className="w-8 h-0.5 bg-sky-100" />
-          <Tippy content="2. Object Detection">
-            <div className="flex-shrink-0 w-12 h-12 grid place-items-center rounded-lg bg-sky-100 text-gray-500">
-              <ObjectDetectionIcon size="1.7rem" />
-            </div>
-          </Tippy>
-          <span className="w-8 h-0.5 bg-sky-100" />
-          <Tippy content="3. Landmark Estimation">
-            <div className="flex-shrink-0 w-12 h-12 grid place-items-center rounded-lg bg-sky-100 text-gray-500">
-              <LandmarkEstimationIcon size="1.7rem" />
-            </div>
-          </Tippy>
-          <span className="w-8 h-0.5 bg-sky-100" />
-          <Tippy content="4. Cobb Angle Calculation">
-            <div className="flex-shrink-0 w-12 h-12 grid place-items-center rounded-lg bg-sky-100 text-gray-500">
-              <CobbAngleIcon size="1.7rem" />
-            </div>
-          </Tippy>
-          <span className="w-8 h-0.5 bg-sky-100" />
-          <Tippy content="5. Complete!">
-            <div className="flex-shrink-0 w-12 h-12 grid place-items-center rounded-lg bg-sky-100 text-gray-500">
-              <CheckIcon size="1.7rem" />
-            </div>
-          </Tippy>
-        </div>
-        <div className="col-span-1" /> */}
       </nav>
-      <main className="flex-grow h-full flex overflow-y-hidden">
-        {/* First Section */}
-        <div className="flex-grow p-3 bg-gray-200 shadow-inner">
+      <main className="min-h-screen max-h-screen flex flex-col sm:flex-row bg-gray-300 overflow-hidden">
+        {/* === MAIN SECTION === */}
+        {selectedFile && (
           <motion.div
             initial={{ scale: 0.5, opacity: 0.5 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ type: "spring", duration: 0.8 }}
-            className="relative max-w-4xl h-full w-full mx-auto"
+            ref={(el) => setContainer(el)}
+            {...panZoomHandlers}
+            style={{ touchAction: "none" }}
+            className="flex-1 flex bg-opacity-50 p-3 shadow-inner cursor-grab active:cursor-grabbing overflow-hidden"
           >
-            {selectedFile ? (
+            <div
+              style={{ transform }}
+              className="flex flex-col relative max-w-4xl w-full mx-auto"
+            >
               <ImageCanvas />
-            ) : (
-              <div className="h-full relative flex flex-col">
-                <ImageUploadBox file={selectedFile} bgClass="bg-gray-100" />
-                <div className="fluid-container p-7 flex flex-col items-center gap-y-5 overflow-hidden">
-                  <motion.p
-                    {...enterAnim(0.2)}
-                    className="flex gap-x-2 items-center text-gray-500 text-sm"
-                  >
-                    <ArrowIcon className="-rotate-90" />
-                    Or try with these example spine images
-                  </motion.p>
-                  <motion.div {...enterAnim(0.3)} className="flex gap-5">
-                    <ExampleImageButton
-                      exampleImageURL="/example_images/1.jpg"
-                      routeToApp={false}
-                    />
-                    <ExampleImageButton
-                      exampleImageURL="/example_images/2.jpg"
-                      routeToApp={false}
-                    />
-                    <ExampleImageButton
-                      exampleImageURL="/example_images/3.jpg"
-                      routeToApp={false}
-                    />
-                    <ExampleImageButton
-                      exampleImageURL="/example_images/4.jpg"
-                      routeToApp={false}
-                    />
-                  </motion.div>
-                </div>
-              </div>
-            )}
+            </div>
           </motion.div>
-        </div>
-        {/* Second Section */}
-        <div className="shadow-xl flex flex-col overflow-y-auto max-w-xs w-full p-3 gap-y-3">
+        )}
+        {!selectedFile && (
+          <div className="flex-1 flex bg-opacity-50 p-3 shadow-inner cursor-grab active:cursor-grabbing overflow-hidden">
+            <div className="relative flex flex-col max-w-2xl w-full mx-auto">
+              <ImageUploadBox file={selectedFile} bgClass="bg-gray-100" />
+              <div className="fluid-container p-7 flex flex-col items-center gap-y-5">
+                <motion.p
+                  {...enterAnim(0.2)}
+                  className="flex gap-x-2 items-center text-gray-500 text-sm"
+                >
+                  <ArrowIcon className="-rotate-90" />
+                  Or try with these example spine images
+                </motion.p>
+                <motion.div {...enterAnim(0.3)} className="flex gap-5">
+                  <ExampleImageButton
+                    exampleImageURL="/example_images/1.jpg"
+                    routeToApp={false}
+                  />
+                  <ExampleImageButton
+                    exampleImageURL="/example_images/2.jpg"
+                    routeToApp={false}
+                  />
+                  <ExampleImageButton
+                    exampleImageURL="/example_images/3.jpg"
+                    routeToApp={false}
+                  />
+                  <ExampleImageButton
+                    exampleImageURL="/example_images/4.jpg"
+                    routeToApp={false}
+                  />
+                </motion.div>
+              </div>
+            </div>
+          </div>
+        )}
+        {/* === SIDE BAR === */}
+        <div className="order-first sm:order-last bg-white shadow-xl flex flex-col overflow-y-auto sm:max-w-xs w-full p-3 gap-y-3">
           <h1 className="text-lg text-primary text-center">
             <span className="font-black">Scolio</span>Vis
           </h1>

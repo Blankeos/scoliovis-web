@@ -31,6 +31,7 @@ specifiers:
   tailwindcss: ^3.1.8
   tippy.js: ^6.3.7
   typescript: 4.6.3
+  use-pan-and-zoom: ^0.6.5
   zustand: ^4.1.3
 
 dependencies:
@@ -53,6 +54,7 @@ dependencies:
   react-icons: 4.6.0_react@18.0.0
   react-scroll: 1.8.7_zpnidt7m3osuk7shl3s4oenomq
   tippy.js: 6.3.7
+  use-pan-and-zoom: 0.6.5_react@18.0.0
   zustand: 4.1.3_immer@9.0.15+react@18.0.0
 
 devDependencies:
@@ -2470,6 +2472,14 @@ packages:
     dependencies:
       punycode: 2.1.1
     dev: true
+
+  /use-pan-and-zoom/0.6.5_react@18.0.0:
+    resolution: {integrity: sha512-f/w1/AjfhfUUZiQ0+kHAPqwJLDW8mEX1UMiN6aK2LDl9hIpIr4d57h8+WjXFUAtYXJ+I3+CQSoujH3/gChNP7w==}
+    peerDependencies:
+      react: ^17.0.2
+    dependencies:
+      react: 18.0.0
+    dev: false
 
   /use-sync-external-store/1.2.0_react@18.0.0:
     resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}
