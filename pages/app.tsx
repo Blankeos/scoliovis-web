@@ -104,9 +104,7 @@ const MainAppPage = () => {
   const [showAngle, setShowAngle] = useState<boolean>(true);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const { transform, setContainer, panZoomHandlers } = usePanZoom({
-    zoomSensitivity: 0.001,
-  });
+  const { transform, setContainer, panZoomHandlers } = usePanZoom();
 
   return (
     <div className="relative flex flex-col min-h-screen max-h-screen overflow-hidden">
