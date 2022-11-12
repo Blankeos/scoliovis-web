@@ -52,6 +52,7 @@ const ExportPopover: React.FC<IExportPopoverProps> = ({ exportItems }) => {
           <div className="relative z-20 shadow rounded-full bg-white text-primary h-12 flex items-center gap-x-5 px-5 border">
             {exportItems.map((eI, i) => (
               <Tippy
+                key={i}
                 theme="transparent"
                 placement="top"
                 animation="shift-away-subtle"
