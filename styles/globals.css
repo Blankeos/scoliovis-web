@@ -39,8 +39,50 @@ a {
 }
 
 /* START: Tippy Stuff */
+
+/* Transparent THEME */
 .tippy-box[data-theme~="transparent"] {
   background-color: transparent;
-  color: transparent;
+  color: #0073f5;
+}
+
+.tippy-box[data-theme~="transparent"][data-placement^="top"]
+  > .tippy-arrow::before {
+  border-top-color: #0073f5;
+}
+.tippy-box[data-theme~="transparent"][data-placement^="bottom"]
+  > .tippy-arrow::before {
+  border-bottom-color: #0073f5;
+}
+.tippy-box[data-theme~="transparent"][data-placement^="left"]
+  > .tippy-arrow::before {
+  border-left-color: #0073f5;
+}
+.tippy-box[data-theme~="transparent"][data-placement^="right"]
+  > .tippy-arrow::before {
+  border-right-color: #0073f5;
+}
+
+/* Plain THEME */
+.tippy-box[data-theme~="plain-white"] {
+  background-color: white;
+  color: black;
+}
+
+.tippy-box[data-theme~="plain-white"][data-placement^="top"]
+  > .tippy-arrow::before {
+  border-top-color: white;
+}
+.tippy-box[data-theme~="plain-white"][data-placement^="bottom"]
+  > .tippy-arrow::before {
+  border-bottom-color: white;
+}
+.tippy-box[data-theme~="plain-white"][data-placement^="left"]
+  > .tippy-arrow::before {
+  border-left-color: white;
+}
+.tippy-box[data-theme~="plain-white"][data-placement^="right"]
+  > .tippy-arrow::before {
+  border-right-color: white;
 }
 /* END: Tippy Stuff */
