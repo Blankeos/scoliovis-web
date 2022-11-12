@@ -1,7 +1,7 @@
 import Head from "components/Head";
 import Link from "next/link";
 
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import { Switch, Transition } from "@headlessui/react";
 
 // Icons
@@ -15,17 +15,10 @@ import {
   RiShapeFill as LandmarkEstimationIcon,
   RiCheckboxCircleLine as CheckIcon,
 } from "react-icons/ri";
-import // TiImage as UploadIcon,
-// TiCameraOutline as ObjectDetectionIcon,
-// TiFlowParallel as LandmarkEstimationIcon,
-// TiTick as CheckIcon,
-"react-icons/ti";
 import { BsFileEarmarkImage as ImageIcon } from "react-icons/bs";
-
 import { TbAngle as CobbAngleIcon } from "react-icons/tb";
-import useServerDelayInformer from "@/hooks/useServerDelayInformer";
-import uploadFile from "services/uploadFile";
 
+import useServerDelayInformer from "@/hooks/useServerDelayInformer";
 import Tippy from "@tippyjs/react";
 import { useStore } from "store";
 import { motion } from "framer-motion";
@@ -41,6 +34,11 @@ import Image from "next/image";
 import getPrediction from "services/getPrediction";
 
 import usePanZoom from "use-pan-and-zoom";
+import { Resizable } from "re-resizable";
+
+import "tippy.js/animations/shift-toward-subtle.css";
+import "tippy.js/animations/shift-away-subtle.css";
+import ExportPopover from "components/MainAppPage/ExportPopover";
 
 const DISPLAY_TYPES: LandmarkDisplayType[] = [
   "no_lines",
@@ -99,13 +97,14 @@ const MainAppPage = () => {
     useState<ISegmentationResponse>();
 
   // States
-  const [enabled, setEnabled] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
-  const [showAngle, setShowAngle] = useState<boolean>(true);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const { transform, setContainer, panZoomHandlers } = usePanZoom();
+  const { transform, setContainer, panZoomHandlers } = usePanZoom({
+    zoomSensitivity: 0.001,
+  });
 
+  const ref = useRef<HTMLElement>(null);
   return (
     <div className="relative flex flex-col min-h-screen max-h-screen overflow-hidden">
       <Head pageTitle="Main App" pagePath="app" />
@@ -119,7 +118,10 @@ const MainAppPage = () => {
           </Link>
         </div>
       </nav>
-      <main className="min-h-screen max-h-screen flex flex-col sm:flex-row bg-gray-300 overflow-hidden">
+      <main
+        ref={ref}
+        className="min-h-screen max-h-screen flex flex-col sm:flex-row bg-gray-300 overflow-hidden"
+      >
         {/* === MAIN SECTION === */}
         {selectedFile && (
           <motion.div
@@ -174,7 +176,7 @@ const MainAppPage = () => {
           </div>
         )}
         {/* === SIDE BAR === */}
-        <div className="order-first sm:order-last bg-white shadow-xl flex flex-col overflow-y-auto sm:max-w-xs w-full p-3 gap-y-3">
+        <SideBarContainer>
           <h1 className="text-lg text-primary text-center">
             <span className="font-black">Scolio</span>Vis
           </h1>
@@ -272,6 +274,7 @@ const MainAppPage = () => {
                         trigger="click"
                         theme="transparent"
                         placement="bottom"
+                        animation="shift-away-subtle"
                         content={
                           <span>
                             <TwitterPicker
@@ -305,6 +308,7 @@ const MainAppPage = () => {
                         trigger="click"
                         theme="transparent"
                         placement="bottom"
+                        animation="shift-away-subtle"
                         content={
                           <span>
                             <TwitterPicker
@@ -361,6 +365,10 @@ const MainAppPage = () => {
                 <CobbAngleIcon />
                 <span>Cobb Angle Display</span>
               </h2>
+              <div className="flex-1" />
+              <div className="">
+                <ExportPopover />
+              </div>
             </>
           )}
           {loading && (
@@ -412,10 +420,43 @@ const MainAppPage = () => {
               </button>
             </div>
           )}
-        </div>
+        </SideBarContainer>
       </main>
     </div>
   );
 };
 
 export default MainAppPage;
+
+interface ISideBarContainerProps {}
+
+const SideBarContainer: FCC<ISideBarContainerProps> = ({ children }) => {
+  return (
+    <>
+      <Resizable
+        enable={{
+          bottom: false,
+          bottomLeft: false,
+          bottomRight: false,
+          left: true,
+          right: false,
+          top: false,
+          topLeft: false,
+          topRight: false,
+        }}
+        maxWidth="450px"
+        minWidth="250px"
+        defaultSize={{ width: 320, height: "auto" }}
+        handleClasses={{
+          left: "hover:bg-blue-50 active:bg-blue-100 transition",
+        }}
+        className="hidden sm:order-last bg-white shadow-xl sm:flex flex-col overflow-y-auto w-full p-3 px-5 gap-y-3"
+      >
+        {children}
+      </Resizable>
+      <div className="order-first sm:hidden sm:order-last bg-white shadow-xl flex flex-col overflow-y-auto w-full p-3 px-5 gap-y-3 h-96">
+        {children}
+      </div>
+    </>
+  );
+};
