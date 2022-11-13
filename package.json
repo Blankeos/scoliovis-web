@@ -15,6 +15,7 @@
     "axios": "^0.26.1",
     "csstype": "^3.1.1",
     "framer-motion": "^7.5.3",
+    "html-to-image": "^1.10.8",
     "immer": "^9.0.15",
     "lottie-react": "^2.3.1",
     "lottie-web": "^5.9.6",
@@ -27,7 +28,9 @@
     "react-dropzone": "^12.1.0",
     "react-hot-toast": "^2.4.0",
     "react-icons": "^4.6.0",
+    "react-merge-refs": "^2.0.1",
     "react-scroll": "^1.8.7",
+    "react-to-print": "^2.14.8",
     "tippy.js": "^6.3.7",
     "use-pan-and-zoom": "^0.6.5",
     "zustand": "^4.1.3"

@@ -15,6 +15,7 @@ specifiers:
   eslint: 8.13.0
   eslint-config-next: 12.1.4
   framer-motion: ^7.5.3
+  html-to-image: ^1.10.8
   immer: ^9.0.15
   lottie-react: ^2.3.1
   lottie-web: ^5.9.6
@@ -28,7 +29,9 @@ specifiers:
   react-dropzone: ^12.1.0
   react-hot-toast: ^2.4.0
   react-icons: ^4.6.0
+  react-merge-refs: ^2.0.1
   react-scroll: ^1.8.7
+  react-to-print: ^2.14.8
   tailwindcss: ^3.1.8
   tippy.js: ^6.3.7
   typescript: 4.6.3
@@ -42,6 +45,7 @@ dependencies:
   axios: 0.26.1
   csstype: 3.1.1
   framer-motion: 7.5.3_zpnidt7m3osuk7shl3s4oenomq
+  html-to-image: 1.10.8
   immer: 9.0.15
   lottie-react: 2.3.1_zpnidt7m3osuk7shl3s4oenomq
   lottie-web: 5.9.6
@@ -54,7 +58,9 @@ dependencies:
   react-dropzone: 12.1.0_react@18.0.0
   react-hot-toast: 2.4.0_4kdkx677ed266evrvxj3s2eng4
   react-icons: 4.6.0_react@18.0.0
+  react-merge-refs: 2.0.1
   react-scroll: 1.8.7_zpnidt7m3osuk7shl3s4oenomq
+  react-to-print: 2.14.8_zpnidt7m3osuk7shl3s4oenomq
   tippy.js: 6.3.7
   use-pan-and-zoom: 0.6.5_react@18.0.0
   zustand: 4.1.3_immer@9.0.15+react@18.0.0
@@ -1435,6 +1441,10 @@ packages:
     resolution: {integrity: sha512-COpmrF2NOg4TBWUJ5UVyaCU2A88wEMkUPK4hNqyCkqHbxT92BbvfjoSozkAIIm6XhicGlJHhFdullInrdhwU8Q==}
     dev: false
 
+  /html-to-image/1.10.8:
+    resolution: {integrity: sha512-t+JyFJwKDCp4ZwBp4iC/wqw0meQDDc77Qs8OFl5P7RGlIP3LQMvwpD7VXxqQfC7/TfC+GKYlFP6WDYfXTmXHfw==}
+    dev: false
+
   /ignore/5.2.0:
     resolution: {integrity: sha512-CmxgYGiEPCLhfLnpPp1MoRmifwEIOgjcHXxOBjv7mY96c+eWScsOP9c112ZyLdWHi0FxHjI+4uVhKYp/gcdRmQ==}
     engines: {node: '>= 4'}
@@ -2114,6 +2124,10 @@ packages:
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
+  /react-merge-refs/2.0.1:
+    resolution: {integrity: sha512-pywF6oouJWuqL26xV3OruRSIqai31R9SdJX/I3gP2q8jLxUnA1IwXcLW8werUHLZOrp4N7YOeQNZrh/BKrHI4A==}
+    dev: false
+
   /react-scroll/1.8.7_zpnidt7m3osuk7shl3s4oenomq:
     resolution: {integrity: sha512-fBOIwweAlhicx8RqP9tQXn/Uhd+DTtVRjw+0VBsIn1Z+MjRYLhTZ0tMoTAU1vOD3dce8mI6copexI4yWII+Luw==}
     peerDependencies:
@@ -2121,6 +2135,17 @@ packages:
       react-dom: ^15.5.4 || ^16.0.0 || ^17.0.0 || ^18.0.0
     dependencies:
       lodash.throttle: 4.1.1
+      prop-types: 15.8.1
+      react: 18.0.0
+      react-dom: 18.0.0_react@18.0.0
+    dev: false
+
+  /react-to-print/2.14.8_zpnidt7m3osuk7shl3s4oenomq:
+    resolution: {integrity: sha512-5MkSF3rLdxF9gmcSA6PdqTq9IFh7XkpYiJGP15OW+7hVr0+bpjLvi+kAIAuVjyV5/pv4GI3GuhVBQ0/hq94EZg==}
+    peerDependencies:
+      react: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+    dependencies:
       prop-types: 15.8.1
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
