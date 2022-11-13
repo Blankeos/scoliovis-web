@@ -12,6 +12,8 @@ import { useStore } from "store";
 import { mergeRefs } from "react-merge-refs";
 
 interface IImageCanvasProps {}
+
+/* eslint-disable react/display-name */
 const ImageCanvas = forwardRef<HTMLCanvasElement, IImageCanvasProps>(
   (props, ref) => {
     // From Global State
