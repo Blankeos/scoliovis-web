@@ -42,7 +42,18 @@ const Home: NextPage = () => {
       <main className="flex-grow h-full">
         <header className="">
           <div className="relative fluid-container px-9 flex flex-col overflow-hidden">
-            <div className="self-center w-32 h-32 static md:absolute md:bottom-0 md:right-0 md:pb-5 md:w-auto md:h-auto">
+            <motion.div
+              animate={{
+                scaleY: [1, 0.95, 1, 0.93, 1, 0.95, 1, 1, 1],
+                scaleX: [1, 0.98, 1, 1, 0.98, 1, 1, 0.98, 1],
+              }}
+              transition={{
+                repeat: Infinity,
+                duration: 1.5,
+                repeatDelay: 1,
+              }}
+              className="self-center w-32 h-32 static md:absolute md:bottom-0 md:right-0 md:pb-5 md:w-auto md:h-auto"
+            >
               <Image
                 alt="Apex the mascot"
                 src="/assets/apex.png"
@@ -50,7 +61,7 @@ const Home: NextPage = () => {
                 height={180}
                 objectFit="contain"
               />
-            </div>
+            </motion.div>
             <motion.h1
               {...enterAnim()}
               className="text-center text-3xl font-extrabold pt-2 pb-10 md:py-10"
@@ -59,6 +70,7 @@ const Home: NextPage = () => {
               <Tippy
                 followCursor={true}
                 plugins={[followCursor]}
+                animation="scale-extreme"
                 content="The standard measurement for scoliosis severity"
               >
                 <span className="text-primary">Cobb Angle</span>

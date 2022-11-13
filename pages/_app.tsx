@@ -1,9 +1,14 @@
-import "../styles/globals.css";
-import "tippy.js/dist/tippy.css";
 import type { AppProps } from "next/app";
 import NextHead from "next/head";
 import Head from "components/Head";
 import { Toaster } from "react-hot-toast";
+
+// CSS
+import "../styles/globals.css";
+import "tippy.js/dist/tippy.css";
+import "tippy.js/animations/shift-toward-subtle.css";
+import "tippy.js/animations/shift-away-subtle.css";
+import "tippy.js/animations/scale-extreme.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
