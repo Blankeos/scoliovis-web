@@ -1,44 +1,44 @@
 import Head from "components/Head";
+import Image from "next/image";
 import Link from "next/link";
+import React, { useEffect, useRef, useState } from "react";
 
-import React, { Fragment, useEffect, useRef, useState } from "react";
-import { Switch, Transition } from "@headlessui/react";
+import { useStore } from "store";
 
 // Icons
-import {
-  FiArrowLeft as ArrowIcon,
-  FiSettings as SettingsIcon,
-} from "react-icons/fi";
+import { FiArrowLeft as ArrowIcon } from "react-icons/fi";
 import {
   RiSearchEyeLine as ObjectDetectionIcon,
-  RiImageFill as UploadIcon,
   RiShapeFill as LandmarkEstimationIcon,
-  RiCheckboxCircleLine as CheckIcon,
 } from "react-icons/ri";
 import { BsFileEarmarkImage as ImageIcon } from "react-icons/bs";
 import { TbAngle as CobbAngleIcon } from "react-icons/tb";
 
-import useServerDelayInformer from "@/hooks/useServerDelayInformer";
+// Components (Libraries)
 import Tippy from "@tippyjs/react";
-import { useStore } from "store";
 import { motion } from "framer-motion";
+import { TwitterPicker } from "react-color";
+import { Resizable } from "re-resizable";
+
+// Components
 import SmallSwitch from "components/Switch/Switch";
 import MultiSwitch from "components/Switch/MultiSwitch";
 import ImageCanvas from "components/MainAppPage/ImageCanvas";
-
-import { TwitterPicker } from "react-color";
 import ImageUploadBox from "components/ImageUploadBox";
-import enterAnim from "@/utils/enterAnim";
 import ExampleImageButton from "components/ExampleImageButton";
-import Image from "next/image";
+import ExportPopover from "components/MainAppPage/ExportPopover";
+
+// Utils and Services
 import getPrediction from "services/getPrediction";
+import enterAnim from "@/utils/enterAnim";
 
+// Hooks
 import usePanZoom from "use-pan-and-zoom";
-import { Resizable } from "re-resizable";
+import useServerDelayInformer from "@/hooks/useServerDelayInformer";
 
+// CSS
 import "tippy.js/animations/shift-toward-subtle.css";
 import "tippy.js/animations/shift-away-subtle.css";
-import ExportPopover from "components/MainAppPage/ExportPopover";
 
 const DISPLAY_TYPES: LandmarkDisplayType[] = [
   "no_lines",
@@ -48,6 +48,9 @@ const DISPLAY_TYPES: LandmarkDisplayType[] = [
 ];
 
 const MainAppPage = () => {
+  // Ref
+  const imageCanvasRef = useRef<HTMLCanvasElement>(null);
+
   const selectedFile = useStore((state) => state.selectedFile);
   const scolioVisAPIResponse = useStore((state) => state.scoliovisAPIResponse);
 
@@ -134,10 +137,11 @@ const MainAppPage = () => {
             className="flex-1 flex bg-opacity-50 p-3 shadow-inner cursor-grab active:cursor-grabbing overflow-hidden"
           >
             <div
+              id="imageCanvasContainer"
               style={{ transform }}
               className="flex flex-col relative max-w-4xl w-full mx-auto"
             >
-              <ImageCanvas />
+              <ImageCanvas ref={imageCanvasRef} />
             </div>
           </motion.div>
         )}
@@ -367,58 +371,28 @@ const MainAppPage = () => {
               </h2>
               <div className="flex-1" />
               <div className="">
-                <ExportPopover />
+                <ExportPopover htmlCanvasRef={imageCanvasRef} />
               </div>
             </>
           )}
-          {loading && (
-            <div className="flex flex-col justify-center h-full gap-y-5">
-              <motion.div
-                initial={{ y: 0 }}
-                animate={{ y: -12 }}
-                transition={{
-                  yoyo: Infinity,
-                  duration: 0.5,
-                }}
-                className="flex justify-center"
-              >
-                <Image
-                  src="/assets/apexglass.png"
-                  width={150}
-                  height={150}
-                  objectFit="contain"
-                />
-              </motion.div>
-              <p className="text-center text-xs text-gray-600 px-4">
-                <b>Apex</b> is currently sending your spine to the server.
-                Please wait a while...
-              </p>
-            </div>
+
+          {/* Display Elements */}
+
+          {/* 1. Display Element: Loading */}
+          {loading && <LoadingDisplay />}
+
+          {/* 2. Display Element: No Image Chosen */}
+          {!scolioVisAPIResponse && !selectedFile && !loading && (
+            <NothingSelectedDisplay />
           )}
-          {!loading && !scolioVisAPIResponse && (
-            <div className="flex flex-col justify-center h-full gap-y-5">
-              <div className="flex justify-center transform translate-x-3">
-                <Image
-                  src="/assets/apexcrying.png"
-                  width={150}
-                  height={150}
-                  objectFit="contain"
-                />
-              </div>
-              <p className="text-center text-xs text-gray-600 px-4">
-                <span className="text-red-500">The server did not respond</span>{" "}
-                so the request failed. <b>Apex</b> is sorry! 😢
-              </p>
-              <button
-                className="text-sm hover:text-primary transition"
-                onClick={() => {
-                  if (!selectedFile) return;
-                  fetchData(selectedFile);
-                }}
-              >
-                Try again?
-              </button>
-            </div>
+
+          {/* 3. Display Element: Failed Request */}
+          {!loading && !scolioVisAPIResponse && selectedFile && (
+            <FailedRequestDisplay
+              onTryAgainClick={() => {
+                fetchData(selectedFile);
+              }}
+            />
           )}
         </SideBarContainer>
       </main>
@@ -458,5 +432,111 @@ const SideBarContainer: FCC<ISideBarContainerProps> = ({ children }) => {
         {children}
       </div>
     </>
+  );
+};
+
+// DISPLAY ELEMENTS
+const LoadingDisplay = () => {
+  return (
+    <div className="flex flex-col justify-center h-full gap-y-5">
+      <motion.div
+        initial={{ y: 0 }}
+        animate={{ y: -12 }}
+        transition={{
+          yoyo: Infinity,
+          duration: 0.5,
+        }}
+        className="flex justify-center"
+      >
+        <Image
+          src="/assets/apexglass.png"
+          width={150}
+          height={150}
+          objectFit="contain"
+        />
+      </motion.div>
+      <p className="text-center text-sm text-gray-600 px-4">
+        <b>Apex</b> is currently sending your spine to the server. Please wait a
+        while...
+      </p>
+    </div>
+  );
+};
+
+const NothingSelectedDisplay = () => {
+  return (
+    <div className="flex flex-col justify-center flex-1 gap-y-5">
+      <motion.div
+        animate={{
+          rotate: [0, -5, 0, 5, 0],
+        }}
+        transition={{
+          repeat: Infinity,
+          duration: 3,
+        }}
+        className="flex justify-center transform translate-x-3"
+      >
+        <Image
+          src="/assets/apexfolder.png"
+          width={150}
+          height={150}
+          objectFit="contain"
+        />
+      </motion.div>
+      <div className="flex flex-col gap-y-2 max-w-xs w-full mx-auto">
+        <h3 className="text-center font-bold text-gray-800">
+          Please choose an image
+        </h3>
+        <p className="text-center text-sm text-gray-600 px-4">
+          You haven&apos;t chosen an image yet. Upload or choose an image so{" "}
+          <b>Apex</b> can get started!
+        </p>
+      </div>
+    </div>
+  );
+};
+
+// Failed Request Display Element
+interface IFailedRequestDisplayProps {
+  onTryAgainClick: () => void;
+}
+const FailedRequestDisplay: React.FC<IFailedRequestDisplayProps> = ({
+  onTryAgainClick,
+}) => {
+  return (
+    <div className="flex flex-col justify-center flex-1 gap-y-5">
+      <motion.div
+        animate={{
+          scaleY: [1, 0.95, 1, 0.93, 1, 0.95, 1, 1, 1],
+          scaleX: [1, 0.98, 1, 1, 0.98, 1, 1, 0.98, 1],
+        }}
+        transition={{
+          repeat: Infinity,
+          duration: 1.5,
+        }}
+        className="flex justify-center transform translate-x-3"
+      >
+        <Image
+          src="/assets/apexcrying.png"
+          width={150}
+          height={150}
+          objectFit="contain"
+          objectPosition="bottom"
+        />
+      </motion.div>
+      <div className="flex flex-col gap-y-2 max-w-xs w-full mx-auto">
+        <h3 className="text-center font-bold text-red-500">Request Failed!</h3>
+        <p className="text-center text-sm text-gray-600 px-4">
+          The server did not respond so the request failed. <b>Apex</b> is
+          sorry! 😢
+        </p>
+      </div>
+      <button
+        className="font-semibold text-gray-800 text-sm hover:text-primary transition"
+        onClick={onTryAgainClick}
+      >
+        Try again?
+      </button>
+    </div>
   );
 };
