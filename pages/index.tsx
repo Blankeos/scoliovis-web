@@ -35,33 +35,61 @@ const Home: NextPage = () => {
   const [ref4, inView4] = useRefInView();
   const [ref5, inView5] = useRefInView();
 
+  const [apexDialogueIdx, setApexDialogueIdx] = useState(0);
+  const apexDialogues = [
+    "I'll do anything! Please!! 😭",
+    "Hi! I'm Apex! 👋",
+    "How's your day? 🌞",
+    "Please make Carlo pass his defense! 🥺🙏",
+  ];
   return (
     <div className="flex flex-col min-h-screen">
       <Head overrideTitle="ScolioVis - Automatically measure Cobb Angles with Machine Learning" />
       <Nav />
       <main className="flex-grow h-full">
         <header className="">
-          <div className="relative fluid-container px-9 flex flex-col overflow-hidden">
-            <motion.div
-              animate={{
-                scaleY: [1, 0.95, 1, 0.93, 1, 0.95, 1, 1, 1],
-                scaleX: [1, 0.98, 1, 1, 0.98, 1, 1, 0.98, 1],
+          <div className="relative fluid-container px-9 flex flex-col">
+            <Tippy
+              content={apexDialogues[apexDialogueIdx]}
+              animation="scale-extreme"
+              placement="top-start"
+              followCursor="horizontal"
+              plugins={[followCursor]}
+              onShow={(props) => {
+                setApexDialogueIdx((prev) => {
+                  return prev + 1 < apexDialogues.length ? prev + 1 : 0;
+                });
               }}
-              transition={{
-                repeat: Infinity,
-                duration: 1.5,
-                repeatDelay: 1,
-              }}
-              className="self-center w-32 h-32 static md:absolute md:bottom-0 md:right-0 md:pb-5 md:w-auto md:h-auto"
+              // onShow={(props) => {
+              //   setApexDialogue((prev) => {
+              //     let ld
+              //     return prev === "Hi! I'm Apex!"
+              //       ? "How's your day?"
+              //       : "Hi! I'm Apex!";
+              //   });
+              // }}
             >
-              <Image
-                alt="Apex the mascot"
-                src="/assets/apex.png"
-                width={180}
-                height={180}
-                objectFit="contain"
-              />
-            </motion.div>
+              <motion.div
+                animate={{
+                  scaleY: [1, 0.95, 1, 1.08, 1, 0.95, 1.05, 1, 1],
+                  scaleX: [1, 0.98, 1, 1, 0.98, 1, 1, 0.98, 1],
+                }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 1.5,
+                  repeatDelay: 1.4,
+                }}
+                className="self-center w-32 h-32 static md:absolute md:bottom-0 md:right-0 md:pb-5 md:w-auto md:h-auto"
+              >
+                <Image
+                  alt="Apex the mascot"
+                  src="/assets/apex.png"
+                  width={180}
+                  height={180}
+                  objectFit="contain"
+                />
+              </motion.div>
+            </Tippy>
             <motion.h1
               {...enterAnim()}
               className="text-center text-3xl font-extrabold pt-2 pb-10 md:py-10"
@@ -104,7 +132,7 @@ const Home: NextPage = () => {
             </div>
           </div>
         </header>
-        <section className="bg-primary overflow-hidden">
+        <section className="bg-gradient-to-t from-purple-400 to-primary overflow-hidden">
           <div className="fluid-container px-7 py-16 overflow-hidden">
             <div className="flex flex-col gap-y-7">
               <motion.h1
