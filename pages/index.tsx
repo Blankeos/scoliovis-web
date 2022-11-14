@@ -22,6 +22,7 @@ import enterAnim from "@/utils/enterAnim";
 import useRefInView from "@/hooks/useRefInView";
 import { useStore } from "store";
 import { useRouter } from "next/router";
+import isHover from "@/utils/isHover";
 
 const Home: NextPage = () => {
   const [isShowing, setShowing] = useState<boolean>(false);
@@ -60,16 +61,24 @@ const Home: NextPage = () => {
                   return prev + 1 < apexDialogues.length ? prev + 1 : 0;
                 });
               }}
-              // onShow={(props) => {
-              //   setApexDialogue((prev) => {
-              //     let ld
-              //     return prev === "Hi! I'm Apex!"
-              //       ? "How's your day?"
-              //       : "Hi! I'm Apex!";
-              //   });
+              onUntrigger={(props, event) => {}}
+              hideOnClick={true}
+              onHidden={(props) => {
+                let apexHero = document.getElementById("apex-hero");
+                if (!apexHero) return;
+
+                if (isHover(apexHero)) {
+                  setTimeout(() => {
+                    props.show();
+                  }, 20);
+                }
+              }}
+              // popperOptions={{
+
               // }}
             >
               <motion.div
+                id="apex-hero"
                 animate={{
                   scaleY: [1, 0.95, 1, 1.08, 1, 0.95, 1.05, 1, 1],
                   scaleX: [1, 0.98, 1, 1, 0.98, 1, 1, 0.98, 1],
