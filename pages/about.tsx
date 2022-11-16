@@ -8,6 +8,8 @@ import enterAnim from "@/utils/enterAnim";
 import Image from "next/image";
 import Head from "components/Head";
 import useRefInView from "@/hooks/useRefInView";
+import Link from "next/link";
+import { Link as ScrollLink } from "react-scroll";
 
 const AboutPage = () => {
   const [ref1, inView1] = useRefInView();
@@ -21,8 +23,17 @@ const AboutPage = () => {
         <div className="w-full max-w-xl mx-auto px-9">
           <motion.div
             {...enterAnim()}
-            className="bg-gradient-to-br from-purple-500 to-primary w-full h-64 rounded-2xl mb-20"
-          ></motion.div>
+            className="relative bg-gradient-to-br from-purple-500 to-primary w-full h-64 rounded-2xl mb-20 overflow-hidden"
+          >
+            <div
+              className="absolute inset-0 grayscale opacity-40"
+              style={{
+                backgroundImage: `url('/assets/authors.webp')`,
+                backgroundPosition: "center",
+                backgroundSize: "cover",
+              }}
+            />
+          </motion.div>
           <motion.h1
             {...enterAnim(0.1)}
             className="text-6xl font-extrabold mb-6"
@@ -32,11 +43,13 @@ const AboutPage = () => {
           <motion.p {...enterAnim(0.2)}>
             <b>ScolioVis</b> is an automatic cobb angle measurement tool
             developed by BS in Computer Science students at West Visayas State
-            University for their Undergraduate Thesis. The finished product is
-            this web application implementing the trained machine learning
-            models to perform vertebrae landmark estimation in order to extract
-            the Cobb Angles automatically. The research is set to be published
-            in 2022.
+            University for their Undergraduate Thesis.
+          </motion.p>
+          <motion.p {...enterAnim(0.3)} className="mt-1.5">
+            The finished product is this web application implementing a Keypoint
+            RCNN model to perform multi-instance vertebra keypoint detection on
+            spine images in order to extract the Cobb Angles automatically. The
+            research is set to be published in early 2023.
           </motion.p>
 
           <motion.h2
@@ -106,15 +119,89 @@ const AboutPage = () => {
           <h2 className="mt-16 mb-6 text-2xl text-center text-gray-700 font-semibold">
             Special Thanks to
           </h2>
-          <p className="text-gray-700">
-            Dr. Frank I. Elijorde - Thesis Adviser
-          </p>
-          <p className="text-gray-700">
-            Dr. Bobby D. Gerardo - Thesis Co-Adviser
-          </p>
-          <p className="text-gray-700">Dr. Julie Ann Salido - Consultation</p>
-          <p className="text-gray-700">Mr. Paolo H. - Consultation</p>
-          <p className="text-gray-700">Dr. Shuo Li - SpineWeb Dataset 16</p>
+          <div className="flex flex-col gap-y-3">
+            <p className="text-gray-700 hanging-text">
+              <Link href="https://scholar.google.com.ph/citations?user=MbegV1wAAAAJ&hl=en">
+                <a
+                  target="_blank"
+                  className="hover:text-primary cursor-pointer font-semibold"
+                >
+                  👨‍🏫 Dr. Frank I. Elijorde
+                </a>
+              </Link>
+              - Our ever-supportive Thesis Adviser.
+            </p>
+            <p className="text-gray-700 hanging-text">
+              <Link href="https://scholar.google.com.ph/citations?user=JNlh9WMAAAAJ&hl=en">
+                <a
+                  target="_blank"
+                  className="hover:text-primary cursor-pointer font-semibold"
+                >
+                  🤵 Dr. Bobby D. Gerardo
+                </a>
+              </Link>{" "}
+              - Our ever-supportive Thesis Co-Adviser.
+            </p>
+            <p className="text-gray-700 hanging-text">
+              <ScrollLink
+                to="shuo-li-ref"
+                spy={true}
+                smooth={true}
+                duration={500}
+                className="hover:text-primary cursor-pointer font-semibold"
+              >
+                👨‍🔬 Dr. Shuo Li
+              </ScrollLink>{" "}
+              - for giving us access to the{" "}
+              <Link href="http://spineweb.digitalimaginggroup.ca/Index.php?n=Main.Datasets#Dataset_16.3A_609_spinal_anterior-posterior_x-ray_images">
+                <a className="hover:text-primary cursor-pointer underline">
+                  SpineWeb Dataset 16
+                </a>
+              </Link>
+            </p>
+            <p className="text-gray-700 hanging-text">
+              <Link href="https://scholar.google.com/citations?user=xeoUxA0AAAAJ&hl=en">
+                <a
+                  target="_blank"
+                  className="hover:text-primary cursor-pointer font-semibold"
+                >
+                  👩‍💼 Dr. Julie Ann Salido
+                </a>
+              </Link>{" "}
+              - for her expertise in computer vision research.
+            </p>
+            <p className="text-gray-700 hanging-text">
+              <Link href="https://www.researchgate.net/profile/Paolo-Hilado-2">
+                <a
+                  target="_blank"
+                  className="hover:text-primary cursor-pointer font-semibold"
+                >
+                  👨‍💼 Mr. Paolo Hilado
+                </a>
+              </Link>{" "}
+              - for his expertise in data science research.
+            </p>
+            <p className="text-gray-700 hanging-text">
+              <span className="font-semibold">
+                👩‍⚕️ Dra. Jocelyn F. Villanueva
+              </span>{" "}
+              - for her expertise in radiology.
+            </p>
+          </div>
+
+          <h2 className="mt-16 mb-6 text-2xl text-center text-gray-700 font-semibold">
+            Important References
+          </h2>
+          <Link href="http://www.digitalimaginggroup.ca/members/Shuo/MICCAIAutomatic.pdf">
+            <a id="shuo-li-ref" target="_blank">
+              <blockquote className="hover:shadow-md transition text-gray-700 text-sm bg-gray-100 rounded-xl px-5 py-3">
+                Wu, H., Bailey, Chris., Rasoulinejad, Parham., and Li, S., 2017.
+                Automatic landmark estimation for adolescent idiopathic
+                scoliosis assessment using boostnet. Medical Image Computing and
+                Computer Assisted Intervention:127-135.
+              </blockquote>
+            </a>
+          </Link>
         </div>
       </main>
       <Footer />
