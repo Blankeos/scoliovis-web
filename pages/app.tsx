@@ -31,6 +31,7 @@ import ExportPopover from "components/MainAppPage/ExportPopover";
 // Utils and Services
 import getPrediction from "services/getPrediction";
 import enterAnim from "@/utils/enterAnim";
+import { debounce } from "lodash";
 
 // Hooks
 import usePanZoom from "use-pan-and-zoom";
@@ -39,6 +40,7 @@ import useServerDelayInformer from "@/hooks/useServerDelayInformer";
 // CSS
 import "tippy.js/animations/shift-toward-subtle.css";
 import "tippy.js/animations/shift-away-subtle.css";
+import useDelayMounted from "@/hooks/useDelayMounted";
 
 const DISPLAY_TYPES: LandmarkDisplayType[] = [
   "no_lines",
@@ -72,16 +74,15 @@ const MainAppPage = () => {
     (state) => state.setShowDetectionLabels
   );
 
+  const debounceFetch = debounce(fetchData, 800);
   async function fetchData(file: ISelectedFile) {
+    console.log("Called fetchData!");
     sdInformer.start();
-    setScoliovisAPIResponse();
     setLoading(true);
     try {
       const res: any = await getPrediction(file);
       setScoliovisAPIResponse(res.data);
       console.log(res.data);
-      // console.log(response.data);
-      // setSegmentationResponse(response.data);
     } catch (e) {
       console.log(e);
     }
@@ -91,13 +92,13 @@ const MainAppPage = () => {
 
   //   Hooks
   useEffect(() => {
+    setScoliovisAPIResponse();
     if (!selectedFile) return;
-    fetchData(selectedFile);
+    debounceFetch(selectedFile);
   }, [selectedFile]);
 
   const sdInformer = useServerDelayInformer();
-  const [segmentationResponse, setSegmentationResponse] =
-    useState<ISegmentationResponse>();
+  const requestFailedDisplayCanMount = useDelayMounted(1000);
 
   // States
   const [loading, setLoading] = useState<boolean>(false);
@@ -387,13 +388,16 @@ const MainAppPage = () => {
           )}
 
           {/* 3. Display Element: Failed Request */}
-          {!loading && !scolioVisAPIResponse && selectedFile && (
-            <FailedRequestDisplay
-              onTryAgainClick={() => {
-                fetchData(selectedFile);
-              }}
-            />
-          )}
+          {requestFailedDisplayCanMount &&
+            !loading &&
+            !scolioVisAPIResponse &&
+            selectedFile && (
+              <FailedRequestDisplay
+                onTryAgainClick={() => {
+                  fetchData(selectedFile);
+                }}
+              />
+            )}
         </SideBarContainer>
       </main>
     </div>
