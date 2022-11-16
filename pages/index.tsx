@@ -46,8 +46,8 @@ const Home: NextPage = () => {
     "I'll do anything! Please!! 😭",
     "Hi! I'm Apex! 👋",
     "How's your day? 🌞",
-    <span>
-      "Please make <b>Carlo</b> pass his defense! {"🥺🙏"}
+    <span key="pass-carlo please">
+      Please make <b>Carlo</b> pass his defense! {"🥺🙏"}
     </span>,
   ];
   return (
