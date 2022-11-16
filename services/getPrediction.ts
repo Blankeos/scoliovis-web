@@ -22,3 +22,5 @@ export default async function getPrediction(file: ISelectedFile) {
     }
   );
 }
+
+// process.env.NEXT_PUBLIC_UPLOADFILEAPI
