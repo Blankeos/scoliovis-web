@@ -86,3 +86,15 @@ a {
   border-right-color: white;
 }
 /* END: Tippy Stuff */
+
+/* START: React-Player */
+.react-player {
+  position: absolute;
+  inset: 0;
+}
+/* END: React-Player */
+
+.hanging-text {
+  padding-left: 1.5rem;
+  text-indent: -1.5rem;
+}

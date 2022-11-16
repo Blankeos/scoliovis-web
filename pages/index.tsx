@@ -23,12 +23,17 @@ import useRefInView from "@/hooks/useRefInView";
 import { useStore } from "store";
 import { useRouter } from "next/router";
 import isHover from "@/utils/isHover";
+import useHasMounted from "@/hooks/useHasMounted";
+import LoadingIcon from "components/LoadingIcon";
 
 const Home: NextPage = () => {
   const [isShowing, setShowing] = useState<boolean>(false);
   const selectedFile = useStore((state) => state.selectedFile);
 
   const router = useRouter();
+
+  const hasMounted = useHasMounted();
+  const [videoIsRendered, setVideoIsRendered] = useState<boolean>(false);
 
   const [ref1, inView1] = useRefInView();
   const [ref2, inView2] = useRefInView();
@@ -41,7 +46,9 @@ const Home: NextPage = () => {
     "I'll do anything! Please!! 😭",
     "Hi! I'm Apex! 👋",
     "How's your day? 🌞",
-    "Please make Carlo pass his defense! 🥺🙏",
+    <span>
+      "Please make <b>Carlo</b> pass his defense! {"🥺🙏"}
+    </span>,
   ];
   return (
     <div className="flex flex-col min-h-screen">
@@ -51,7 +58,14 @@ const Home: NextPage = () => {
         <header className="">
           <div className="relative fluid-container px-9 flex flex-col">
             <Tippy
-              content={apexDialogues[apexDialogueIdx]}
+              content={
+                <div className="flex flex-col items-end pt-1.5">
+                  <span>{apexDialogues[apexDialogueIdx]}</span>
+                  <span className="text-gray-400 text-xs font-extralight">
+                    click to next{" ►"}
+                  </span>
+                </div>
+              }
               animation="scale-extreme"
               placement="top-start"
               followCursor="horizontal"
@@ -73,9 +87,6 @@ const Home: NextPage = () => {
                   }, 20);
                 }
               }}
-              // popperOptions={{
-
-              // }}
             >
               <motion.div
                 id="apex-hero"
@@ -88,7 +99,7 @@ const Home: NextPage = () => {
                   duration: 1.5,
                   repeatDelay: 1.4,
                 }}
-                className="self-center w-32 h-32 static md:absolute md:bottom-0 md:right-0 md:pb-5 md:w-auto md:h-auto"
+                className="self-center w-32 h-32 static md:absolute md:bottom-0 md:right-0 md:pb-5 md:w-auto md:h-auto cursor-pointer"
               >
                 <Image
                   alt="Apex the mascot"
@@ -246,8 +257,46 @@ const Home: NextPage = () => {
             <div className="absolute bg-white h-1/2 bottom-0 left-0 right-0"></div>
             {/* Content */}
             <div className="relative fluid-container px-9">
-              <div className="grid place-items-center bg-gray-200 h-96 rounded-2xl shadow-xl">
-                <PlayIcon size="5rem" className="text-primary" />
+              <div
+                className="relative bg-gray-200 h-96 rounded-2xl shadow-xl overflow-hidden"
+                style={{
+                  background: `url('/assets/authors.webp')`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+              >
+                {videoIsRendered && (
+                  <div className="absolute w-full h-full grid place-items-center animate-[pulse_1s_ease-out_infinite] duration-75 bg-purple-500 bg-opacity-30">
+                    <LoadingIcon />
+                  </div>
+                )}
+                {videoIsRendered ? (
+                  <iframe
+                    className="relative"
+                    width="100%"
+                    height="100%"
+                    src="https://www.youtube.com/embed/_ES_iyG25fM?autoplay=1&rel=0&loop=1"
+                    title="ScolioVis Demo"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                ) : (
+                  <button
+                    onClick={() => setVideoIsRendered(true)}
+                    className="group relative w-full h-full grid place-items-center hover:bg-purple-500 hover:bg-opacity-10 transition ease-out"
+                  >
+                    <div className="absolute inset-0" />
+                    <div className="absolute inset-0 bg-white bg-opacity-20" />
+                    <span className="relative grid place-items-center">
+                      <span className="absolute bg-white w-10 h-10" />
+                      <PlayIcon
+                        size="5rem"
+                        className="relative text-primary drop-shadow-xl group-hover:drop-shadow-2xl transition group-hover:scale-105"
+                      />
+                    </span>
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -280,8 +329,14 @@ const Home: NextPage = () => {
                   Great model performance
                 </h2>
                 <p className="text-gray-700">
-                  We&apos;re using a YoloV5 model trained at 96% mAP as well as
-                  a localized landmark detection model with __ accuracy.
+                  We trained a Keypoint RCNN model on the{" "}
+                  <Link href="http://spineweb.digitalimaginggroup.ca/Index.php?n=Main.Datasets#Dataset_16.3A_609_spinal_anterior-posterior_x-ray_images">
+                    <a className="hover:text-primary cursor-pointer underline">
+                      SpineWeb Dataset 16
+                    </a>
+                  </Link>
+                  . Boasting a performance of 93% AP at IoU=0.50 for object
+                  detections and 57% AP at IoU=0.50 on keypoint detections.
                 </p>
               </motion.div>
             </div>
@@ -296,7 +351,10 @@ const Home: NextPage = () => {
                 </h2>
                 <p className="text-gray-700">
                   We&apos;re planning to conduct ISO to evaluate the usability
-                  of our app.
+                  of our app. We want experts in Radiology to try out our app!
+                  <span className="block mt-2 hover:text-primary cursor-pointer">
+                    Would you like to participate?
+                  </span>
                 </p>
               </motion.div>
               <motion.div {...enterAnim(0.1, inView4)} className="">
