@@ -10,6 +10,7 @@ import React, {
 } from "react";
 import { useStore } from "store";
 import { mergeRefs } from "react-merge-refs";
+import { inRange } from "lodash";
 
 interface IImageCanvasProps {}
 
@@ -67,14 +68,24 @@ const ImageCanvas = forwardRef<HTMLCanvasElement, IImageCanvasProps>(
     async function initialize() {
       drawImage();
       if (!selectedFile || !scoliovisAPIResponse) return;
-      // const res: any = await getLandmarks(selectedFile);
-      // const landmarks = res.data.landmarks;
-      const points = denormalizeLandmarks(
-        scoliovisAPIResponse.landmarks,
-        selectedFile.width,
-        selectedFile.height
-      );
-
+      let points: number[][] = [];
+      if (inRange(Math.max(...scoliovisAPIResponse.landmarks), 0, 1)) {
+        // from /getprediction
+        points = denormalizeLandmarks(
+          scoliovisAPIResponse.landmarks,
+          selectedFile.width,
+          selectedFile.height
+        );
+      } else {
+        // from /v2/getprediction
+        for (let i = 0; i < scoliovisAPIResponse.landmarks.length; i++) {
+          points.push([
+            scoliovisAPIResponse.landmarks[i],
+            scoliovisAPIResponse.landmarks[i + 1],
+          ]);
+          i += 1;
+        }
+      }
       setPoints(points);
       drawLandmarks({
         points: points,
