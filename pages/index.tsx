@@ -70,12 +70,6 @@ const Home: NextPage = () => {
               placement="top-start"
               followCursor="horizontal"
               plugins={[followCursor]}
-              onShow={(props) => {
-                setApexDialogueIdx((prev) => {
-                  return prev + 1 < apexDialogues.length ? prev + 1 : 0;
-                });
-              }}
-              onUntrigger={(props, event) => {}}
               hideOnClick={true}
               onHidden={(props) => {
                 let apexHero = document.getElementById("apex-hero");
@@ -83,6 +77,9 @@ const Home: NextPage = () => {
 
                 if (isHover(apexHero)) {
                   setTimeout(() => {
+                    setApexDialogueIdx((prev) => {
+                      return prev + 1 < apexDialogues.length ? prev + 1 : 0;
+                    });
                     props.show();
                   }, 20);
                 }
