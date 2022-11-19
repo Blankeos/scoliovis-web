@@ -322,7 +322,7 @@ const Home: NextPage = () => {
                 />
               </motion.div>
               <motion.div {...enterAnim(0.2, inView3)} className="max-w-xs">
-                <h2 className="font-bold text-2xl text-gray-800">
+                <h2 className="font-bold text-2xl text-gray-800 mb-2">
                   Great model performance
                 </h2>
                 <p className="text-gray-700">
@@ -332,8 +332,11 @@ const Home: NextPage = () => {
                       SpineWeb Dataset 16
                     </a>
                   </Link>
-                  . Boasting a performance of 93% AP at IoU=0.50 for object
-                  detections and 57% AP at IoU=0.50 on keypoint detections.
+                  . Boasting a performance of <b>93% AP at IoU=0.50</b> for
+                  object detections and <b>57% AP at OKS=0.50</b> on keypoint
+                  detections. For cobb angle measurement, we have achieved an{" "}
+                  <b>SMAPE of 8.97</b> which means ScolioVis as a whole is able
+                  to predict cobb angles at <b>91.03% accuracy</b>.
                 </p>
               </motion.div>
             </div>
@@ -343,7 +346,7 @@ const Home: NextPage = () => {
                 {...enterAnim(0.2, inView4)}
                 className="max-w-xs justify-self-end text-right"
               >
-                <h2 className="font-bold text-2xl text-gray-800">
+                <h2 className="font-bold text-2xl text-gray-800 mb-2">
                   Usability ISO
                 </h2>
                 <p className="text-gray-700">
