@@ -32,15 +32,9 @@ const EXPORT_ICONS: { [Property in ExportTag]: JSX.Element } = {
 };
 interface IExportPopoverProps {
   exportItems?: ExportItem[];
-  htmlCanvasRef: RefObject<HTMLCanvasElement>;
 }
 
-const ExportPopover: React.FC<IExportPopoverProps> = ({
-  exportItems,
-  htmlCanvasRef,
-}) => {
-  const printableContainerRef = useRef<HTMLDivElement>(null);
-
+const ExportPopover: React.FC<IExportPopoverProps> = ({ exportItems }) => {
   function handleDownloadImage(imageType: "png" | "jpeg") {
     // Return a function so you don't need to () => {handleDownloadImage(imageType) for onClick}
     return () => {
@@ -93,7 +87,7 @@ const ExportPopover: React.FC<IExportPopoverProps> = ({
 
   //       return containerClone;
   //     }
-  //     return document.body;
+  //     return do.ment.body;
   //   },
   // });
 
