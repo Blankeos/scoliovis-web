@@ -252,6 +252,7 @@ const ImageCanvas: React.FC<IImageCanvasProps> = (props, ref) => {
     });
     let top = 0;
     let bottom = 0;
+
     // Draw PT
     ctx.current.lineWidth = 5;
     ctx.current.strokeStyle = "orange";
@@ -324,14 +325,25 @@ const ImageCanvas: React.FC<IImageCanvasProps> = (props, ref) => {
     let text = `${angleType.toUpperCase()}=${scoliovisAPIResponse.angles[
       angleType
     ].angle.toFixed(2)}°`;
-    let padding = 25;
+    let padding = 50;
     let textSize = ctx.current.measureText(text);
+    let prevFillStyle = ctx.current.fillStyle;
+    ctx.current.textBaseline = "middle";
+    ctx.current.fillStyle = `rgba(0,0,0,0.7)`;
+    ctx.current.fillRect(
+      selectedFile.width - textSize.width - padding - padding / 2,
+      topMaxPoint[1] + (bottomMaxPoint[1] - topMaxPoint[1]) / 2 - 48,
+      textSize.width + padding,
+      48 + padding
+    );
+    ctx.current.fillStyle = prevFillStyle;
     ctx.current.fillText(
       text,
       selectedFile.width - textSize.width - padding,
       topMaxPoint[1] + (bottomMaxPoint[1] - topMaxPoint[1]) / 2
     );
 
+    return;
     // 4. DRAW PERPENDICULAR
     // 4.1 DRAW PERPENDICULAR: TOP
     // - Swapper Based on Slope
