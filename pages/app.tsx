@@ -41,6 +41,7 @@ import useServerDelayInformer from "@/hooks/useServerDelayInformer";
 import "tippy.js/animations/shift-toward-subtle.css";
 import "tippy.js/animations/shift-away-subtle.css";
 import useDelayMounted from "@/hooks/useDelayMounted";
+import getMaxCobbAngle from "@/utils/cobbAngle/getMaxCobbAngle";
 
 const DISPLAY_TYPES: LandmarkDisplayType[] = [
   "no_lines",
@@ -51,8 +52,6 @@ const DISPLAY_TYPES: LandmarkDisplayType[] = [
 
 const MainAppPage = () => {
   // Ref
-  const imageCanvasRef = useRef<HTMLCanvasElement>(null);
-
   const selectedFile = useStore((state) => state.selectedFile);
   const scolioVisAPIResponse = useStore((state) => state.scoliovisAPIResponse);
 
@@ -90,11 +89,11 @@ const MainAppPage = () => {
     sdInformer.cancel();
   }
 
-  //   Hooks
+  // Hooks;
   useEffect(() => {
-    setScoliovisAPIResponse();
-    if (!selectedFile) return;
-    debounceFetch(selectedFile);
+    // setScoliovisAPIResponse();
+    // if (!selectedFile) return;
+    // debounceFetch(selectedFile);
   }, [selectedFile]);
 
   const sdInformer = useServerDelayInformer();
@@ -142,7 +141,7 @@ const MainAppPage = () => {
               style={{ transform }}
               className="flex flex-col relative max-w-4xl w-full mx-auto"
             >
-              <ImageCanvas ref={imageCanvasRef} />
+              <ImageCanvas />
             </div>
           </motion.div>
         )}
@@ -282,6 +281,9 @@ const MainAppPage = () => {
                         animation="shift-away-subtle"
                         content={
                           <span>
+                            <p className="bg-primary text-white border-t border-l border-r px-3 py-1.5 rounded-t-xl font-semibold">
+                              Upper line color
+                            </p>
                             <TwitterPicker
                               color={drawSettings.landmarkColor[0]}
                               colors={[
@@ -305,7 +307,9 @@ const MainAppPage = () => {
                       >
                         <div
                           className="h-7 w-7 border rounded-lg cursor-pointer"
-                          style={{ background: drawSettings.landmarkColor[0] }}
+                          style={{
+                            background: drawSettings.landmarkColor[0],
+                          }}
                         ></div>
                       </Tippy>
                       <Tippy
@@ -316,6 +320,9 @@ const MainAppPage = () => {
                         animation="shift-away-subtle"
                         content={
                           <span>
+                            <p className="bg-primary text-white border-t border-l border-r px-3 py-1.5 rounded-t-xl font-semibold">
+                              Lower line color
+                            </p>
                             <TwitterPicker
                               color={drawSettings.landmarkColor[1]}
                               colors={[
@@ -370,9 +377,78 @@ const MainAppPage = () => {
                 <CobbAngleIcon />
                 <span>Cobb Angle Display</span>
               </h2>
+              <hr />
+              {scolioVisAPIResponse && scolioVisAPIResponse.angles ? (
+                <div className="flex flex-col gap-y-3 text-sm text-gray-700">
+                  <p className="font-semibold">Results</p>
+                  <div>Curve Type: {scolioVisAPIResponse.curve_type}</div>
+                  <div>
+                    <div className="grid grid-cols-[210px,1fr]">
+                      <span>Proximal Thoracic (PT):</span>
+                      <span>
+                        {scolioVisAPIResponse.angles.pt.angle.toFixed(2)}°
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-[210px,1fr]">
+                      <span>Main Thoracic (MT):</span>
+                      <span>
+                        {scolioVisAPIResponse.angles.mt.angle.toFixed(2)}°
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-[210px,1fr]">
+                      <span>Thoracolumbar/Lumbar (TL/L):</span>
+                      <span>
+                        {scolioVisAPIResponse.angles.tl.angle.toFixed(2)}°
+                      </span>
+                    </div>
+                  </div>
+                  <p>
+                    The greatest bend is found at{" "}
+                    <b>
+                      {getMaxCobbAngle(
+                        scolioVisAPIResponse.angles
+                      ).max.toUpperCase()}
+                      :{" "}
+                      {getMaxCobbAngle(
+                        scolioVisAPIResponse.angles
+                      ).value.toFixed(2)}
+                      °
+                    </b>{" "}
+                    taken from the superior endplate of
+                    <b>
+                      (
+                      {scolioVisAPIResponse.angles[
+                        getMaxCobbAngle(scolioVisAPIResponse.angles).max
+                      ].idxs[0] + 1}
+                      )
+                    </b>{" "}
+                    and inferior endplate of (
+                    <b>
+                      {scolioVisAPIResponse.angles[
+                        getMaxCobbAngle(scolioVisAPIResponse.angles).max
+                      ].idxs[1] + 1}
+                      )
+                    </b>
+                    .
+                  </p>
+                </div>
+              ) : (
+                <div className="flex flex-col gap-y-2">
+                  <p className="text-red-500 text-sm">
+                    This particular image crashed our Cobb Angle Measurement
+                    Algorithm so we can't display any info on it.
+                  </p>
+                  <p className="text-red-500 text-sm">
+                    It's a bug that occurs in{" "}
+                    <b>{(0.046875 * 100).toFixed(2)}%</b> or <b>6/128</b> of our
+                    images. We're still trying to fix it. We hope you
+                    understand!
+                  </p>
+                </div>
+              )}
               <div className="flex-1" />
               <div className="">
-                <ExportPopover htmlCanvasRef={imageCanvasRef} />
+                <ExportPopover />
               </div>
             </>
           )}
