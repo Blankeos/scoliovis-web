@@ -31,10 +31,20 @@ type LandmarkDisplayType =
 type ScolioVisAPIResponseType = {
   landmarks: number[];
   detections: DetectionType[];
+  angles: AnglesType;
+  midpoint_lines: [[number, number], [number, number]][];
+  curve_type: "C" | "S";
+  // Removed
   normalized_detections: DetectionType[];
   base64_image: string;
 };
 
+type AnglesType = {
+  [K in "pt" | "mt" | "tl"]: {
+    angle: number;
+    idxs: [number, number];
+  };
+};
 type DetectionType = {
   class: number;
   confidence: number;
@@ -45,6 +55,20 @@ type DetectionType = {
   ymax: number;
 };
 
+type PointType = {
+  x: number;
+  y: number;
+};
+
+type LineType = {
+  p1: PointType;
+  p2: PointType;
+};
+
+type CobbAngleLinesType = {
+  top: LineType;
+  bottom: LineType;
+};
 // Custom Type for a React functional component with props AND CHILDREN
 // Source: https://stackoverflow.com/questions/71788254/react-18-typescript-children-fc/71800185#71800185 solution by ashuvssut
 // Import syntax in d.ts files: https://stackoverflow.com/questions/39040108/import-class-in-definition-file-d-ts
