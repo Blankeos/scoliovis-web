@@ -436,12 +436,12 @@ const MainAppPage = () => {
                 <div className="flex flex-col gap-y-2">
                   <p className="text-red-500 text-sm">
                     This particular image crashed our Cobb Angle Measurement
-                    Algorithm so we can't display any info on it.
+                    Algorithm so we can&apos;t display any info on it.
                   </p>
                   <p className="text-red-500 text-sm">
-                    It's a bug that occurs in{" "}
+                    It&apos;s a bug that occurs in{" "}
                     <b>{(0.046875 * 100).toFixed(2)}%</b> or <b>6/128</b> of our
-                    images. We're still trying to fix it. We hope you
+                    images. We&apos;re still trying to fix it. We hope you
                     understand!
                   </p>
                 </div>
