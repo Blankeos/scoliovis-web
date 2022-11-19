@@ -187,6 +187,10 @@ const AboutPage = () => {
               </span>{" "}
               - for her expertise in radiology.
             </p>
+            <p className="text-gray-700 hanging-text">
+              <span className="font-semibold">👨‍⚕️ Dr. Christopher Barrera</span>{" "}
+              - for his expertise in radiology.
+            </p>
           </div>
 
           <h2 className="mt-16 mb-6 text-2xl text-center text-gray-700 font-semibold">
