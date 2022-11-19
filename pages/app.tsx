@@ -91,9 +91,9 @@ const MainAppPage = () => {
 
   // Hooks;
   useEffect(() => {
-    // setScoliovisAPIResponse();
-    // if (!selectedFile) return;
-    // debounceFetch(selectedFile);
+    setScoliovisAPIResponse();
+    if (!selectedFile) return;
+    debounceFetch(selectedFile);
   }, [selectedFile]);
 
   const sdInformer = useServerDelayInformer();
