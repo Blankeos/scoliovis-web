@@ -18,7 +18,7 @@ const Footer = () => {
               About
             </a>
           </Link>
-          <Link href="/">
+          <Link href="/paper">
             <a className="text-gray-500 hover:text-primary transition underline">
               Paper
             </a>
