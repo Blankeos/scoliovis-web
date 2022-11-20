@@ -20,7 +20,7 @@ type ImageUploadBoxProps = {
 const ImageUploadBox: React.FC<ImageUploadBoxProps> = ({
   file,
   onSuccess = () => {},
-  bgClass = "bg-gray-200",
+  bgClass = "bg-gray-200 bg-opacity-50 backdrop-blur-md",
 }) => {
   const setSelectedFile = useStore((state) => state.setSelectedFile);
 
