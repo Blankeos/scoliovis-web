@@ -33,12 +33,16 @@ const Nav = () => {
           <ul className="flex gap-x-8 overflow-hidden">
             <li>
               <Link href="/about">
-                <a className="text-gray-500 text-sm">About</a>
+                <a className="text-gray-500 text-sm hover:text-primary transition">
+                  About
+                </a>
               </Link>
             </li>
             <li>
               <Link href="/paper">
-                <a className="text-gray-500 text-sm">Paper</a>
+                <a className="text-gray-500 text-sm hover:text-primary transition">
+                  Paper
+                </a>
               </Link>
             </li>
           </ul>

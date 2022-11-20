@@ -42,14 +42,14 @@ const AboutPage = () => {
           </motion.h1>
           <motion.p {...enterAnim(0.2)}>
             <b>ScolioVis</b> is an automatic cobb angle measurement tool
-            developed by BS in Computer Science students at West Visayas State
+            developed by B.S. in Computer Science students at West Visayas State
             University for their Undergraduate Thesis.
           </motion.p>
           <motion.p {...enterAnim(0.3)} className="mt-1.5">
             The finished product is this web application implementing a Keypoint
-            RCNN model to perform multi-instance vertebra keypoint detection on
-            spine images in order to extract the Cobb Angles automatically. The
-            research is set to be published in early 2023.
+            RCNN model that performs multi-instance vertebra keypoint detection
+            on spine images in order to extract the Cobb Angles automatically.
+            The research is set to be published in early 2023.
           </motion.p>
 
           <motion.h2
@@ -128,7 +128,7 @@ const AboutPage = () => {
                 >
                   👨‍🏫 Dr. Frank I. Elijorde
                 </a>
-              </Link>
+              </Link>{" "}
               - Our ever-supportive Thesis Adviser.
             </p>
             <p className="text-gray-700 hanging-text">
