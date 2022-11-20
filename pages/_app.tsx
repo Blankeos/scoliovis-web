@@ -4,6 +4,7 @@ import Head from "components/Head";
 import { Toaster } from "react-hot-toast";
 
 // CSS
+import "styles/animated-bg-styles.css";
 import "../styles/globals.css";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/shift-toward-subtle.css";

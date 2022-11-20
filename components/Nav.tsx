@@ -8,7 +8,7 @@ import { animateScroll as scroll } from "react-scroll";
 const Nav = () => {
   const router = useRouter();
   return (
-    <nav className="">
+    <nav className="relative z-50">
       <div className="fluid-container py-7 px-9 w-full overflow-hidden">
         <div className="flex justify-between gap-x-8">
           {router.pathname === "/" ? (

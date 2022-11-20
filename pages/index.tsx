@@ -25,6 +25,7 @@ import { useRouter } from "next/router";
 import isHover from "@/utils/isHover";
 import useHasMounted from "@/hooks/useHasMounted";
 import LoadingIcon from "components/LoadingIcon";
+import AnimatedBackground from "components/AnimatedBackground";
 
 const Home: NextPage = () => {
   const [isShowing, setShowing] = useState<boolean>(false);
@@ -43,19 +44,20 @@ const Home: NextPage = () => {
 
   const [apexDialogueIdx, setApexDialogueIdx] = useState(0);
   const apexDialogues = [
-    "I'll do anything! Please!! 😭",
     "Hi! I'm Apex! 👋",
     "How's your day? 🌞",
     <span key="pass-carlo please">
       Please make <b>Carlo</b> pass his defense! {"🥺🙏"}
     </span>,
+    "I'll do anything! Please!! 😭",
   ];
   return (
     <div className="flex flex-col min-h-screen">
       <Head overrideTitle="ScolioVis - Automatically measure Cobb Angles with Machine Learning" />
-      <Nav />
       <main className="flex-grow h-full">
-        <header className="">
+        <header className="relative">
+          <Nav />
+          <AnimatedBackground />
           <div className="relative fluid-container px-9 flex flex-col">
             <Tippy
               content={
