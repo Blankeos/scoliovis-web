@@ -204,7 +204,7 @@ const MainAppPage = () => {
                   setEnabled={setShowDetections}
                 />
                 <ObjectDetectionIcon />
-                <span>Detection Display</span>
+                <span>Display Detections</span>
               </h2>
               {drawSettings.showDetections && (
                 <div className="flex flex-col gap-y-0.5">
@@ -252,7 +252,7 @@ const MainAppPage = () => {
                   setEnabled={setShowLandmarks}
                 />
                 <LandmarkEstimationIcon />
-                <span>Landmark Display</span>
+                <span>Display Keypoints</span>
               </h2>
               {drawSettings.showLandmarks && (
                 <div className="flex flex-col gap-y-0.5">
@@ -375,7 +375,7 @@ const MainAppPage = () => {
                   setEnabled={setShowCobbAngle}
                 />
                 <CobbAngleIcon />
-                <span>Cobb Angle Display</span>
+                <span>Display Cobb Angle</span>
               </h2>
               <hr />
               {scolioVisAPIResponse && scolioVisAPIResponse.angles ? (

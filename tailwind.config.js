@@ -15,6 +15,9 @@ module.exports = {
       colors: {
         primary: "#0073f5",
       },
+      cursor: {
+        talk: "url(/cursor-chat.png), pointer",
+      },
       keyframes: {
         wiggle: {
           "0%, 100%": { transform: "rotate(0deg) scale(1)" },

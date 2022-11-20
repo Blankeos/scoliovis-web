@@ -98,7 +98,7 @@ const Home: NextPage = () => {
                   duration: 1.5,
                   repeatDelay: 1.4,
                 }}
-                className="self-center w-32 h-32 static md:absolute md:bottom-0 md:right-0 md:pb-5 md:w-auto md:h-auto cursor-pointer"
+                className="self-center w-32 h-32 static md:absolute md:bottom-0 md:right-0 md:pb-5 md:w-auto md:h-auto cursor-talk"
               >
                 <Image
                   alt="Apex the mascot"

@@ -59,12 +59,25 @@ const ExportPopover: React.FC<IExportPopoverProps> = ({ exportItems }) => {
       const canvas: HTMLCanvasElement = document.getElementById(
         "image-canvas"
       ) as HTMLCanvasElement;
+      toast.promise(downloadingPromise(), {
+        success: (
+          <span>
+            Exported <b>.{imageType}</b>
+          </span>
+        ),
+        loading: "Exporting...",
+        error: "Failed to download",
+      });
 
       // 3. Make Link Element Downloadable and Click
       imageLink.download = `ScolioVisResult_${monthDay}_${time}.${imageType}`;
       imageLink.href = canvas.toDataURL(`image/${imageType}`, 1);
       imageLink.click();
     };
+  }
+
+  async function downloadingPromise() {
+    await new Promise((resolve) => setTimeout(resolve, 600));
   }
 
   function handlePDF() {
@@ -74,22 +87,6 @@ const ExportPopover: React.FC<IExportPopoverProps> = ({ exportItems }) => {
   function handlePrint() {
     toast.error("Printing is not available yet.");
   }
-  // const handlePrint = useReactToPrint({
-  //   documentTitle: "Scoliovis",
-  //   content: () => {
-  //     let imageCanvasContainer = document.getElementById(
-  //       "imageCanvasContainer"
-  //     );
-  //     if (imageCanvasContainer) {
-  //       imageCanvasContainer.className = "";
-  //       let containerClone = document.createElement("div");
-  //       containerClone.innerHTML = imageCanvasContainer.innerHTML;
-
-  //       return containerClone;
-  //     }
-  //     return do.ment.body;
-  //   },
-  // });
 
   exportItems = [
     { exportTag: "PDF", onClick: handlePDF },

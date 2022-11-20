@@ -1,3 +1,4 @@
+import Tippy from "@tippyjs/react";
 import React, { useState } from "react";
 
 // calc((124px/4)*0
@@ -18,70 +19,106 @@ const MultiSwitch: React.FC<IMultiSwitchProps> = ({
         }}
         className="absolute transition ease-in-out transform h-7 w-7 bg-white rounded-md shadow"
       />
-      <button
-        onClick={() => {
-          onChange && onChange(0);
-        }}
-        className={`relative h-7 w-7 grid place-items-center
-        ${currentIndex === 0 ? "opacity-70" : "opacity-40"}
-        `}
+      <Tippy
+        delay={[300, 0]}
+        content={<span className="text-xs">no lines</span>}
       >
-        <span
-          className="h-5 w-5"
-          style={{
-            backgroundImage: "url(/assets/landmark-display-1.svg)",
-            backgroundSize: "contain",
+        <button
+          onClick={() => {
+            onChange && onChange(0);
           }}
-        />
-      </button>
-      <button
-        onClick={() => {
-          onChange && onChange(1);
-        }}
-        className={`relative h-7 w-7 grid place-items-center
-        ${currentIndex === 1 ? "opacity-70" : "opacity-40"}
+          className={`relative h-7 w-7 grid place-items-center
+        ${
+          currentIndex === 0
+            ? "opacity-70"
+            : "opacity-40 hover:bg-white rounded-md transition"
+        }
         `}
+        >
+          <span
+            className="h-5 w-5"
+            style={{
+              backgroundImage: "url(/assets/landmark-display-1.svg)",
+              backgroundSize: "contain",
+            }}
+          />
+        </button>
+      </Tippy>
+      <Tippy
+        delay={[300, 0]}
+        content={<span className="text-xs">upper lines only</span>}
       >
-        <span
-          className="h-5 w-5"
-          style={{
-            backgroundImage: "url(/assets/landmark-display-2.svg)",
-            backgroundSize: "contain",
+        <button
+          onClick={() => {
+            onChange && onChange(1);
           }}
-        />
-      </button>
-      <button
-        onClick={() => {
-          onChange && onChange(2);
-        }}
-        className={`relative h-7 w-7 grid place-items-center
-        ${currentIndex === 2 ? "opacity-70" : "opacity-40"}
+          className={`relative h-7 w-7 grid place-items-center
+        ${
+          currentIndex === 1
+            ? "opacity-70"
+            : "opacity-40 hover:bg-white rounded-md transition"
+        }
         `}
+        >
+          <span
+            className="h-5 w-5"
+            style={{
+              backgroundImage: "url(/assets/landmark-display-2.svg)",
+              backgroundSize: "contain",
+            }}
+          />
+        </button>
+      </Tippy>
+      <Tippy
+        delay={[300, 0]}
+        content={<span className="text-xs">Lower lines only</span>}
       >
-        <span
-          className="h-5 w-5"
-          style={{
-            backgroundImage: "url(/assets/landmark-display-3.svg)",
-            backgroundSize: "contain",
+        <button
+          onClick={() => {
+            onChange && onChange(2);
           }}
-        />
-      </button>
-      <button
-        onClick={() => {
-          onChange && onChange(3);
-        }}
-        className={`relative h-7 w-7 grid place-items-center
-        ${currentIndex === 3 ? "opacity-70" : "opacity-40"}
+          className={`relative h-7 w-7 grid place-items-center
+        ${
+          currentIndex === 2
+            ? "opacity-70"
+            : "opacity-40 hover:bg-white rounded-md transition"
+        }
         `}
+        >
+          <span
+            className="h-5 w-5"
+            style={{
+              backgroundImage: "url(/assets/landmark-display-3.svg)",
+              backgroundSize: "contain",
+            }}
+          />
+        </button>
+      </Tippy>
+      <Tippy
+        delay={[300, 0]}
+        content={<span className="text-xs">all lines</span>}
       >
-        <span
-          className="h-5 w-5"
-          style={{
-            backgroundImage: "url(/assets/landmark-display-4.svg)",
-            backgroundSize: "contain",
+        <button
+          onClick={() => {
+            onChange && onChange(3);
           }}
-        />
-      </button>
+          className={`relative h-7 w-7 grid place-items-center
+        ${
+          currentIndex === 3
+            ? "opacity-70"
+            : "opacity-40 hover:bg-white rounded-md transition"
+        }
+        `}
+        >
+          <span
+            className="h-5 w-5"
+            style={{
+              backgroundImage: "url(/assets/landmark-display-4.svg)",
+              backgroundSize: "contain",
+            }}
+          />
+        </button>
+      </Tippy>
     </div>
   );
 };
