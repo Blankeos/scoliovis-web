@@ -281,20 +281,27 @@ const Home: NextPage = () => {
                     allowFullScreen
                   ></iframe>
                 ) : (
-                  <button
-                    onClick={() => setVideoIsRendered(true)}
-                    className="group relative w-full h-full grid place-items-center hover:bg-purple-500 hover:bg-opacity-10 transition ease-out"
+                  <Tippy
+                    content="This video is a placeholder"
+                    followCursor
+                    plugins={[followCursor]}
+                    arrow={false}
                   >
-                    <div className="absolute inset-0" />
-                    <div className="absolute inset-0 bg-white bg-opacity-20" />
-                    <span className="relative grid place-items-center">
-                      <span className="absolute bg-white w-10 h-10" />
-                      <PlayIcon
-                        size="5rem"
-                        className="relative text-primary drop-shadow-xl group-hover:drop-shadow-2xl transition group-hover:scale-105"
-                      />
-                    </span>
-                  </button>
+                    <button
+                      onClick={() => setVideoIsRendered(true)}
+                      className="group relative w-full h-full grid place-items-center hover:bg-purple-500 hover:bg-opacity-10 transition ease-out"
+                    >
+                      <div className="absolute inset-0" />
+                      <div className="absolute inset-0 bg-white bg-opacity-20" />
+                      <span className="relative grid place-items-center">
+                        <span className="absolute bg-white w-10 h-10" />
+                        <PlayIcon
+                          size="5rem"
+                          className="relative text-primary drop-shadow-xl group-hover:drop-shadow-2xl transition group-hover:scale-105"
+                        />
+                      </span>
+                    </button>
+                  </Tippy>
                 )}
               </div>
             </div>

@@ -14,8 +14,17 @@ const PaperPage: NextPage = () => (
       <div className="w-full max-w-xl mx-auto px-9">
         <motion.div
           {...enterAnim()}
-          className="bg-gradient-to-br from-purple-500 to-primary w-full h-64 rounded-2xl mb-20"
-        ></motion.div>
+          className="relative bg-gradient-to-br from-purple-500 to-primary w-full h-64 rounded-2xl mb-20 overflow-hidden"
+        >
+          <div
+            className="absolute inset-0 grayscale opacity-40"
+            style={{
+              backgroundImage: `url('https://www.panaynews.net/wp-content/uploads/2018/11/Quezon-Hall-College-of-Arts-and-Sciences-West-Visayas-State-University-e1541958764604.jpg')`,
+              backgroundPosition: "center",
+              backgroundSize: "cover",
+            }}
+          />
+        </motion.div>
         <motion.h1 {...enterAnim(0.1)} className="text-6xl font-extrabold mb-6">
           Paper
         </motion.h1>
