@@ -12,6 +12,11 @@ body {
   @apply font-manrope;
 }
 
+::selection {
+  color: #f5f3ff;
+  background: #a855f7;
+}
+
 h1,
 h2,
 h3,
