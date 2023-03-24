@@ -206,6 +206,24 @@ const AboutPage = () => {
               </blockquote>
             </a>
           </Link>
+
+          <h2 className="mt-16 mb-6 text-2xl text-center text-gray-700 font-semibold">
+            Interested in Collaborating?
+          </h2>
+          <div className="flex flex-col items-center gap-y-1">
+            <div className="max-w-sm text-center">
+              <p className="text-gray-700 mb-3">
+                Want to help us improve ScolioVis and make this a<br />
+                medical-grade app? Contact us at:
+              </p>
+            </div>
+            <a
+              href="mailto:carloantonio.taleon@wvsu.edu.ph"
+              className="text-center text-white bg-primary rounded-md self-center px-4 py-2.5"
+            >
+              carloantonio.taleon@wvsu.edu.ph
+            </a>
+          </div>
         </div>
       </main>
       <Footer />

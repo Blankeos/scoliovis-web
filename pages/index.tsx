@@ -97,6 +97,7 @@ const Home: NextPage = () => {
                   repeat: Infinity,
                   duration: 1.5,
                   repeatDelay: 1.4,
+                  delay: 1.8,
                 }}
                 className="self-center w-32 h-32 static md:absolute md:bottom-0 md:right-0 md:pb-5 md:w-auto md:h-auto cursor-talk"
               >
@@ -192,7 +193,7 @@ const Home: NextPage = () => {
                     />
                   </div>
                   <h2 className="text-lg font-medium text-gray-700">
-                    Input a Spine Image
+                    1. Input Image
                   </h2>
                   <p className="text-gray-500">
                     Upload a spine image, don&apos;t worry, we don&apos;t save
@@ -216,9 +217,7 @@ const Home: NextPage = () => {
                       objectFit="contain"
                     />
                   </div>
-                  <h2 className="text-lg font-medium text-gray-700">
-                    ScolioVis Algorithm
-                  </h2>
+                  <h2 className="text-lg font-medium text-gray-700">2. Wait</h2>
                   <p className="text-gray-500">
                     Let our ML model and algorithm do the work for you.
                   </p>
@@ -241,7 +240,7 @@ const Home: NextPage = () => {
                     />
                   </div>
                   <h2 className="text-lg font-medium text-gray-700">
-                    Cobb Angle Results
+                    3. Get Results
                   </h2>
                   <p className="text-gray-500">
                     Get the cobb angle result along with some analysis.

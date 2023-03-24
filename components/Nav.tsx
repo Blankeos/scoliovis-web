@@ -1,9 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { useRouter } from "next/router";
-
 import { animateScroll as scroll } from "react-scroll";
-// nav className="sticky top-0 bg-white z-20 backdrop-blur-sm bg-opacity-80"
 
 const Nav = () => {
   const router = useRouter();
@@ -32,18 +30,10 @@ const Nav = () => {
           )}
           <ul className="flex gap-x-8 overflow-hidden">
             <li>
-              <Link href="/about">
-                <a className="text-gray-500 text-sm hover:text-primary transition">
-                  About
-                </a>
-              </Link>
+              <NavLink name="About" href="/about" />
             </li>
             <li>
-              <Link href="/paper">
-                <a className="text-gray-500 text-sm hover:text-primary transition">
-                  Paper
-                </a>
-              </Link>
+              <NavLink name="Paper" href="/paper" />
             </li>
           </ul>
         </div>
@@ -52,4 +42,24 @@ const Nav = () => {
   );
 };
 
+interface NavLink {
+  name: string;
+  href: string;
+}
+
+const NavLink: React.FC<NavLink> = ({ name, href }) => {
+  const router = useRouter();
+  return (
+    <Link href={href}>
+      <a
+        className={`
+      ${
+        router.pathname === href ? "text-primary" : "text-gray-500"
+      } text-sm transition hover:text-primary`}
+      >
+        {name}
+      </a>
+    </Link>
+  );
+};
 export default Nav;

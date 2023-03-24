@@ -16,14 +16,20 @@ For more information on the whole project go to [blankeos/scoliovis](https://git
 
 ### Installation
 
-```sh
-# 1. Clone repo
-> git clone https://github.com/blankeos/scoliovis-web.git
-> cd scoliovis-web
+1. Clone repo
 
-# 2. Install dependencies
-> pnpm install
+   ```sh
+   > git clone https://github.com/blankeos/scoliovis-web.git
+   > cd scoliovis-web
+   ```
 
-# 3. Run the server
-> pnpm dev
-```
+2. Install dependencies
+
+   ```sh
+   > pnpm install
+   ```
+
+3. Run the server
+   ```sh
+   > pnpm dev
+   ```

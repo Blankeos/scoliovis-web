@@ -7,7 +7,9 @@ export default async function getPrediction(file: ISelectedFile) {
   formData.append("image", file);
 
   return await axios({
-    url: process.env.NEXT_PUBLIC_UPLOADFILEAPI,
+    url:
+      process.env.NEXT_PUBLIC_UPLOADFILEAPI ||
+      "http://localhost:8000/v2/getprediction",
     method: "POST",
     headers: {
       authorization: "your token",
