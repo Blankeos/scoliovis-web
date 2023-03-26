@@ -9,6 +9,7 @@ specifiers:
   '@types/react': 18.0.1
   '@types/react-color': ^3.0.6
   '@types/react-dom': 18.0.0
+  '@types/react-pdf': ^6.2.0
   '@types/react-scroll': ^1.8.4
   autoprefixer: ^10.4.12
   axios: ^0.26.1
@@ -74,6 +75,7 @@ devDependencies:
   '@types/react': 18.0.1
   '@types/react-color': 3.0.6
   '@types/react-dom': 18.0.0
+  '@types/react-pdf': 6.2.0
   '@types/react-scroll': 1.8.4
   autoprefixer: 10.4.12_postcss@8.4.18
   eslint: 8.13.0
@@ -390,6 +392,15 @@ packages:
     resolution: {integrity: sha512-49897Y0UiCGmxZqpC8Blrf6meL8QUla6eb+BBhn69dTXlmuOlzkfr7HHY/O8J25e1lTUMs+YYxSlVDAaGHCOLg==}
     dependencies:
       '@types/react': 18.0.1
+    dev: true
+
+  /@types/react-pdf/6.2.0:
+    resolution: {integrity: sha512-OSCYmrfaJvpXkM5V4seUMAhUDOAOqbGQf9kwv14INyTf7AjDs2ukfkkQrLWRQ8OjWrDklbXYWh5l7pT7l0N76g==}
+    dependencies:
+      '@types/react': 18.0.1
+      pdfjs-dist: 2.16.105
+    transitivePeerDependencies:
+      - worker-loader
     dev: true
 
   /@types/react-scroll/1.8.4:
@@ -848,6 +859,11 @@ packages:
     engines: {node: '>=6.0.0'}
     dependencies:
       esutils: 2.0.3
+    dev: true
+
+  /dommatrix/1.0.3:
+    resolution: {integrity: sha512-l32Xp/TLgWb8ReqbVJAFIvXmY7go4nTxxlWiAFyhoQw9RKEOHBZNnyGvJWqDVSPmq3Y9HlM4npqF/T6VMOXhww==}
+    deprecated: dommatrix is no longer maintained. Please use @thednp/dommatrix.
     dev: true
 
   /electron-to-chromium/1.4.283:
@@ -1935,6 +1951,18 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
+  /pdfjs-dist/2.16.105:
+    resolution: {integrity: sha512-J4dn41spsAwUxCpEoVf6GVoz908IAA3mYiLmNxg8J9kfRXc2jxpbUepcP0ocp0alVNLFthTAM8DZ1RaHh8sU0A==}
+    peerDependencies:
+      worker-loader: ^3.0.8
+    peerDependenciesMeta:
+      worker-loader:
+        optional: true
+    dependencies:
+      dommatrix: 1.0.3
+      web-streams-polyfill: 3.2.1
+    dev: true
+
   /picocolors/1.0.0:
     resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
 
@@ -2540,6 +2568,11 @@ packages:
 
   /v8-compile-cache/2.3.0:
     resolution: {integrity: sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==}
+    dev: true
+
+  /web-streams-polyfill/3.2.1:
+    resolution: {integrity: sha512-e0MO3wdXWKrLbL0DgGnUV7WHVuw9OUvL4hjgnPkIeEvESk74gAITi5G606JtZPp39cd8HA9VQzCIvA49LpPN5Q==}
+    engines: {node: '>= 8'}
     dev: true
 
   /which-boxed-primitive/1.0.2:

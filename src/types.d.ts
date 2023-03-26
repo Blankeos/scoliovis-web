@@ -80,3 +80,5 @@ interface ISegmentationResponse {
   filename: string;
   name: string;
 }
+
+declare module "pdfjs-dist/build/pdf.worker.entry";
