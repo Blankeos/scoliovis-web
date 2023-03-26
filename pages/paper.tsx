@@ -73,7 +73,7 @@ const PaperPage: NextPage = () => {
           </motion.p>
           <iframe
             {...enterAnim(0.4)}
-            className={`transition w-full h-[36rem] ring-primary mt-5 overflow-hidden rounded-xl ${iframeClass}`}
+            className={`transition w-full h-[36rem] ring-primary mt-5 overflow-hidden rounded-xl border border-gray-600 ${iframeClass}`}
             src="/assets/ScolioVis_Manuscript_IN-EVALUATION.pdf"
           />
         </div>
