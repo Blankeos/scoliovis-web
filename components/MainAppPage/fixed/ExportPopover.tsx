@@ -43,12 +43,6 @@ interface IExportPopoverProps {
 }
 //#endregion Types
 
-const MyDoc = (
-  <Document>
-    <Page>// My document data</Page>
-  </Document>
-);
-
 const ExportPopover: React.FC<IExportPopoverProps> = ({}) => {
   const [toastId, setToastId] = useState<string>("");
   const PDF_TOASTID = "PDF_TOAST";
