@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Tippy from "@tippyjs/react";
 import toast from "react-hot-toast";
 
-import ScolioVisDocument from "./ScolioVisDocument";
+import ScolioVisDocument from "../ScolioVisDocument";
 
 //#region Animations
 import { motion } from "framer-motion";
@@ -20,7 +20,7 @@ import {
 } from "react-icons/bs";
 import { AiOutlineFileJpg as JPGIcon } from "react-icons/ai";
 import { MdPrint as PrintIcon } from "react-icons/md";
-import { BlobProvider, usePDF } from "@react-pdf/renderer";
+import { Document, Page, usePDF } from "@react-pdf/renderer";
 import useForceUpdate from "@/hooks/useForceUpdate";
 import { useStore } from "store";
 import { debounce } from "lodash";
@@ -43,8 +43,16 @@ interface IExportPopoverProps {
 }
 //#endregion Types
 
+const MyDoc = (
+  <Document>
+    <Page>// My document data</Page>
+  </Document>
+);
+
 const ExportPopover: React.FC<IExportPopoverProps> = ({}) => {
   const [toastId, setToastId] = useState<string>("");
+  const PDF_TOASTID = "PDF_TOAST";
+
   const [pdfDownloadIsAvailable, setPDFDownloadIsAvailable] =
     useState<boolean>(false);
   // setCanvasURL can be used to regenerate the PDF.
@@ -53,10 +61,35 @@ const ExportPopover: React.FC<IExportPopoverProps> = ({}) => {
   );
   const scolioVisAPIResponse = useStore((state) => state.scoliovisAPIResponse);
   const drawSettings = useStore((state) => state.drawSettings);
+  const [instance, update] = usePDF({
+    document: (
+      <ScolioVisDocument
+        imageSrc={canvasURL}
+        scolioVisAPIResponse={scolioVisAPIResponse}
+      />
+    ),
+  });
 
   useEffect(() => {
     refetchCanvasURL();
   }, []);
+
+  useEffect(() => {
+    if (scolioVisAPIResponse) update();
+  }, [canvasURL]);
+
+  useEffect(() => {
+    if (instance.loading === false && scolioVisAPIResponse) {
+      toast.success("Generated PDF Successfully!", {
+        id: PDF_TOASTID,
+      });
+      setPDFDownloadIsAvailable(true);
+    }
+  }, [instance.loading]);
+
+  useEffect(() => {
+    if (pdfDownloadIsAvailable && instance.url) downloadPDF(instance.url);
+  }, [pdfDownloadIsAvailable]);
 
   // Everytime draw settings changes, prevent PDF Download (Opt for regenerate)
   useEffect(() => {
@@ -157,58 +190,20 @@ const ExportPopover: React.FC<IExportPopoverProps> = ({}) => {
         offset={[0, 20]}
         content={
           <div className="relative z-20 shadow rounded-full bg-white text-primary h-12 flex items-center gap-x-5 px-5 border">
-            {pdfDownloadIsAvailable ? (
-              <BlobProvider
-                document={
-                  <ScolioVisDocument
-                    imageSrc={canvasURL}
-                    scolioVisAPIResponse={scolioVisAPIResponse}
-                  />
+            <ExportItemButton
+              exportTag="PDF"
+              onClick={() => {
+                if (pdfDownloadIsAvailable) {
+                  toast.success("Downloading PDF", { id: PDF_TOASTID });
+                  if (instance.url) downloadPDF(instance.url);
+                  return;
                 }
-              >
-                {({ blob, url, loading, error }) => {
-                  if (url && !loading) {
-                    console.log({
-                      url,
-                      error,
-                      loading,
-                      pdfDownloadIsAvailable,
-                    });
-                    toast.success("Generated PDF", {
-                      id: toastId,
-                    });
-                    setTimeout(() => {
-                      downloadPDF(url);
-                    }, 800);
-
-                    return (
-                      <ExportItemButton
-                        exportTag="PDF"
-                        onClick={() => {
-                          downloadPDF(url);
-                        }}
-                      />
-                    );
-                  }
-                  return (
-                    <ExportItemButton
-                      exportTag="PDF"
-                      onClick={() => {}}
-                      disabled={true}
-                    />
-                  );
-                }}
-              </BlobProvider>
-            ) : (
-              <ExportItemButton
-                exportTag="PDF"
-                onClick={() => {
+                if (!pdfDownloadIsAvailable) {
                   refetchCanvasURL();
-                  setPDFDownloadIsAvailable(true);
-                  setToastId(toast.loading("Generating PDF..."));
-                }}
-              />
-            )}
+                  toast.loading("Generating PDF", { id: PDF_TOASTID });
+                }
+              }}
+            />
             {exportItems &&
               exportItems.map((eI, i) => (
                 <ExportItemButton

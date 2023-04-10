@@ -26,7 +26,7 @@ import MultiSwitch from "components/Switch/MultiSwitch";
 import ImageCanvas from "components/MainAppPage/ImageCanvas";
 import ImageUploadBox from "components/ImageUploadBox";
 import ExampleImageButton from "components/ExampleImageButton";
-import ExportPopover from "components/MainAppPage/ExportPopover";
+import ExportPopover from "components/MainAppPage/fixed/ExportPopover";
 
 // Utils and Services
 import getPrediction from "services/getPrediction";

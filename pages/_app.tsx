@@ -2,16 +2,39 @@ import type { AppProps } from "next/app";
 import NextHead from "next/head";
 import Head from "components/Head";
 import { Toaster } from "react-hot-toast";
+import { useEffect } from "react";
+import NProgress from "nprogress";
+import "nprogress/nprogress.css";
 
 // CSS
+import "styles/nprogress.css";
 import "styles/animated-bg-styles.css";
 import "../styles/globals.css";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/shift-toward-subtle.css";
 import "tippy.js/animations/shift-away-subtle.css";
 import "tippy.js/animations/scale-extreme.css";
+import { useRouter } from "next/router";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleRouteStart = () => NProgress.start();
+    const handleRouteDone = () => NProgress.done();
+
+    router.events.on("routeChangeStart", handleRouteStart);
+    router.events.on("routeChangeComplete", handleRouteDone);
+    router.events.on("routeChangeError", handleRouteDone);
+
+    return () => {
+      // Make sure to remove the event handler on unmount!
+      router.events.off("routeChangeStart", handleRouteStart);
+      router.events.off("routeChangeComplete", handleRouteDone);
+      router.events.off("routeChangeError", handleRouteDone);
+    };
+  }, []);
+
   return (
     <>
       <NextHead>
