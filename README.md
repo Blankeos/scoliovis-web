@@ -30,6 +30,11 @@ For more information on the whole project go to [blankeos/scoliovis](https://git
    ```
 
 3. Run the server
+
    ```sh
+   > pnpm build
+   > pnpm start
+
+   # or just run in dev mode
    > pnpm dev
    ```

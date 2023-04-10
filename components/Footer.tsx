@@ -26,9 +26,9 @@ const Footer = () => {
         </div>
         {/* Footer message */}
         <p className="text-gray-900 text-center px-10">
-          This is part of an on-going research paper by Elizalde, Rubinos, and
-          Taleon for West Visayas State University - College of Information and
-          Communications Technology.
+          This is part of an undergraduate research paper by Elizalde, Rubinos,
+          and Taleon for West Visayas State University - College of Information
+          and Communications Technology.
           <br />
           All Rights Reserved.
         </p>
