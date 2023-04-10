@@ -53,7 +53,7 @@ const PaperPage: NextPage = () => {
           >
             Paper
           </motion.h1>
-          <div className="flex gap-x-2 gap-y-2 mb-6 flex-wrap">
+          {/* <div className="flex gap-x-2 gap-y-2 mb-6 flex-wrap">
             <motion.p
               {...enterAnim(0.2)}
               className="items-center bg-green-400 justify-self-start text-gray-700 px-3 py-1 rounded-full text-xs truncate"
@@ -66,13 +66,13 @@ const PaperPage: NextPage = () => {
             >
               Status (1/5): <b>Thesis Adviser</b>
             </motion.p>
-          </div>
-          <motion.p {...enterAnim(0.4)} className="text-gray-800">
+          </div> */}
+          <motion.p {...enterAnim(0.2)} className="text-gray-800">
             Read our complete manuscript for West Visayas State University -
             College of Information and Communications Technology.
           </motion.p>
           <iframe
-            {...enterAnim(0.4)}
+            {...enterAnim(0.3)}
             className={`transition w-full h-[36rem] ring-primary mt-5 overflow-hidden rounded-xl border border-gray-600 ${iframeClass}`}
             src="/assets/ScolioVis_Manuscript_IN-EVALUATION.pdf"
           />

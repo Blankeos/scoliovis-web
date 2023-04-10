@@ -333,7 +333,7 @@ const Home: NextPage = () => {
                 <h2 className="font-bold text-2xl text-gray-800 mb-2">
                   Great model performance
                 </h2>
-                <p className="text-gray-700">
+                <p className="text-gray-600">
                   We trained a Keypoint RCNN model on the{" "}
                   <Link href="http://spineweb.digitalimaginggroup.ca/Index.php?n=Main.Datasets#Dataset_16.3A_609_spinal_anterior-posterior_x-ray_images">
                     <a className="hover:text-primary cursor-pointer underline">
@@ -355,14 +355,14 @@ const Home: NextPage = () => {
                 className="max-w-xs justify-self-end text-right"
               >
                 <h2 className="font-bold text-2xl text-gray-800 mb-2">
-                  Usability ISO
+                  Very Good Software Quality
                 </h2>
-                <p className="text-gray-700">
-                  We&apos;re planning to conduct ISO to evaluate the usability
-                  of our app. We want experts in Radiology to try out our app!
-                  <span className="block mt-2 hover:text-primary cursor-pointer">
-                    Would you like to participate?
-                  </span>
+                <p className="text-gray-600">
+                  ScolioVis was evaluated using the{" "}
+                  <b>ISO/IEC 25010 Software Quality Standards</b>, and achieved
+                  a high quality and effectiveness in meeting user needs, with
+                  all eight characteristics assessed being rated as{" "}
+                  <b>"Very Good"</b> with an <b>overall mean of 4.39</b>.
                 </p>
               </motion.div>
               <motion.div {...enterAnim(0.1, inView4)} className="">
