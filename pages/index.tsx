@@ -362,7 +362,8 @@ const Home: NextPage = () => {
                   <b>ISO/IEC 25010 Software Quality Standards</b>, and achieved
                   a high quality and effectiveness in meeting user needs, with
                   all eight characteristics assessed being rated as{" "}
-                  <b>"Very Good"</b> with an <b>overall mean of 4.39</b>.
+                  <b>&quot;Very Good&quot;</b> with an{" "}
+                  <b>overall mean of 4.39</b>.
                 </p>
               </motion.div>
               <motion.div {...enterAnim(0.1, inView4)} className="">
